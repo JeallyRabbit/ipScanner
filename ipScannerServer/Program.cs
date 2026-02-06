@@ -9,6 +9,19 @@ using System.Text.Json.Serialization;
 namespace MyApp
 {
 
+    public class ServerEngine
+    {
+        private readonly string _cs;
+        public ServerEngine(string connectionString) => _cs = connectionString;
+
+        public async Task ClearLeaseOwnersAsync(CancellationToken ct)
+        {
+            await using var conn = new NpgsqlConnection(_cs);
+            var sql = @"SQL QUERY";
+            await conn.ExecuteAsync(new Dapper.CommandDefinition(sql, cancellationToken: ct));
+        }
+    }
+
 
 
     class Database
@@ -83,7 +96,8 @@ namespace MyApp
         const int MENU_DATABASE_JSON = 2;
         const int MENU_DATABASE_INPUT = 3;
         const int MENU_PROCESS_SERVER_SIDE = 4;
-        const int CLEAR_LEASE_OWNERS_INTERVAL = 600000;// 600 sec between clearing lease_owners in database
+        const int CLEAR_LEASE_OWNERS_INTERVAL = 600_000;// 600 sec between clearing lease_owners in database
+        const int CLEAR_OFFLINE_RECORDS = 60 * (60_000);//60_000 is 60 seconds=1 minute
         const int REQUEST_PACKAGE_SIZE = 30;
 
         const string SELECTION_BACK = "back";
@@ -112,7 +126,7 @@ namespace MyApp
             {
                 if (menu == MENU_EXIT)
                 {
-                    break;
+                    //break;
                 }
                 if (menu == MENU_SERVER_CLIENT)
                 {
@@ -358,7 +372,7 @@ namespace MyApp
                     string ip = Dns.GetHostAddresses(Dns.GetHostName())?.ToString() ?? "localhost";
                     //builder.WebHost.UseUrls([$"https://{hostname}:60718", $"https://{ip}:60718"]);
 
-                    builder.WebHost.UseUrls(["https://*:60718", "http://*:60718"]);
+                    //builder.WebHost.UseUrls(["https://*:60718", "http://*:60718"]);
 
                     bool successConnectToDataBase = true;
                     try
@@ -402,7 +416,23 @@ namespace MyApp
                     if (successConnectToDataBase)
                     {
 
+                        //web interface
+                        builder.Services.AddRazorPages();
+                        builder.Services.AddControllers();
+                        builder.Services.AddSingleton(sp => new ServerEngine(connectionString));
+
+
+
+
                         var app = builder.Build();
+
+                        app.UseRouting();
+
+                        app.MapControllers();
+                        app.MapRazorPages();
+
+
+                        clearOfflineRecords(connectionString);
 
 
                         clearLeaseOwners(connectionString);
@@ -415,7 +445,7 @@ namespace MyApp
 
 
 
-                        // GET /api/pcs/oldest  →  returns 10 PCs with oldest last_checked_date
+                        // GET /api/pcs/oldest  →  returns PCs with oldest last_checked_date
                         app.MapGet("/api/pcs/oldest", async (HttpContext context) =>
                         {
 
@@ -436,7 +466,7 @@ namespace MyApp
                                 LIMIT @myLimit
                             ) AS oldest
                             WHERE d.ip = oldest.address
-                            RETURNING d.ip AS address, d.hostname AS hostname, d.last_checked_date AS lastCheckedDate;
+                            RETURNING d.ip AS address, d.hostname AS hostname, to_char(d.last_checked_date, 'DD/MM/YYYY HH24:MI:SS') AS lastCheckedDate;;
                             ";
 
                             try
@@ -552,6 +582,48 @@ namespace MyApp
         }
 
 
+        private static async Task clearOfflineRecords(string connectionString = "")
+        {
+            var conn = new NpgsqlConnection(connectionString);
+            while (true)
+            {
+                AnsiConsole.MarkupLine($"[red]CLEARING OFFLINE DEVICES !![/]");
+                var sql = @"
+                            UPDATE devices
+                            SET hostname = NULL,
+                            last_logged_user=NULL,
+                            last_checked_date = NULL,
+                            last_found_date = NULL,
+                            lease_end_date = NULL,
+                            lease_owner = NULL,
+                            operating_system=NULL,
+                            serial_number = NULL,
+                            model = NULL,
+                            proc_gen = NULL
+                            WHERE last_found_date < now() - interval '2 months'
+                            ";
+                try
+                {
+
+                    var rows = await conn.ExecuteAsync(sql);
+
+                    AnsiConsole.MarkupLine($"[grey]Cleared {rows} offline records (offline for 2 months).[/]");
+                    //return Results.Ok(rows);
+                }
+                catch (System.ArgumentNullException ex)
+                {
+                    Console.WriteLine(ex);
+                    //return Results.NotFound();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+
+                await Task.Delay(CLEAR_OFFLINE_RECORDS);
+            }
+        }
 
 
         private static async Task clearLeaseOwners(string connectionString = "")
@@ -569,15 +641,19 @@ namespace MyApp
                 try
                 {
 
-                    var rows = await conn.QueryAsync(sql);
+                    var rows = await conn.ExecuteAsync(sql);
 
-                    AnsiConsole.MarkupLine($"[grey]Removed {rows.Count()} lease owners.[/]");
+                    AnsiConsole.MarkupLine($"[grey]Removed {rows} lease owners.[/]");
                     //return Results.Ok(rows);
                 }
                 catch (System.ArgumentNullException ex)
                 {
                     Console.WriteLine(ex);
                     //return Results.NotFound();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
 
 

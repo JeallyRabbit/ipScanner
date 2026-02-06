@@ -408,14 +408,7 @@ namespace Client
                         if ((isRunningOnLinux && !usingCustomCredentials) || reqCustomCredentials)
                         {
                             menu = MENU_INPUT_CREDENTIALS;
-                            try
-                            {
-                                //   //shortcutTask.Dispose();
-                            }
-                            catch (System.InvalidOperationException)
-                            {
-                                //await shortcutTask;
-                            }
+
                             continue;
                         }
                     }
@@ -442,7 +435,6 @@ namespace Client
 
 
                         List<IP> addresses = client.GetFromJsonAsync<List<IP>>(url).GetAwaiter().GetResult();
-
 
 
                         if (addresses is null)
@@ -556,14 +548,6 @@ namespace Client
                                 menu = MENU_CONNECT_TO_SERVER_TYPE;
                                 AnsiConsole.MarkupLine("[yellow]Scan stopped[/]");
                                 AnsiConsole.Markup("[grey]Press [bold]<Enter>[/] to continue...[/]");
-                                try
-                                {
-                                    //displayTask.Dispose();
-                                }
-                                catch (System.InvalidOperationException)
-                                {
-                                    //await shortcutTask;
-                                }
 
                                 try
                                 {
@@ -703,23 +687,7 @@ namespace Client
                                                 menu = MENU_CONNECT_TO_SERVER_TYPE;
                                                 AnsiConsole.MarkupLine("[yellow]Scan stopped[/]");
                                                 AnsiConsole.Markup("[grey]Press [bold]<Enter>[/] to continue...[/]");
-                                                try
-                                                {
-                                                    //shortcutTask.Dispose();
-                                                }
-                                                catch (System.InvalidOperationException)
-                                                {
-                                                    //await shortcutTask;
-                                                }
-                                                try
-                                                {
-                                                    //displayTask.Dispose();
-                                                }
-                                                catch (System.InvalidOperationException)
-                                                {
-                                                    //await shortcutTask;
-                                                }
-                                                // Console.ReadLine();
+
                                                 continue;
                                             }
 
@@ -755,37 +723,9 @@ namespace Client
                                 );//for parallel
 
 
-
-
-
-                                scanTask.Wait();
+                                //scanTask.Wait();
 
                                 await scanTask;
-                                /*
-                                try
-                                {
-                                    //shortcutTask.Dispose();
-                                }
-                                catch (InvalidOperationException ex)
-                                {
-                                    ///
-                                }
-                                try
-                                {
-                                    scanTask.Dispose();
-                                }
-                                catch (InvalidOperationException ex)
-                                {
-                                    ///
-                                }
-                                */
-
-                                //AnsiConsole.Clear();
-                                //AnsiConsole.Write(BuildTable(ipResponses, addresses, 0, processedAddresses));
-
-
-
-
 
                                 //sending response to server
                                 responseTask = sendResponseToServer(serverData.getAddress(), serverData.getPort(), client, ipResponses);
@@ -794,24 +734,7 @@ namespace Client
                                 AnsiConsole.Clear();
 
 
-                                /*
-                                try
-                                {
-                                    //displayTask.Dispose();
-                                }
-                                catch (System.InvalidOperationException)
-                                {
-                                    //await shortcutTask;
-                                }
-                                try
-                                {
-                                    //shortcutTask.Dispose();
-                                }
-                                catch (System.InvalidOperationException)
-                                {
-                                    //await shortcutTask;
-                                }
-                                */
+
 
                                 //Console.Clear();
                                 //AnsiConsole.Write(BuildTable(ipResponses, addresses, 0, processedAddresses));
@@ -822,22 +745,7 @@ namespace Client
                                     menu = MENU_CONNECT_TO_SERVER_TYPE;
                                     AnsiConsole.MarkupLine("[yellow]Scan stopped[/]");
                                     AnsiConsole.Markup("[grey]Press [bold]<Enter>[/] to continue...[/]");
-                                    try
-                                    {
-                                        //displayTask.Dispose();
-                                    }
-                                    catch (System.InvalidOperationException)
-                                    {
-                                        //await shortcutTask;
-                                    }
-                                    try
-                                    {
-                                        //shortcutTask.Dispose();
-                                    }
-                                    catch (System.InvalidOperationException)
-                                    {
-                                        //await shortcutTask;
-                                    }
+
                                     break;
                                 }
                             }
@@ -851,22 +759,7 @@ namespace Client
                                 continue;
                             }
 
-                            try
-                            {
-                                //displayTask.Dispose();
-                            }
-                            catch (System.InvalidOperationException)
-                            {
-                                //await shortcutTask;
-                            }
-                            try
-                            {
-                                //shortcutTask.Dispose();
-                            }
-                            catch (System.InvalidOperationException)
-                            {
-                                //await shortcutTask;
-                            }
+
                         }
 
 
@@ -899,14 +792,7 @@ namespace Client
                     }
                     catch (System.AggregateException)
                     {
-                        try
-                        {
-                            //shortcutTask.Dispose();
-                        }
-                        catch (System.InvalidOperationException)
-                        {
-                            //await shortcutTask;
-                        }
+
                         menu = MENU_CONNECT_TO_SERVER_TYPE;
                     }
                     catch (Exception ex)
@@ -934,12 +820,13 @@ namespace Client
             try// getting current logged user on remote host
             {
                 // Works only for client running windows
+
                 var options = usingCustomCredentials ? new ConnectionOptions
                 {
                     Username = credentialsUsername,
                     Password = credentialsPassword,
-                    Timeout = new TimeSpan(0, 0, 5)
-                } : new ConnectionOptions();
+                    Timeout = new System.TimeSpan(0, 0, 30)
+                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, 30) };
 
 
                 var scope = new ManagementScope($@"\\{hostname}\root\cimv2", options);
@@ -991,8 +878,8 @@ namespace Client
                 {
                     Username = credentialsUsername,
                     Password = credentialsPassword.ToString(),
-                    Timeout = new TimeSpan(0, 0, 5)
-                } : new ConnectionOptions();
+                    Timeout = new TimeSpan(0, 0, 30)
+                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, 30) };//waiting 30 seconds
 
                 var scope = new ManagementScope($@"\\{hostname}\root\cimv2", options);
 
@@ -1048,8 +935,8 @@ namespace Client
                 {
                     Username = credentialsUsername,
                     Password = credentialsPassword.ToString(),
-                    Timeout = new TimeSpan(0, 0, 5)
-                } : new ConnectionOptions();
+                    Timeout = new TimeSpan(0, 0, 30)
+                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, 30) };//waiting 30 seconds
 
                 var scope = new ManagementScope($@"\\{hostname}\root\cimv2", options);
 
@@ -1061,7 +948,7 @@ namespace Client
                     "SELECT  SerialNumber FROM Win32_BIOS");
 
                 using var searcher = new ManagementObjectSearcher(scope, query);
-                searcher.Options.Timeout = new TimeSpan(0, 0, 10);//10 sec
+                searcher.Options.Timeout = new TimeSpan(0, 0, 30);//10 sec
                 using var results = searcher.Get();
 
                 foreach (ManagementObject os in results)
@@ -1093,8 +980,8 @@ namespace Client
                 {
                     Username = credentialsUsername,
                     Password = credentialsPassword.ToString(),
-                    Timeout = new TimeSpan(0, 0, 5)
-                } : new ConnectionOptions();
+                    Timeout = new TimeSpan(0, 0, 30)
+                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, 30) };//waiting 30 seconds
 
                 var scope = new ManagementScope($@"\\{hostname}\root\cimv2", options);
                 scope.Connect();
@@ -1285,7 +1172,7 @@ namespace Client
                     if (!re.successFinding)
                     {
 
-                        tab.AddRow($"[red]{re.address.ToString()}[/]", "[red] - not found -[/]", "[red] - not found -[/]", re.lastCheckedDate.ToString(), "-", re.procGen.ToString(), "-", "-", "-");
+                        tab.AddRow($"[red]{re.address.ToString()}[/]", "[red] - not found -[/]", "[red] - not found -[/]", re.lastCheckedDate.ToString("dd/MM/yyyy HH:mm:ss"), "-", re.procGen.ToString(), "-", "-", "-");
 
                     }
                     else
@@ -1302,7 +1189,7 @@ namespace Client
                             string tabModel = re.model?.ToString() ?? "-";
                             string tabSN = re.serialNumber?.ToString() ?? "-";
                             string tabProcGen = re.procGen.ToString();
-                            tab.AddRow($"[green]{tabAddress}[/]", tabHostname, tabLastLoggedUser, $"[green]{re.lastCheckedDate.ToString()}[/]",
+                            tab.AddRow($"[green]{tabAddress}[/]", tabHostname, tabLastLoggedUser, $"[green]{re.lastCheckedDate.ToString("dd/MM/yyyy HH:mm:ss")}[/]",
                             $"[green]{tabOperatingSystem}[/]", $"[green]{tabProcGen}[/]", $"[green]{re.lastFoundDate.ToString()}[/]", $"[green]{tabModel}[/]", $"[green]{tabSN}[/]");
 
 
@@ -1330,7 +1217,7 @@ namespace Client
                             }
                             else
                             {
-                                tab.AddRow(re.address.ToString(), "---", "---", re.lastCheckedDate.ToString().Replace('/', '.'), "---", "---", "---", "---");
+                                tab.AddRow(re.address.ToString(), "---", "---", re.lastCheckedDate.ToString().Replace('/', '.') ?? "-", "---", "---", "---", "---");
                             }
 
                         }

@@ -166,27 +166,27 @@ namespace Client
         public TerminalTheme()
         {
             // Standard ANSI (approx Windows / VT100 defaults)
-            BlackHost = "#000000";
-            RedSyntaxString = "#800000";
-            GreenCommand = "#008000";
-            YellowCommandSecond = "#808000";
-            BluePath = "#000080";
-            MagentaSyntaxVar = "#800080";
-            CyanPrompt = "#008080";
-            White = "#C0C0C0";
+            BlackHost = "#494D64";
+            RedSyntaxString = "#ED8796";
+            GreenCommand = "#A6DA95";
+            YellowCommandSecond = "#EED49F";
+            BluePath = "#8AADF4";
+            MagentaSyntaxVar = "#F5BDE6";
+            CyanPrompt = "#8BD5CA";
+            White = "#B8C0E0";
 
-            BrightBlack = "#808080";
-            BrightRedCommandError = "#FF0000";
-            BrightGreenExec = "#00FF00";
-            BrightYellow = "#FFFF00";
-            BrightBlueFolder = "#0000FF";
-            BrightMagenta = "#FF00FF";
-            BrightCyan = "#00FFFF";
-            BrightWhite = "#FFFFFF";
+            BrightBlack = "#5B6078";
+            BrightRedCommandError = "#ED8796";
+            BrightGreenExec = "#A6DA95";
+            BrightYellow = "#EED49F";
+            BrightBlueFolder = "#8AADF4";
+            BrightMagenta = "#F5BDE6";
+            BrightCyan = "#8BD5CA";
+            BrightWhite = "#A5ADCB";
 
-            Background = "#000000";
-            ForegroundText = "#C0C0C0";
-            Cursor = "#C0C0C0";
+            Background = "#24273A";
+            ForegroundText = "#CAD3F5";
+            Cursor = "#CAD3F5";
         }
 
     }
@@ -275,8 +275,14 @@ namespace Client
 
 
 
+
+
+
+
     internal class Program
     {
+
+
         const int MENU_EXIT = -1;
         const int MENU_SERVER_CLIENT = 0;
         const int MENU_DATABYSE_CONNECTION_TYPE = 1;
@@ -312,6 +318,8 @@ namespace Client
         static Color promptChoicesColor;
         static Color promptDefaultChoicesColor;
         static String headerColor;
+        static String backgroundColor;
+
         static void SetCurrentScanCts(CancellationTokenSource? cts)
         {
             lock (_scanCtsLock)
@@ -321,7 +329,10 @@ namespace Client
         static void CancelCurrentScan()
         {
             lock (_scanCtsLock)
+            {
                 _currentScanCts?.Cancel();
+            }
+
         }
 
         public static string url = "";
@@ -346,7 +357,8 @@ namespace Client
             int httpRequestCounter = 0;
 
 
-            using var appCts = new CancellationTokenSource();
+            using var appCts = new CancellationTokenSource()
+                ;
             var shortcutTask = ListenForShortcutAsync(appCts);
 
             myThemeRgb = new TerminalThemeRGB(myTheme);
@@ -371,8 +383,11 @@ namespace Client
                         myThemeRgb.BluePath.G,
                         myThemeRgb.BluePath.B);*/
 
+            backgroundColor = myTheme.Background;
+
             while (true)
             {
+
 
 
 
@@ -391,8 +406,8 @@ namespace Client
                     .AddChoices(new[] { "Load from .JSON", "Input manually", "Change Theme", "Exit" });
 
 
-
                     clientConnectionPrompt.HighlightStyle = new Style(highlightColor);
+
                     var clientConnectionChoice = AnsiConsole.Prompt(clientConnectionPrompt);
 
 
@@ -486,14 +501,14 @@ namespace Client
                             {
                                 AnsiConsole.MarkupLine($"[{myTheme.BrightRedCommandError}]Failed to read data[/]");
 
-                                AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
+                                AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
                                 Console.ReadLine();
                                 menu = MENU_CLIENT_JSON;
                             }
                             else
                             {
                                 menu = MENU_PROCESS_CLIENT;
-                                AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
+                                AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
                                 Console.ReadLine();
                             }
 
@@ -567,6 +582,7 @@ namespace Client
                         """).StringColor(stringColor)
                         .MemberColor(memberColor); ;
 
+
                     AnsiConsole.Write(
                         new Panel(jsonPrint)
                             .Header("Data saved to JSON")
@@ -599,18 +615,12 @@ namespace Client
                         if (isSavingSucces)
                         {
                             currentDir += Path.DirectorySeparatorChar + fileName;
-                            var path = new TextPath(currentDir).RootColor(Color.Red)
-            .SeparatorColor(new Color(myThemeRgb.BrightBlack.R, myThemeRgb.BrightBlack.G, myThemeRgb.BrightBlack.B))
-            .StemColor(new Color(myThemeRgb.BluePath.R, myThemeRgb.BluePath.G, myThemeRgb.BluePath.B))
-            .LeafColor(new Color(myThemeRgb.YellowCommandSecond.R, myThemeRgb.YellowCommandSecond.G, myThemeRgb.YellowCommandSecond.B));
-
                             AnsiConsole.MarkupLine($"[{myTheme.GreenCommand}]Saved to:[/]");
-                            AnsiConsole.Write(path);
-                            AnsiConsole.WriteLine();
+                            PrintPath(currentDir);
                         }
 
 
-                        AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
+                        AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
                         Console.ReadLine();
 
                     }
@@ -646,14 +656,10 @@ namespace Client
 
 
                     var files = Directory.GetFiles(currentDir);
-                    var path = new TextPath(currentDir).RootColor(Color.Red)
-            .SeparatorColor(new Color(myThemeRgb.BrightBlack.R, myThemeRgb.BrightBlack.G, myThemeRgb.BrightBlack.B))
-            .StemColor(new Color(myThemeRgb.BluePath.R, myThemeRgb.BluePath.G, myThemeRgb.BluePath.B))
-            .LeafColor(new Color(myThemeRgb.YellowCommandSecond.R, myThemeRgb.YellowCommandSecond.G, myThemeRgb.YellowCommandSecond.B));
-                    var panel = new Panel(path);
-                    panel.Border = BoxBorder.Square;
 
-                    AnsiConsole.Write(panel);
+                    PrintPath(currentDir);
+
+
 
 
                     List<string> fileNames = new List<string>();
@@ -676,7 +682,7 @@ namespace Client
                         .Title("Choose Theme:")
                         .WrapAround(true)
                         .EnableSearch()
-                        .PageSize(height)
+                        .PageSize(Math.Min(height / 2, 10))
                         .AddChoices(fileNames);
 
 
@@ -727,11 +733,13 @@ namespace Client
 
 
                             var (r, g, b) = HexToRgb(myTheme.Background);
-                            AnsiConsole.Background = new Color((byte)r, (byte)g, (byte)b);
-                            // AnsiConsole.Background = Color.White;
-                            AnsiConsole.Clear(); // IMPORTANT
+                            Color bg = new Color((byte)r, (byte)g, (byte)b);
+
+                            // Apply the selected theme background (hex)
+                            //PaintBackgroundHex(myTheme.Background);
+
                             AnsiConsole.MarkupLine($"[{myTheme.BrightYellow}]Selected {themeSelection}[/]");
-                            AnsiConsole.Markup($"[{myTheme.BrightGreenExec}]Press [bold]<Enter>[/] to continue...[/]");
+                            AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Background: {myTheme.Background}[/]");
 
                             Console.ReadLine();
                         }
@@ -739,7 +747,7 @@ namespace Client
                         {
                             menu = MENU_CONNECT_TO_SERVER_TYPE;
                             AnsiConsole.MarkupLine($"[{myTheme.BrightRedCommandError}]Error[/] {ex.Message}");
-                            AnsiConsole.Markup($"[{myTheme.BrightRedCommandError}]Press [bold]<Enter>[/] to continue...[/]");
+                            AnsiConsole.MarkupLine($"[{myTheme.BrightRedCommandError}]Press [bold]<Enter>[/] to continue...[/]");
 
                             Console.ReadLine();
                         }
@@ -848,9 +856,6 @@ namespace Client
                                                {
                                                    break;
                                                }
-                                               //AnsiConsole.Clear();
-                                               //ctx.UpdateTarget(BuildTable(ipResponses, addresses, frame, processedAddresses));
-
                                                List<ipResponse> responsesSnapshot;
                                                List<IP> addressesSnapshot;
 
@@ -889,7 +894,7 @@ namespace Client
                                            AnsiConsole.Clear();
                                            menu = MENU_CONNECT_TO_SERVER_TYPE;
                                            AnsiConsole.MarkupLine("[yellow]Scan stopped[/]");
-                                           AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
+                                           AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
                                        }
                                        catch (Exception ex)
                                        {
@@ -906,7 +911,7 @@ namespace Client
                                 AnsiConsole.Clear();
                                 menu = MENU_CONNECT_TO_SERVER_TYPE;
                                 AnsiConsole.MarkupLine("[yellow]Scan stopped[/]");
-                                AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
+                                AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
 
                                 try
                                 {
@@ -988,7 +993,7 @@ namespace Client
                                                         AnsiConsole.Clear();
                                                         menu = MENU_CONNECT_TO_SERVER_TYPE;
                                                         AnsiConsole.MarkupLine("[yellow]Scan stopped[/]");
-                                                        AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
+                                                        AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
                                                         //Console.ReadLine();
                                                         continue;
                                                     }
@@ -1045,7 +1050,7 @@ namespace Client
                                                 AnsiConsole.Clear();
                                                 menu = MENU_CONNECT_TO_SERVER_TYPE;
                                                 AnsiConsole.MarkupLine("[yellow]Scan stopped[/]");
-                                                AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
+                                                AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
 
                                                 continue;
                                             }
@@ -1103,7 +1108,7 @@ namespace Client
                                     AnsiConsole.Clear();
                                     menu = MENU_CONNECT_TO_SERVER_TYPE;
                                     AnsiConsole.MarkupLine("[yellow]Scan stopped[/]");
-                                    AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
+                                    AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
 
                                     break;
                                 }
@@ -1113,7 +1118,7 @@ namespace Client
                                 AnsiConsole.Clear();
                                 menu = MENU_CONNECT_TO_SERVER_TYPE;
                                 AnsiConsole.MarkupLine("[yellow]Scan stopped[/]");
-                                AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
+                                AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
 
                                 continue;
                             }
@@ -1126,7 +1131,7 @@ namespace Client
                     catch (UriFormatException ex)
                     {
                         AnsiConsole.MarkupLine($"[{myTheme.BrightRedCommandError}]Unable to connect to server with url: [/] {url}");
-                        AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/][/]");
+                        AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/][/]");
                         Console.ReadLine();
                         menu = MENU_CONNECT_TO_SERVER_TYPE;
                     }
@@ -1140,7 +1145,7 @@ namespace Client
                             httpRequestCounter = 0;
                             AnsiConsole.MarkupLine($"[{myTheme.BrightRedCommandError}]Error[/] {ex.GetType()} {ex.Message}");
                             Thread.Sleep(1000);
-                            AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/][/]");
+                            AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/][/]");
                             Console.ReadLine();
 
 
@@ -1210,12 +1215,7 @@ namespace Client
             }
             catch (UnauthorizedAccessException ex)
             {
-                // Wrong credentials or insufficient permissions.
-                //AnsiConsole.MarkupLine($"[{myTheme.BrightRedCommandError}]Insufficient[/] permissions to get current logged user on [yellow]{hostname}[/]");
-                //AnsiConsole.Markup($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
-                //Console.ReadLine();
-                //AnsiConsole.Clear();
-                //menu = MENU_CONNECT_TO_SERVER_TYPE;
+
 
             }
             catch (Exception ex)
@@ -1499,7 +1499,7 @@ namespace Client
                 table,
                 bar
             //new Rule(),
-            //new Markup($"[{myTheme.BrightBlack}]{status}[/]")
+            //AnsiConsole.Markup($"[{myTheme.BrightBlack}]{status}[/]")
             );
         }
 
@@ -1508,6 +1508,12 @@ namespace Client
         {
             addresses = addresses ?? new List<IP>();
             ipResponses = ipResponses ?? new List<ipResponse>();
+
+
+
+
+
+
 
             var tab = new Spectre.Console.Table();
             tab.Title($"[bold]Live Ping[/]  (Ctrl + 'Q' to stop) - Processed {processedAddresses} addresses");
@@ -1583,7 +1589,6 @@ namespace Client
 
                     }
                 }
-
                 tab.Collapse();
 
             }
@@ -1622,40 +1627,45 @@ namespace Client
             //Console.WriteLine("Finished sending");
         }
 
+        static void MarkupLineThemed(string markup)
+        {
+            int width = Console.WindowWidth;
+
+            // Remove markup tags to measure visible length
+            var plainText = Spectre.Console.Markup.Remove(markup);
+            int visibleLength = plainText.Length;
+
+            int padding = Math.Max(0, width - visibleLength);
+
+            string padded = markup + new string(' ', padding);
+
+            AnsiConsole.MarkupLine($"[on {myTheme.Background}]{padded}[/]");
+        }
+
+        public static Markup MarkupThemed(string markup)
+        {
+            int width = Console.WindowWidth;
+
+            // Remove markup tags to measure visible length
+            var plainText = Spectre.Console.Markup.Remove(markup);
+            int visibleLength = plainText.Length;
+
+            int padding = Math.Max(0, width - visibleLength);
+
+            string padded = markup + new string(' ', padding);
+
+            return new Markup($"[on {myTheme.Background}]{padded}[/]");
+        }
+
+
+
         private static string fileSelection(string currentDir, int height)
         {
             var files = Directory.GetFiles(currentDir);
             var directories = Directory.GetDirectories(currentDir);
 
 
-            var rootColor = new Color(myThemeRgb.BrightRedCommandError.R,
-                myThemeRgb.BrightRedCommandError.G,
-                myThemeRgb.BrightRedCommandError.B);
-
-
-            var separatorColor = new Color(myThemeRgb.BrightRedCommandError.R,
-                myThemeRgb.BrightRedCommandError.G,
-                myThemeRgb.BrightRedCommandError.B);
-            ;
-
-
-            var stemColor = new Color(myThemeRgb.MagentaSyntaxVar.R,
-                myThemeRgb.MagentaSyntaxVar.G,
-                myThemeRgb.MagentaSyntaxVar.B);
-
-            var leafColor = new Color(myThemeRgb.BrightGreenExec.R,
-                myThemeRgb.BrightGreenExec.G,
-                myThemeRgb.BrightGreenExec.B);
-
-            var path = new TextPath(currentDir).RootColor(rootColor)
-            .SeparatorColor(separatorColor)
-            .StemColor(stemColor)
-            .LeafColor(leafColor);
-
-            var panel = new Panel(path);
-            panel.Border = BoxBorder.Square;
-
-            AnsiConsole.Write(panel);
+            PrintPath(currentDir);
 
 
             List<string> fileNames = new List<string>();
@@ -1688,8 +1698,8 @@ namespace Client
             .PageSize(height)
             .WrapAround(true)
             .AddChoices(fileNames);
+
             selectionPrompt.HighlightStyle = new Style(highlightColor);
-            selectionPrompt.SearchHighlightStyle = new Style(searchHighlightColor);
 
             var fileSelection = AnsiConsole.Prompt(selectionPrompt);
 
@@ -1733,6 +1743,66 @@ namespace Client
             return (r, g, b);
         }
 
+        static string EscapeForMarkup(string s) => Markup.Escape(s);
+
+        static void PaintBackgroundHex(string hexBg)
+        {
+            // Ensure it's something like "#RRGGBB"
+            if (string.IsNullOrWhiteSpace(hexBg))
+                hexBg = "#000000";
+
+            var width = Console.WindowWidth;
+            var height = Console.WindowHeight;
+
+            // Fill full visible window with background-colored spaces
+            var line = new string(' ', Math.Max(0, width));
+
+            // IMPORTANT: Clear first so scrollback doesn't mix old content
+            AnsiConsole.Clear();
+
+            // Use escaped bg value (Spectre markup can treat '#' normally, but safe anyway)
+            var bg = EscapeForMarkup(hexBg);
+
+            for (int y = 0; y < height; y++)
+                AnsiConsole.MarkupLine($"[on {bg}]{line}[/]");
+
+            Console.SetCursorPosition(0, 0);
+        }
+
+        static void PrintPath(string currentDir)
+        {
+
+            var rootColor = new Color(myThemeRgb.BrightRedCommandError.R,
+                myThemeRgb.BrightRedCommandError.G,
+                myThemeRgb.BrightRedCommandError.B);
+
+
+            var separatorColor = new Color(myThemeRgb.BrightRedCommandError.R,
+                myThemeRgb.BrightRedCommandError.G,
+                myThemeRgb.BrightRedCommandError.B);
+            ;
+
+
+            var stemColor = new Color(myThemeRgb.MagentaSyntaxVar.R,
+                myThemeRgb.MagentaSyntaxVar.G,
+                myThemeRgb.MagentaSyntaxVar.B);
+
+            var leafColor = new Color(myThemeRgb.BrightGreenExec.R,
+                myThemeRgb.BrightGreenExec.G,
+                myThemeRgb.BrightGreenExec.B);
+
+            var path = new TextPath(currentDir).RootColor(rootColor)
+            .SeparatorColor(separatorColor)
+            .StemColor(stemColor)
+            .LeafColor(leafColor);
+
+            var panel = new Panel(path);
+            panel.Border = BoxBorder.Square;
+
+            AnsiConsole.Write(panel);
+
+
+        }
 
 
 

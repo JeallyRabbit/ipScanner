@@ -1643,7 +1643,6 @@ namespace Client
             AnsiConsole.Clear();
         }
 
-        private static string fileSelection(string currentDir, int height)
         static void MarkupLineThemed(string markup)
         {
             int width = Console.WindowWidth;

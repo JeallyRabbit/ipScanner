@@ -1643,20 +1643,6 @@ namespace Client
             AnsiConsole.Clear();
         }
 
-        static void MarkupLineThemed(string markup)
-        {
-            int width = Console.WindowWidth;
-
-            // Remove markup tags to measure visible length
-            var plainText = Spectre.Console.Markup.Remove(markup);
-            int visibleLength = plainText.Length;
-
-            int padding = Math.Max(0, width - visibleLength);
-
-            string padded = markup + new string(' ', padding);
-
-            AnsiConsole.MarkupLine($"[on {myTheme.Background}]{padded}[/]");
-        }
 
         public static Markup MarkupThemed(string markup)
         {

@@ -1,26 +1,16 @@
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using Server.Services;
 using Spectre.Console;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace MyApp
 {
-
-    public class ServerEngine
-    {
-        private readonly string _cs;
-        public ServerEngine(string connectionString) => _cs = connectionString;
-
-        public async Task ClearLeaseOwnersAsync(CancellationToken ct)
-        {
-            await using var conn = new NpgsqlConnection(_cs);
-            var sql = @"SQL QUERY";
-            await conn.ExecuteAsync(new Dapper.CommandDefinition(sql, cancellationToken: ct));
-        }
-    }
 
 
 
@@ -50,10 +40,56 @@ namespace MyApp
         public string getPort() => port;
     }
 
+    [Table("devices")] // replace with actual table name
+    public class DbRecord
+    {
+        [Key]
+        [Column("ip")]
+        [MaxLength(15)]
+        public string Ip { get; set; }
+
+        [Column("hostname")]
+        [MaxLength(64)]
+        public string? Hostname { get; set; }
+
+        [Column("last_logged_user")]
+        [MaxLength(64)]
+        public string? LastLoggedUser { get; set; }
+
+        [Column("last_checked_date")]
+        public DateTimeOffset? LastCheckedDate { get; set; }
+
+        [Column("last_found_date")]
+        public DateTimeOffset? LastFoundDate { get; set; }
+
+        [Column("lease_end_date")]
+        public DateTimeOffset? LeaseEndDate { get; set; }
+
+        [Column("lease_owner")]
+        [MaxLength(32)]
+        public string? LeaseOwner { get; set; }
+
+        [Column("operating_system")]
+        [MaxLength(64)]
+        public string? OperatingSystem { get; set; }
+
+        [Column("serial_number")]
+        [MaxLength(64)]
+        public string? SerialNumber { get; set; }
+
+        [Column("model")]
+        [MaxLength(32)]
+        public string? Model { get; set; }
+
+        [Column("proc_gen")]
+        public decimal? ProcGen { get; set; }
+    }
+
 
 
     public class ipResponse
     {
+        [Key]
         public string address { get; set; }
         public string hostname { get; set; }
         public string lastLoggedUser { get; set; }
@@ -83,9 +119,9 @@ namespace MyApp
 
     public sealed class AppDbContext(DbContextOptions<AppDbContext> opts) : DbContext(opts)
     {
-        public DbSet<IP> IPs => Set<IP>();
+        public DbSet<DbRecord> DbRecords => Set<DbRecord>();
         protected override void OnModelCreating(ModelBuilder b)
-            => b.Entity<IP>().HasIndex(x => x.lastCheckedDate);
+            => b.Entity<DbRecord>().HasIndex(x => x.Ip);
     }
 
     internal class Program
@@ -361,18 +397,20 @@ namespace MyApp
                     var builder = WebApplication.CreateBuilder(args);
                     builder.WebHost.ConfigureKestrel(options =>
                     {
-                        options.ListenAnyIP(60719);           // HTTP
-
-                        /*options.ListenAnyIP(60718, listenOpts =>
-                        {
-                            listenOpts.UseHttps();            // HTTPS
-                        });*/
+                        options.ListenAnyIP(60719);
                     });
+
+                    builder.Services.AddControllersWithViews();
+                    builder.Services.AddControllers();
+                    builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+
+                    builder.Services.AddScoped<IRecordService, RecordService>();
+
+
                     string hostname = Dns.GetHostName();
                     string ip = Dns.GetHostAddresses(Dns.GetHostName())?.ToString() ?? "localhost";
-                    //builder.WebHost.UseUrls([$"https://{hostname}:60718", $"https://{ip}:60718"]);
 
-                    //builder.WebHost.UseUrls(["https://*:60718", "http://*:60718"]);
+
 
                     bool successConnectToDataBase = true;
                     try
@@ -416,20 +454,23 @@ namespace MyApp
                     if (successConnectToDataBase)
                     {
 
-                        //web interface
-                        builder.Services.AddRazorPages();
-                        builder.Services.AddControllers();
-                        builder.Services.AddSingleton(sp => new ServerEngine(connectionString));
+
 
 
 
 
                         var app = builder.Build();
 
+                        app.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Records}/{action=Index}/{id?}");
+
+
                         app.UseRouting();
 
                         app.MapControllers();
-                        app.MapRazorPages();
+
+
 
 
                         clearOfflineRecords(connectionString);

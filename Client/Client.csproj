@@ -11,6 +11,1468 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Themes\3024 Day.yml" />
+    <None Remove="Themes\3024 Night.yml" />
+    <None Remove="Themes\Aci.yml" />
+    <None Remove="Themes\Acme.yml" />
+    <None Remove="Themes\Aco.yml" />
+    <None Remove="Themes\Adventure Time.yml" />
+    <None Remove="Themes\Afterglow.yml" />
+    <None Remove="Themes\Alien Blood.yml" />
+    <None Remove="Themes\Apprentice.yml" />
+    <None Remove="Themes\Arc Dark.yml" />
+    <None Remove="Themes\Arc Light.yml" />
+    <None Remove="Themes\Argonaut.yml" />
+    <None Remove="Themes\Arthur.yml" />
+    <None Remove="Themes\Astrodark.yml" />
+    <None Remove="Themes\Atelier Cave.yml" />
+    <None Remove="Themes\Atelier Dune.yml" />
+    <None Remove="Themes\Atelier Estuary.yml" />
+    <None Remove="Themes\Atelier Forest.yml" />
+    <None Remove="Themes\Atelier Heath.yml" />
+    <None Remove="Themes\Atelier Lakeside.yml" />
+    <None Remove="Themes\Atelier Plateau.yml" />
+    <None Remove="Themes\Atelier Savanna.yml" />
+    <None Remove="Themes\Atelier Seaside.yml" />
+    <None Remove="Themes\Atelier Sulphurpool.yml" />
+    <None Remove="Themes\Atom.yml" />
+    <None Remove="Themes\Aura.yml" />
+    <None Remove="Themes\Ayaka.yml" />
+    <None Remove="Themes\Ayu Dark.yml" />
+    <None Remove="Themes\Ayu Light.yml" />
+    <None Remove="Themes\Ayu Mirage.yml" />
+    <None Remove="Themes\Azu.yml" />
+    <None Remove="Themes\Base2Tone Cave.yml" />
+    <None Remove="Themes\Base2Tone Desert.yml" />
+    <None Remove="Themes\Base2Tone Drawbridge.yml" />
+    <None Remove="Themes\Base2Tone Earth.yml" />
+    <None Remove="Themes\Base2Tone Evening.yml" />
+    <None Remove="Themes\Base2Tone Field.yml" />
+    <None Remove="Themes\Base2Tone Forest.yml" />
+    <None Remove="Themes\Base2Tone Garden.yml" />
+    <None Remove="Themes\Base2Tone Heath.yml" />
+    <None Remove="Themes\Base2Tone Lake.yml" />
+    <None Remove="Themes\Base2Tone Lavender.yml" />
+    <None Remove="Themes\Base2Tone Mall.yml" />
+    <None Remove="Themes\Base2Tone Meadow.yml" />
+    <None Remove="Themes\Base2Tone Morning.yml" />
+    <None Remove="Themes\Base2Tone Motel.yml" />
+    <None Remove="Themes\Base2Tone Pool.yml" />
+    <None Remove="Themes\Base2Tone Porch.yml" />
+    <None Remove="Themes\Base2Tone Sea.yml" />
+    <None Remove="Themes\Base2Tone Space.yml" />
+    <None Remove="Themes\Base2Tone Suburb.yml" />
+    <None Remove="Themes\Base4Tone Classic A.yml" />
+    <None Remove="Themes\Base4Tone Classic B.yml" />
+    <None Remove="Themes\Base4Tone Classic C.yml" />
+    <None Remove="Themes\Base4Tone Classic D.yml" />
+    <None Remove="Themes\Base4Tone Classic E.yml" />
+    <None Remove="Themes\Base4Tone Classic F.yml" />
+    <None Remove="Themes\Base4Tone Classic I.yml" />
+    <None Remove="Themes\Base4Tone Classic L.yml" />
+    <None Remove="Themes\Base4Tone Classic O.yml" />
+    <None Remove="Themes\Base4Tone Classic P.yml" />
+    <None Remove="Themes\Base4Tone Classic Q.yml" />
+    <None Remove="Themes\Base4Tone Classic R.yml" />
+    <None Remove="Themes\Base4Tone Classic S.yml" />
+    <None Remove="Themes\Base4Tone Classic T.yml" />
+    <None Remove="Themes\Base4Tone Classic U.yml" />
+    <None Remove="Themes\Base4Tone Classic W.yml" />
+    <None Remove="Themes\Base4Tone Modern C.yml" />
+    <None Remove="Themes\Base4Tone Modern N.yml" />
+    <None Remove="Themes\Base4Tone Modern W.yml" />
+    <None Remove="Themes\Belafonte Day.yml" />
+    <None Remove="Themes\Belafonte Night.yml" />
+    <None Remove="Themes\Bim.yml" />
+    <None Remove="Themes\Birds Of Paradise.yml" />
+    <None Remove="Themes\Blazer.yml" />
+    <None Remove="Themes\Blue Dolphin.yml" />
+    <None Remove="Themes\Blue Moon Light.yml" />
+    <None Remove="Themes\Blue Moon.yml" />
+    <None Remove="Themes\Bluloco Light.yml" />
+    <None Remove="Themes\Bluloco Zsh Light.yml" />
+    <None Remove="Themes\Borland.yml" />
+    <None Remove="Themes\Breadog.yml" />
+    <None Remove="Themes\Breath Darker.yml" />
+    <None Remove="Themes\Breath Light.yml" />
+    <None Remove="Themes\Breath Silverfox.yml" />
+    <None Remove="Themes\Breath.yml" />
+    <None Remove="Themes\Breeze.yml" />
+    <None Remove="Themes\Broadcast.yml" />
+    <None Remove="Themes\Brogrammer.yml" />
+    <None Remove="Themes\Butrin.yml" />
+    <None Remove="Themes\C64.yml" />
+    <None Remove="Themes\Cai.yml" />
+    <None Remove="Themes\Campbell.yml" />
+    <None Remove="Themes\Catppuccin Frappé.yml" />
+    <None Remove="Themes\Catppuccin Latte.yml" />
+    <None Remove="Themes\Catppuccin Macchiato.yml" />
+    <None Remove="Themes\Catppuccin Mocha.yml" />
+    <None Remove="Themes\Chalk.yml" />
+    <None Remove="Themes\Chalkboard.yml" />
+    <None Remove="Themes\Chameleon.yml" />
+    <None Remove="Themes\Ciapre.yml" />
+    <None Remove="Themes\City Lights.yml" />
+    <None Remove="Themes\Clone Of Ubuntu.yml" />
+    <None Remove="Themes\Clrs.yml" />
+    <None Remove="Themes\Cobalt 2.yml" />
+    <None Remove="Themes\Cobalt Neon.yml" />
+    <None Remove="Themes\Colorcli.yml" />
+    <None Remove="Themes\Crayon Pony Fish.yml" />
+    <None Remove="Themes\Dark Pastel.yml" />
+    <None Remove="Themes\Darkside.yml" />
+    <None Remove="Themes\Dehydration.yml" />
+    <None Remove="Themes\Desert.yml" />
+    <None Remove="Themes\Dimmed Monokai.yml" />
+    <None Remove="Themes\Dissonance.yml" />
+    <None Remove="Themes\Doom One.yml" />
+    <None Remove="Themes\Dracula.yml" />
+    <None Remove="Themes\Earthsong.yml" />
+    <None Remove="Themes\Elemental.yml" />
+    <None Remove="Themes\Elementary.yml" />
+    <None Remove="Themes\Elic.yml" />
+    <None Remove="Themes\Elio.yml" />
+    <None Remove="Themes\Espresso Libre.yml" />
+    <None Remove="Themes\Espresso.yml" />
+    <None Remove="Themes\Everblush.yml" />
+    <None Remove="Themes\Everforest Dark Hard.yml" />
+    <None Remove="Themes\Everforest Dark Medium.yml" />
+    <None Remove="Themes\Everforest Dark Soft.yml" />
+    <None Remove="Themes\Everforest Light Hard.yml" />
+    <None Remove="Themes\Everforest Light Medium.yml" />
+    <None Remove="Themes\Everforest Light Soft.yml" />
+    <None Remove="Themes\Fairy Floss Dark.yml" />
+    <None Remove="Themes\Fairy Floss.yml" />
+    <None Remove="Themes\Fishtank.yml" />
+    <None Remove="Themes\Flat Remix.yml" />
+    <None Remove="Themes\Flat.yml" />
+    <None Remove="Themes\Flatland.yml" />
+    <None Remove="Themes\Flexoki Dark.yml" />
+    <None Remove="Themes\Flexoki Light.yml" />
+    <None Remove="Themes\Foxnightly.yml" />
+    <None Remove="Themes\Freya.yml" />
+    <None Remove="Themes\Frontend Delight.yml" />
+    <None Remove="Themes\Frontend Fun Forrest.yml" />
+    <None Remove="Themes\Frontend Galaxy.yml" />
+    <None Remove="Themes\Geohot.yml" />
+    <None Remove="Themes\Github Dark.yml" />
+    <None Remove="Themes\Github Light.yml" />
+    <None Remove="Themes\Gogh.yml" />
+    <None Remove="Themes\Gooey.yml" />
+    <None Remove="Themes\Google Dark.yml" />
+    <None Remove="Themes\Google Light.yml" />
+    <None Remove="Themes\Gotham.yml" />
+    <None Remove="Themes\Grape.yml" />
+    <None Remove="Themes\Grass.yml" />
+    <None Remove="Themes\Gruvbox Dark.yml" />
+    <None Remove="Themes\Gruvbox Material Dark.yml" />
+    <None Remove="Themes\Gruvbox Material Light.yml" />
+    <None Remove="Themes\Gruvbox.yml" />
+    <None Remove="Themes\Guezwhoz.yml" />
+    <None Remove="Themes\Hardcore.yml" />
+    <None Remove="Themes\Harper.yml" />
+    <None Remove="Themes\Hemisu Dark.yml" />
+    <None Remove="Themes\Hemisu Light.yml" />
+    <None Remove="Themes\Highway.yml" />
+    <None Remove="Themes\Hipster Green.yml" />
+    <None Remove="Themes\Homebrew Light.yml" />
+    <None Remove="Themes\Homebrew Ocean.yml" />
+    <None Remove="Themes\Homebrew.yml" />
+    <None Remove="Themes\Horizon Bright.yml" />
+    <None Remove="Themes\Horizon Dark.yml" />
+    <None Remove="Themes\Hurtado.yml" />
+    <None Remove="Themes\Hybrid.yml" />
+    <None Remove="Themes\Ibm 3270 %28High Contrast%29.yml" />
+    <None Remove="Themes\Ibm3270.yml" />
+    <None Remove="Themes\Ic Green Ppl.yml" />
+    <None Remove="Themes\Ic Orange Ppl.yml" />
+    <None Remove="Themes\Iceberg.yml" />
+    <None Remove="Themes\Idle Toes.yml" />
+    <None Remove="Themes\Ir Black.yml" />
+    <None Remove="Themes\Jackie Brown.yml" />
+    <None Remove="Themes\Japanesque.yml" />
+    <None Remove="Themes\Jellybeans.yml" />
+    <None Remove="Themes\Jup.yml" />
+    <None Remove="Themes\Kanagawa Dragon.yml" />
+    <None Remove="Themes\Kanagawa Lotus.yml" />
+    <None Remove="Themes\Kanagawa Wave.yml" />
+    <None Remove="Themes\Kibble.yml" />
+    <None Remove="Themes\Kokuban.yml" />
+    <None Remove="Themes\Laserwave.yml" />
+    <None Remove="Themes\Later This Evening.yml" />
+    <None Remove="Themes\Lavandula.yml" />
+    <None Remove="Themes\Liquid Carbon Transparent.yml" />
+    <None Remove="Themes\Liquid Carbon.yml" />
+    <None Remove="Themes\Lunaria Dark.yml" />
+    <None Remove="Themes\Lunaria Eclipse.yml" />
+    <None Remove="Themes\Lunaria Light.yml" />
+    <None Remove="Themes\Maia.yml" />
+    <None Remove="Themes\Man Page.yml" />
+    <None Remove="Themes\Mar.yml" />
+    <None Remove="Themes\Material.yml" />
+    <None Remove="Themes\Mathias.yml" />
+    <None Remove="Themes\Medallion.yml" />
+    <None Remove="Themes\Minimalist Dark.yml" />
+    <None Remove="Themes\Miramare.yml" />
+    <None Remove="Themes\Misterioso.yml" />
+    <None Remove="Themes\Modus Operandi Tinted.yml" />
+    <None Remove="Themes\Modus Operandi.yml" />
+    <None Remove="Themes\Modus Vivendi Tinted.yml" />
+    <None Remove="Themes\Modus Vivendi.yml" />
+    <None Remove="Themes\Molokai.yml" />
+    <None Remove="Themes\Mona Lisa.yml" />
+    <None Remove="Themes\Mono Amber.yml" />
+    <None Remove="Themes\Mono Cyan.yml" />
+    <None Remove="Themes\Mono Green.yml" />
+    <None Remove="Themes\Mono Red.yml" />
+    <None Remove="Themes\Mono White.yml" />
+    <None Remove="Themes\Mono Yellow.yml" />
+    <None Remove="Themes\Monokai Dark.yml" />
+    <None Remove="Themes\Monokai Pro Light Sun.yml" />
+    <None Remove="Themes\Monokai Pro Light.yml" />
+    <None Remove="Themes\Monokai Pro Machine.yml" />
+    <None Remove="Themes\Monokai Pro Octagon.yml" />
+    <None Remove="Themes\Monokai Pro Ristretto.yml" />
+    <None Remove="Themes\Monokai Pro Spectrum.yml" />
+    <None Remove="Themes\Monokai Pro.yml" />
+    <None Remove="Themes\Monokai Soda.yml" />
+    <None Remove="Themes\Moonfly.yml" />
+    <None Remove="Themes\Morada.yml" />
+    <None Remove="Themes\N0Tch2K.yml" />
+    <None Remove="Themes\Nanosecond.yml" />
+    <None Remove="Themes\Neon Night.yml" />
+    <None Remove="Themes\Neopolitan.yml" />
+    <None Remove="Themes\Nep.yml" />
+    <None Remove="Themes\Neutron.yml" />
+    <None Remove="Themes\Night Owl.yml" />
+    <None Remove="Themes\Nightfly.yml" />
+    <None Remove="Themes\Nightlion V1.yml" />
+    <None Remove="Themes\Nightlion V2.yml" />
+    <None Remove="Themes\Nighty.yml" />
+    <None Remove="Themes\Nord Light.yml" />
+    <None Remove="Themes\Nord.yml" />
+    <None Remove="Themes\Novel.yml" />
+    <None Remove="Themes\Obsidian.yml" />
+    <None Remove="Themes\Ocean Dark.yml" />
+    <None Remove="Themes\Oceanic Next.yml" />
+    <None Remove="Themes\Ollie.yml" />
+    <None Remove="Themes\Omni.yml" />
+    <None Remove="Themes\One Dark.yml" />
+    <None Remove="Themes\One Half Black.yml" />
+    <None Remove="Themes\One Light.yml" />
+    <None Remove="Themes\Oxocarbon Dark.yml" />
+    <None Remove="Themes\Palenight.yml" />
+    <None Remove="Themes\Pali.yml" />
+    <None Remove="Themes\Panda.yml" />
+    <None Remove="Themes\Paper.yml" />
+    <None Remove="Themes\Papercolor Dark.yml" />
+    <None Remove="Themes\Papercolor Light.yml" />
+    <None Remove="Themes\Paraiso Dark.yml" />
+    <None Remove="Themes\Paul Millr.yml" />
+    <None Remove="Themes\Pencil Dark.yml" />
+    <None Remove="Themes\Pencil Light.yml" />
+    <None Remove="Themes\Peppermint.yml" />
+    <None Remove="Themes\Pixiefloss.yml" />
+    <None Remove="Themes\Pnevma.yml" />
+    <None Remove="Themes\Powershell.yml" />
+    <None Remove="Themes\Predawn.yml" />
+    <None Remove="Themes\Pro.yml" />
+    <None Remove="Themes\Purple People Eater.yml" />
+    <None Remove="Themes\Quiet.yml" />
+    <None Remove="Themes\Red Alert.yml" />
+    <None Remove="Themes\Red Sands.yml" />
+    <None Remove="Themes\Relaxed.yml" />
+    <None Remove="Themes\Rippedcasts.yml" />
+    <None Remove="Themes\Rosé Pine Dawn.yml" />
+    <None Remove="Themes\Rosé Pine Moon.yml" />
+    <None Remove="Themes\Rosé Pine.yml" />
+    <None Remove="Themes\Royal.yml" />
+    <None Remove="Themes\Sat.yml" />
+    <None Remove="Themes\Sea Shells.yml" />
+    <None Remove="Themes\Seafoam Pastel.yml" />
+    <None Remove="Themes\Selenized Black.yml" />
+    <None Remove="Themes\Selenized Dark.yml" />
+    <None Remove="Themes\Selenized Light.yml" />
+    <None Remove="Themes\Selenized White.yml" />
+    <None Remove="Themes\Seoul256 Light.yml" />
+    <None Remove="Themes\Seoul256.yml" />
+    <None Remove="Themes\Seti.yml" />
+    <None Remove="Themes\Shaman.yml" />
+    <None Remove="Themes\Shel.yml" />
+    <None Remove="Themes\Slate.yml" />
+    <None Remove="Themes\Smyck.yml" />
+    <None Remove="Themes\Snazzy.yml" />
+    <None Remove="Themes\Soft Server.yml" />
+    <None Remove="Themes\Solarized Darcula.yml" />
+    <None Remove="Themes\Solarized Dark Higher Contrast.yml" />
+    <None Remove="Themes\Solarized Dark.yml" />
+    <None Remove="Themes\Solarized Light.yml" />
+    <None Remove="Themes\Sonokai.yml" />
+    <None Remove="Themes\Spacedust.yml" />
+    <None Remove="Themes\Spacegray Eighties Dull.yml" />
+    <None Remove="Themes\Spacegray Eighties.yml" />
+    <None Remove="Themes\Spacegray.yml" />
+    <None Remove="Themes\Sparky.yml" />
+    <None Remove="Themes\Spring.yml" />
+    <None Remove="Themes\Square.yml" />
+    <None Remove="Themes\Srcery.yml" />
+    <None Remove="Themes\Summer Pop.yml" />
+    <None Remove="Themes\Sundried.yml" />
+    <None Remove="Themes\Sweet Eliverlara.yml" />
+    <None Remove="Themes\Sweet Terminal.yml" />
+    <None Remove="Themes\Symphonic.yml" />
+    <None Remove="Themes\Synthwave Alpha.yml" />
+    <None Remove="Themes\Synthwave.yml" />
+    <None Remove="Themes\Teerb.yml" />
+    <None Remove="Themes\Tempus Autumn.yml" />
+    <None Remove="Themes\Tempus Classic.yml" />
+    <None Remove="Themes\Tempus Dawn.yml" />
+    <None Remove="Themes\Tempus Day.yml" />
+    <None Remove="Themes\Tempus Dusk.yml" />
+    <None Remove="Themes\Tempus Fugit.yml" />
+    <None Remove="Themes\Tempus Future.yml" />
+    <None Remove="Themes\Tempus Night.yml" />
+    <None Remove="Themes\Tempus Past.yml" />
+    <None Remove="Themes\Tempus Rift.yml" />
+    <None Remove="Themes\Tempus Spring.yml" />
+    <None Remove="Themes\Tempus Summer.yml" />
+    <None Remove="Themes\Tempus Tempest.yml" />
+    <None Remove="Themes\Tempus Totus.yml" />
+    <None Remove="Themes\Tempus Warp.yml" />
+    <None Remove="Themes\Tempus Winter.yml" />
+    <None Remove="Themes\Tender.yml" />
+    <None Remove="Themes\Terminal Basic.yml" />
+    <None Remove="Themes\Terminix Dark.yml" />
+    <None Remove="Themes\Thayer Bright.yml" />
+    <None Remove="Themes\Tin.yml" />
+    <None Remove="Themes\Tiwahu Dark.yml" />
+    <None Remove="Themes\Tiwahu Light.yml" />
+    <None Remove="Themes\Tokyo Night Light.yml" />
+    <None Remove="Themes\Tokyo Night Storm.yml" />
+    <None Remove="Themes\Tokyo Night.yml" />
+    <None Remove="Themes\Tomorrow Night Blue.yml" />
+    <None Remove="Themes\Tomorrow Night Bright.yml" />
+    <None Remove="Themes\Tomorrow Night Eighties.yml" />
+    <None Remove="Themes\Tomorrow Night.yml" />
+    <None Remove="Themes\Tomorrow.yml" />
+    <None Remove="Themes\Toy Chest.yml" />
+    <None Remove="Themes\Treehouse.yml" />
+    <None Remove="Themes\Twilight.yml" />
+    <None Remove="Themes\Ura.yml" />
+    <None Remove="Themes\Urple.yml" />
+    <None Remove="Themes\Vacme.yml" />
+    <None Remove="Themes\Vag.yml" />
+    <None Remove="Themes\Vaombe.yml" />
+    <None Remove="Themes\Vaughn.yml" />
+    <None Remove="Themes\Vibrant Ink.yml" />
+    <None Remove="Themes\Vs Code Dark+.yml" />
+    <None Remove="Themes\Vs Code Light+.yml" />
+    <None Remove="Themes\Warm Neon.yml" />
+    <None Remove="Themes\Website.yml" />
+    <None Remove="Themes\Wez.yml" />
+    <None Remove="Themes\Wild Cherry.yml" />
+    <None Remove="Themes\Wombat.yml" />
+    <None Remove="Themes\Wryan.yml" />
+    <None Remove="Themes\Wzoreck.yml" />
+    <None Remove="Themes\Zenburn.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Themes\3024 Day.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\3024 Night.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Aci.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Acme.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Aco.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Adventure Time.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Afterglow.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Alien Blood.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Apprentice.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Arc Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Arc Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Argonaut.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Arthur.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Astrodark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Atelier Cave.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Atelier Dune.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Atelier Estuary.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Atelier Forest.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Atelier Heath.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Atelier Lakeside.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Atelier Plateau.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Atelier Savanna.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Atelier Seaside.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Atelier Sulphurpool.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Atom.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Aura.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ayaka.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ayu Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ayu Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ayu Mirage.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Azu.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Cave.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Desert.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Drawbridge.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Earth.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Evening.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Field.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Forest.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Garden.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Heath.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Lake.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Lavender.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Mall.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Meadow.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Morning.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Motel.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Pool.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Porch.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Sea.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Space.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base2Tone Suburb.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic A.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic B.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic C.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic D.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic E.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic F.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic I.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic L.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic O.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic P.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic Q.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic R.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic S.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic T.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic U.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Classic W.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Modern C.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Modern N.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Base4Tone Modern W.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Belafonte Day.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Belafonte Night.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Bim.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Birds Of Paradise.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Blazer.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Blue Dolphin.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Blue Moon Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Blue Moon.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Bluloco Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Bluloco Zsh Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Borland.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Breadog.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Breath Darker.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Breath Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Breath Silverfox.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Breath.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Breeze.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Broadcast.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Brogrammer.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Butrin.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\C64.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Cai.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Campbell.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Catppuccin Frappé.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Catppuccin Latte.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Catppuccin Macchiato.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Catppuccin Mocha.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Chalk.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Chalkboard.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Chameleon.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ciapre.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\City Lights.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Clone Of Ubuntu.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Clrs.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Cobalt 2.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Cobalt Neon.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Colorcli.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Crayon Pony Fish.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Dark Pastel.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Darkside.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Dehydration.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Desert.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Dimmed Monokai.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Dissonance.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Doom One.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Dracula.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Earthsong.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Elemental.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Elementary.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Elic.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Elio.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Espresso Libre.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Espresso.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Everblush.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Everforest Dark Hard.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Everforest Dark Medium.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Everforest Dark Soft.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Everforest Light Hard.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Everforest Light Medium.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Everforest Light Soft.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Fairy Floss Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Fairy Floss.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Fishtank.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Flat Remix.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Flat.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Flatland.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Flexoki Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Flexoki Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Foxnightly.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Freya.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Frontend Delight.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Frontend Fun Forrest.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Frontend Galaxy.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Geohot.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Github Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Github Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Gogh.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Gooey.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Google Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Google Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Gotham.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Grape.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Grass.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Gruvbox Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Gruvbox Material Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Gruvbox Material Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Gruvbox.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Guezwhoz.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Hardcore.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Harper.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Hemisu Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Hemisu Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Highway.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Hipster Green.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Homebrew Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Homebrew Ocean.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Homebrew.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Horizon Bright.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Horizon Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Hurtado.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Hybrid.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ibm 3270 (High Contrast).yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ibm3270.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ic Green Ppl.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ic Orange Ppl.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Iceberg.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Idle Toes.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ir Black.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Jackie Brown.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Japanesque.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Jellybeans.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Jup.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Kanagawa Dragon.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Kanagawa Lotus.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Kanagawa Wave.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Kibble.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Kokuban.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Laserwave.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Later This Evening.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Lavandula.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Liquid Carbon Transparent.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Liquid Carbon.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Lunaria Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Lunaria Eclipse.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Lunaria Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Maia.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Man Page.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Mar.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Material.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Mathias.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Medallion.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Minimalist Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Miramare.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Misterioso.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Modus Operandi Tinted.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Modus Operandi.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Modus Vivendi Tinted.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Modus Vivendi.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Molokai.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Mona Lisa.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Mono Amber.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Mono Cyan.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Mono Green.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Mono Red.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Mono White.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Mono Yellow.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Monokai Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Monokai Pro Light Sun.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Monokai Pro Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Monokai Pro Machine.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Monokai Pro Octagon.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Monokai Pro Ristretto.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Monokai Pro Spectrum.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Monokai Pro.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Monokai Soda.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Moonfly.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Morada.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\N0Tch2K.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Nanosecond.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Neon Night.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Neopolitan.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Nep.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Neutron.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Night Owl.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Nightfly.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Nightlion V1.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Nightlion V2.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Nighty.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Nord Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Nord.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Novel.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Obsidian.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ocean Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Oceanic Next.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ollie.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Omni.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\One Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\One Half Black.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\One Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Oxocarbon Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Palenight.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Pali.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Panda.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Paper.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Papercolor Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Papercolor Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Paraiso Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Paul Millr.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Pencil Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Pencil Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Peppermint.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Pixiefloss.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Pnevma.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Powershell.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Predawn.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Pro.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Purple People Eater.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Quiet.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Red Alert.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Red Sands.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Relaxed.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Rippedcasts.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Rosé Pine Dawn.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Rosé Pine Moon.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Rosé Pine.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Royal.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Sat.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Sea Shells.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Seafoam Pastel.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Selenized Black.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Selenized Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Selenized Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Selenized White.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Seoul256 Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Seoul256.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Seti.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Shaman.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Shel.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Slate.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Smyck.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Snazzy.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Soft Server.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Solarized Darcula.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Solarized Dark Higher Contrast.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Solarized Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Solarized Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Sonokai.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Spacedust.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Spacegray Eighties Dull.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Spacegray Eighties.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Spacegray.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Sparky.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Spring.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Square.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Srcery.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Summer Pop.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Sundried.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Sweet Eliverlara.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Sweet Terminal.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Symphonic.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Synthwave Alpha.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Synthwave.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Teerb.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Autumn.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Classic.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Dawn.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Day.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Dusk.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Fugit.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Future.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Night.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Past.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Rift.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Spring.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Summer.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Tempest.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Totus.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Warp.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tempus Winter.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tender.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Terminal Basic.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Terminix Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Thayer Bright.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tin.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tiwahu Dark.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tiwahu Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tokyo Night Light.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tokyo Night Storm.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tokyo Night.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tomorrow Night Blue.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tomorrow Night Bright.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tomorrow Night Eighties.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tomorrow Night.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Tomorrow.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Toy Chest.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Treehouse.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Twilight.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Ura.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Urple.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Vacme.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Vag.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Vaombe.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Vaughn.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Vibrant Ink.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Vs Code Dark+.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Vs Code Light+.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Warm Neon.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Website.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Wez.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Wild Cherry.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Wombat.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Wryan.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Wzoreck.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes\Zenburn.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
     <PackageReference Include="Microsoft.PowerShell.Commands.Diagnostics" Version="7.5.4" />
     <PackageReference Include="Microsoft.PowerShell.Commands.Management" Version="7.5.4" />
@@ -26,10 +1488,6 @@
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
     <PackageReference Include="YamlDotNet" Version="16.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Themes\" />
   </ItemGroup>
 
 </Project>

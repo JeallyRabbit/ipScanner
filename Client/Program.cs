@@ -388,6 +388,7 @@ namespace Client
             while (true)
             {
 
+                SetTerminalDefaultBackground(myTheme.Background, myTheme.ForegroundText);
 
 
 
@@ -664,7 +665,7 @@ namespace Client
 
                     List<string> fileNames = new List<string>();
 
-
+                    fileNames.Add(SELECTION_BACK);
                     fileNames.Add("..");
 
                     foreach (var file in files)
@@ -1627,6 +1628,22 @@ namespace Client
             //Console.WriteLine("Finished sending");
         }
 
+        static void SetTerminalDefaultBackground(string hexBg, string hexFg)
+        {
+            if (!hexBg.StartsWith("#"))
+                hexBg = "#" + hexBg;
+
+            if (!hexFg.StartsWith("#"))
+                hexFg = "#" + hexFg;
+
+            // OSC 11: set default background color
+            Console.Write($"\x1b]11;{hexBg}\x1b\\");
+            Console.Write($"\x1b]10;{hexFg}\x1b\\");
+
+            AnsiConsole.Clear();
+        }
+
+        private static string fileSelection(string currentDir, int height)
         static void MarkupLineThemed(string markup)
         {
             int width = Console.WindowWidth;

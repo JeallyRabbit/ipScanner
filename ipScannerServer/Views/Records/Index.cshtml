@@ -1,0 +1,54 @@
+﻿
+@model List<MyApp.DbRecord>
+@{
+	Layout = "_Layout";
+
+}
+
+<h1>Server Admin</h1>
+<p>Welcome to the server admin interface.</p>
+
+<form asp-controller="Records" asp-action="Search" method="post">
+    <input type="text" name="Ip" placeholder="Enter IP"/>
+    <input type="text" name="Hostname" placeholder="Enter hostname"/>
+    <button type="Search">Search</button>
+</form>
+
+@if (Model != null && Model.Count > 0)
+{
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Address</th>
+                <th>Hostname</th>
+                <th>LastLoggedUser</th>
+                <th>LastCheckedDate</th>
+                <th>LastFoundDate</th>
+                <th>OperatingSystem</th>
+                <th>Model</th>
+                <th>ProcGen</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var ip in Model)
+        {
+            <tr>
+                <td>@ip.Ip</td>
+                <td>@ip.Hostname</td>
+                <td>@ip.LastLoggedUser</td>
+                <td>@ip.LastCheckedDate</td>
+                <td>@ip.LastFoundDate</td>
+                <td>@ip.OperatingSystem</td>
+                <td>@ip.SerialNumber</td>
+                <td>@ip.Model</td>
+                <td>@ip.ProcGen</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><em>No records loaded yet.</em></p>
+}

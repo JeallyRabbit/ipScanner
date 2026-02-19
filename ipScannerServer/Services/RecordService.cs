@@ -1,5 +1,4 @@
 ﻿using MyApp;
-using Server.Controllers;
 
 namespace Server.Services
 {
@@ -19,7 +18,7 @@ namespace Server.Services
             return _context.DbRecords.ToList();
         }
 
-        public List<DbRecord> Search(SearchRequest req)
+        public List<DbRecord> Search(Server.Models.SearchRequest req)
         {
             var query = _context.DbRecords.AsQueryable();
 
@@ -29,7 +28,7 @@ namespace Server.Services
             }
             else if (!string.IsNullOrWhiteSpace(req.Hostname))
             {
-                query = query.Where(x => x.Hostname.Contains(req.Hostname));
+                query = query.Where(x => x.Hostname.ToLower().Contains(req.Hostname.ToLower()));
             }
             else if (req.LastLoggedUser != null)
             {
@@ -40,6 +39,7 @@ namespace Server.Services
                 return _context.DbRecords.ToList();
             }
 
+            var deb = query.ToList();
             return query.ToList();
         }
 

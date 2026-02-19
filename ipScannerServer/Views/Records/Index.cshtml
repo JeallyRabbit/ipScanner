@@ -1,54 +1,141 @@
-﻿
-@model List<MyApp.DbRecord>
+﻿@model Server.Models.RecordsPageModel
+
 @{
-	Layout = "_Layout";
-
+    Layout = "_Layout";
 }
 
-<h1>Server Admin</h1>
-<p>Welcome to the server admin interface.</p>
+<div class="min-h-screen bg-base-200">
+    <div class="mx-auto max-w-6xl p-6 space-y-6">
 
-<form asp-controller="Records" asp-action="Search" method="post">
-    <input type="text" name="Ip" placeholder="Enter IP"/>
-    <input type="text" name="Hostname" placeholder="Enter hostname"/>
-    <button type="Search">Search</button>
-</form>
+        <div class="prose">
+            <h1 class="m-0">Server Admin</h1>
+            <p>Welcome to the server admin interface.</p>
+        </div>
 
-@if (Model != null && Model.Count > 0)
-{
-    <hr />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Address</th>
-                <th>Hostname</th>
-                <th>LastLoggedUser</th>
-                <th>LastCheckedDate</th>
-                <th>LastFoundDate</th>
-                <th>OperatingSystem</th>
-                <th>Model</th>
-                <th>ProcGen</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var ip in Model)
+        <div class="card bg-base-100 shadow">
+            <div class="card-body gap-4">
+
+                <form asp-controller="Records" asp-action="Search" method="post" id="searchForm"
+                      class="flex flex-col gap-3 md:flex-row md:items-end">
+
+                    <label class="form-control w-full md:max-w-xs">
+                        <div class="label">
+                            <span class="label-text">IP</span>
+                        </div>
+                        <input asp-for="Request.Ip"
+                               placeholder="Enter IP"
+                               id="searchIP"
+                               class="input input-bordered w-full" />
+                    </label>
+
+                    <label class="form-control w-full md:max-w-sm">
+                        <div class="label">
+                            <span class="label-text">Hostname</span>
+                        </div>
+                        <input asp-for="Request.Hostname"
+                               placeholder="Enter hostname"
+                               id="searchHost"
+                               class="input input-bordered w-full" />
+                    </label>
+
+                    <button class="btn btn-primary md:w-auto w-full"
+                            type="submit"
+                            id="searchButton">
+                        Search
+                    </button>
+                </form>
+
+                <div class="text-sm opacity-70">
+                    Results update automatically while typing.
+                </div>
+            </div>
+        </div>
+
+        @if (Model?.Results?.Any() == true)
         {
-            <tr>
-                <td>@ip.Ip</td>
-                <td>@ip.Hostname</td>
-                <td>@ip.LastLoggedUser</td>
-                <td>@ip.LastCheckedDate</td>
-                <td>@ip.LastFoundDate</td>
-                <td>@ip.OperatingSystem</td>
-                <td>@ip.SerialNumber</td>
-                <td>@ip.Model</td>
-                <td>@ip.ProcGen</td>
-            </tr>
+            <div class="card bg-base-100 shadow">
+                <div class="card-body">
+                    <div class="flex items-center justify-between gap-3">
+                        <h2 class="card-title">Results</h2>
+                        <div class="badge badge-neutral">@Model.Results.Count</div>
+                    </div>
+
+                    <div class="overflow-x-auto mt-2">
+                        <table class="table table-zebra w-full">
+                            <thead>
+                                <tr>
+                                    <th>Address</th>
+                                    <th>Hostname</th>
+                                    <th>LastLoggedUser</th>
+                                    <th>LastCheckedDate</th>
+                                    <th>LastFoundDate</th>
+                                    <th>OperatingSystem</th>
+                                    <th>Serial</th>
+                                    <th>Model</th>
+                                    <th>ProcGen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var ip in Model.Results)
+                                {
+                                    <tr class="hover">
+                                        <td>@ip.Ip</td>
+                                        <td>@ip.Hostname</td>
+                                        <td>@ip.LastLoggedUser</td>
+                                        <td>@ip.LastCheckedDate</td>
+                                        <td>@ip.LastFoundDate</td>
+                                        <td>@ip.OperatingSystem</td>
+                                        <td>@ip.SerialNumber</td>
+                                        <td>@ip.Model</td>
+                                        <td>@ip.ProcGen</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         }
-        </tbody>
-    </table>
-}
-else
-{
-    <p><em>No records loaded yet.</em></p>
-}
+        else
+        {
+            <div class="alert">
+                <span>No records to show.</span>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    // save focused field before submit
+    document.querySelectorAll("#searchForm input").forEach(el => {
+        el.addEventListener("focus", () => sessionStorage.setItem("focusedInput", el.id));
+    });
+
+    // restore focus after reload
+    window.addEventListener("load", () => {
+        const id = sessionStorage.getItem("focusedInput");
+        if (!id) return;
+        const el = document.getElementById(id);
+        if (el) el.focus();
+    });
+
+    const form = document.getElementById("searchForm");
+    const ipInput = document.getElementById("searchIP");
+    const hostInput = document.getElementById("searchHost");
+
+    ipInput.addEventListener("input", triggerSearch);
+    hostInput.addEventListener("input", triggerSearch);
+
+    let timer;
+
+    function triggerSearch() {
+        clearTimeout(timer);
+
+        // Optional: don't spam submits on empty
+        // if (!ipInput.value && !hostInput.value) return;
+
+        timer = setTimeout(() => {
+            form.submit();
+        }, 500);
+    }
+</script>

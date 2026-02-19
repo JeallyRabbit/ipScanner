@@ -461,6 +461,7 @@ namespace MyApp
 
                         var app = builder.Build();
 
+                        app.UseStaticFiles();
                         app.MapControllerRoute(
                         name: "default",
                         pattern: "{controller=Records}/{action=Index}/{id?}");

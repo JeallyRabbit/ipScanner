@@ -4,14 +4,10 @@
     Layout = "_Layout";
 }
 
+
+
 <div class="min-h-screen bg-base-200">
     <div class="mx-auto max-w-6xl p-6 space-y-6">
-
-        <div class="prose">
-            <h1 class="m-0">Server Admin</h1>
-            <p>Welcome to the server admin interface.</p>
-        </div>
-
         <div class="card bg-base-100 shadow">
             <div class="card-body gap-4">
 
@@ -51,6 +47,9 @@
             </div>
         </div>
 
+
+        
+
         @if (Model?.Results?.Any() == true)
         {
             <div class="card bg-base-100 shadow">
@@ -60,14 +59,14 @@
                         <div class="badge badge-neutral">@Model.Results.Count</div>
                     </div>
 
-                    <div class="overflow-x-auto mt-2">
-                        <table class="table table-zebra w-full">
-                            <thead>
+                    <div class="overflow-y-auto overflow-x-auto mt-2" style="max-height:500px;">
+                        <table class="table">
+                            <thead class="sticky top-0 bg-base-100">
                                 <tr>
-                                    <th>Address</th>
+                                    <th data-type="ip">Address</th>
                                     <th>Hostname</th>
                                     <th>LastLoggedUser</th>
-                                    <th>LastCheckedDate</th>
+                                    <!-- <th>LastCheckedDate</th> -->
                                     <th>LastFoundDate</th>
                                     <th>OperatingSystem</th>
                                     <th>Serial</th>
@@ -82,7 +81,7 @@
                                         <td>@ip.Ip</td>
                                         <td>@ip.Hostname</td>
                                         <td>@ip.LastLoggedUser</td>
-                                        <td>@ip.LastCheckedDate</td>
+                                        <!-- <td>@ip.LastCheckedDate</td> -->
                                         <td>@ip.LastFoundDate</td>
                                         <td>@ip.OperatingSystem</td>
                                         <td>@ip.SerialNumber</td>
@@ -116,7 +115,10 @@
         const id = sessionStorage.getItem("focusedInput");
         if (!id) return;
         const el = document.getElementById(id);
-        if (el) el.focus();
+        if (el){ 
+            el.focus();
+            el.selectionStart = el.selectionEnd = el.value.length;
+        }
     });
 
     const form = document.getElementById("searchForm");
@@ -132,10 +134,95 @@
         clearTimeout(timer);
 
         // Optional: don't spam submits on empty
-        // if (!ipInput.value && !hostInput.value) return;
+         if (!ipInput.value && !hostInput.value) return;
 
         timer = setTimeout(() => {
             form.submit();
-        }, 500);
+        }, 1000);
     }
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+  function ipToNumber(ip) {
+    // Handles typical IPv4 like "192.168.1.10"
+    // Returns NaN if invalid
+    const parts = ip.trim().split(".");
+    if (parts.length !== 4) return NaN;
+
+    let n = 0;
+    for (let i = 0; i < 4; i++) {
+      const p = Number(parts[i]);
+      if (!Number.isInteger(p) || p < 0 || p > 255) return NaN;
+      n = n * 256 + p;
+    }
+    return n;
+  }
+
+  function getSortValue(text, type) {
+    const v = (text ?? "").trim();
+
+    if (type === "ip") return ipToNumber(v);
+    if (type === "number") {
+      const num = Number(v.replace(",", "."));
+      return Number.isFinite(num) ? num : NaN;
+    }
+
+    // default text
+    return v.toLowerCase();
+  }
+
+  // Attach to all header cells
+  document.querySelectorAll("table.table thead th").forEach((th, index) => {
+
+        th.style.cursor = "pointer";
+
+        th.addEventListener("click", () => {
+
+          const table = th.closest("table");
+          const tbody = table.tBodies[0];
+          if (!tbody) return;
+
+          // Determine direction per-table + per-column
+          const key = `sortDir_${index}`;
+          const asc = table.dataset[key] !== "asc";
+          table.dataset[key] = asc ? "asc" : "desc";
+
+          // Optional: clear classes on other headers, set on this one
+          table.querySelectorAll("thead th").forEach(h => h.classList.remove("asc", "desc"));
+          th.classList.add(asc ? "asc" : "desc");
+
+          const type = th.dataset.type || "text";
+
+          const rows = Array.from(tbody.rows);
+
+          rows.sort((a, b) => {
+            const Araw = a.cells[index]?.textContent ?? "";
+            const Braw = b.cells[index]?.textContent ?? "";
+
+            const A = getSortValue(Araw, type);
+            const B = getSortValue(Braw, type);
+
+            // Put invalid/empty values at the bottom
+            const Aok = (type === "text") ? true : Number.isFinite(A);
+            const Bok = (type === "text") ? true : Number.isFinite(B);
+
+            if (type !== "text") {
+              if (!Aok && !Bok) return 0;
+              if (!Aok) return 1;
+              if (!Bok) return -1;
+              return asc ? (A - B) : (B - A);
+            }
+
+            // Text compare
+            return asc ? A.localeCompare(B) : B.localeCompare(A);
+          });
+
+          rows.forEach(r => tbody.appendChild(r));
+        });
+      });
+
+    });
+
+
 </script>

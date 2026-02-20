@@ -1,6 +1,13 @@
 ﻿@import "tailwindcss";
 
+@source inline("btn-outline");
+@source inline("btn btn-outline"); /* optional */
+@source inline("btn btn-dash btn-primary btn-circle"); /* optional */
+
 /* daisyUI v5 */
 @plugin "daisyui" {
-    themes: light --default, dark --prefersdark, cupcake, emerald, dracula;
+    themes: light, dark --prefersdark, cupcake, emerald, dracula,coffee --default;
 }
+
+
+

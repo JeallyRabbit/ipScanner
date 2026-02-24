@@ -13,5 +13,6 @@
         public string? SerialNumber { get; set; }
         public string? Model { get; set; }
         public decimal? ProcGen { get; set; }
+        public string? skipEmpty { get; set; }
     }
 }

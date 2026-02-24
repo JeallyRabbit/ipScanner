@@ -40,7 +40,7 @@ namespace MyApp
         public string getPort() => port;
     }
 
-    [Table("devices")] // replace with actual table name
+    [Table("devices")]
     public class DbRecord
     {
         [Key]
@@ -57,13 +57,13 @@ namespace MyApp
         public string? LastLoggedUser { get; set; }
 
         [Column("last_checked_date")]
-        public DateTimeOffset? LastCheckedDate { get; set; }
+        public DateTime? LastCheckedDate { get; set; }
 
         [Column("last_found_date")]
-        public DateTimeOffset? LastFoundDate { get; set; }
+        public DateTime? LastFoundDate { get; set; }
 
         [Column("lease_end_date")]
-        public DateTimeOffset? LeaseEndDate { get; set; }
+        public DateTime? LeaseEndDate { get; set; }
 
         [Column("lease_owner")]
         [MaxLength(32)]
@@ -171,6 +171,7 @@ namespace MyApp
                         new SelectionPrompt<string>()
                         .Title("Select an option:")
                         .PageSize(5)
+                        .WrapAround(true)
                         .AddChoices(new[] { "Connect server to database", "Exit" }));
                     if (choice == "Connect server to database")
                     {
@@ -188,6 +189,7 @@ namespace MyApp
                     new SelectionPrompt<string>()
                     .Title("Choose server connection configuration method:")
                     .PageSize(5)
+                    .WrapAround(true)
                     .AddChoices(new[] { "Load from .JSON", "Input manually", "Exit" }));
 
 
@@ -747,6 +749,7 @@ namespace MyApp
             new SelectionPrompt<string>()
             .Title("Choose file:")
             .PageSize(height)
+            .WrapAround(true)
             .AddChoices(fileNames));
 
             return fileSelection;

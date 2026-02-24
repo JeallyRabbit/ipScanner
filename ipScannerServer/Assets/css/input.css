@@ -2,8 +2,8 @@
 
 @source inline("btn-outline");
 @source inline("btn btn-outline"); /* optional */
-@source inline("btn btn-dash btn-primary btn-circle"); /* optional */
-
+@source inline("btn btn-dash btn-primary btn-circle"); /* Classes for buttons */
+@source inline("checkbox checkbox-primary checkbox-secondary checkbox-lg"); /* Classes for checkbox*/
 /* daisyUI v5 */
 @plugin "daisyui" {
     themes: light, dark --prefersdark, cupcake, emerald, dracula,coffee --default;

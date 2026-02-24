@@ -1549,9 +1549,7 @@ namespace Client
                             string tabAddress = re.address?.ToString() ?? "-";
                             string tabHostname = re.hostname?.ToString() ?? "-";
                             string tabLastLoggedUser = re.lastLoggedUser?.ToString() ?? "-";
-                            //string tabLastCheckedDate = re.lastCheckedDate?.ToString() ?? "-";
                             string tabOperatingSystem = re.operatingSystem?.ToString() ?? "-";
-                            //string tabLastFoundDate = re.lastFoundDate?.ToString() ?? "-";
                             string tabModel = re.model?.ToString() ?? "-";
                             string tabSN = re.serialNumber?.ToString() ?? "-";
                             string tabProcGen = re.procGen.ToString();

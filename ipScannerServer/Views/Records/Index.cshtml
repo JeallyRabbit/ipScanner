@@ -6,17 +6,17 @@
 
 
 
-<div class="min-h-screen bg-base-200">
-    <div class="mx-auto max-w-6xl p-6 space-y-6">
+<div class="min-h-screen  bg-base-200">
+    <div class="mx-auto max-w-8xl p-6 space-y-6">
         <div class="card bg-base-100 shadow">
-            <div class="card-body gap-4">
+            <div class=" mx-auto card-body gap-4">
 
                 <form asp-controller="Records" asp-action="Search" method="post" id="searchForm"
                       class="flex flex-col gap-3 md:flex-row md:items-end">
 
                     <label class="form-control w-full md:max-w-xs">
                         <div class="label">
-                            <span class="label-text">IP</span>
+                            <span class="label-text">IP:</span>
                         </div>
                         <input asp-for="Request.Ip"
                                placeholder="Enter IP"
@@ -26,7 +26,7 @@
 
                     <label class="form-control w-full md:max-w-sm">
                         <div class="label">
-                            <span class="label-text">Hostname</span>
+                            <span class="label-text">Hostname:</span>
                         </div>
                         <input asp-for="Request.Hostname"
                                placeholder="Enter hostname"
@@ -39,6 +39,16 @@
                             id="searchButton">
                         Search
                     </button>
+
+                    <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+                      <legend class="fieldset-legend">View options:</legend>
+                      <label class="label">
+                            <input asp-for="Request.skipEmpty" type="checkbox" id="skipEmptyCheckBox" class="checkbox checkbox-secondary" />
+                        Skip empty records
+                      </label>
+                    </fieldset>
+
+
                 </form>
 
                 <div class="text-sm opacity-70">
@@ -81,8 +91,8 @@
                                         <td>@ip.Ip</td>
                                         <td>@ip.Hostname</td>
                                         <td>@ip.LastLoggedUser</td>
-                                        <!-- <td>@ip.LastCheckedDate</td> -->
-                                        <td>@ip.LastFoundDate</td>
+										<!--<td>@ip.LastCheckedDate</td> -->
+										<td>@ip.LastFoundDate</td>
                                         <td>@ip.OperatingSystem</td>
                                         <td>@ip.SerialNumber</td>
                                         <td>@ip.Model</td>
@@ -105,7 +115,7 @@
 </div>
 
 <script>
-    // save focused field before submit
+    
     document.querySelectorAll("#searchForm input").forEach(el => {
         el.addEventListener("focus", () => sessionStorage.setItem("focusedInput", el.id));
     });
@@ -124,9 +134,11 @@
     const form = document.getElementById("searchForm");
     const ipInput = document.getElementById("searchIP");
     const hostInput = document.getElementById("searchHost");
+    const emptyCheckBox=document.getElementById("skipEmptyCheckBox");
 
     ipInput.addEventListener("input", triggerSearch);
     hostInput.addEventListener("input", triggerSearch);
+      emptyCheckBox.addEventListener("input",triggerSearch);
 
     let timer;
 

@@ -21,6 +21,7 @@ namespace Server.Services
         public List<DbRecord> Search(Server.Models.SearchRequest req)
         {
             var query = _context.DbRecords.AsQueryable();
+            var querySkipEmpty = query; // Dummy value assign
 
             if (!string.IsNullOrWhiteSpace(req.Ip))
             {
@@ -39,7 +40,11 @@ namespace Server.Services
                 return _context.DbRecords.ToList();
             }
 
-            var deb = query.ToList();
+            if (req.skipEmpty == "true")
+            {
+                querySkipEmpty = query.Where(x => x.LastFoundDate != null);
+                return querySkipEmpty.ToList();
+            }
             return query.ToList();
         }
 

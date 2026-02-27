@@ -31,9 +31,9 @@ namespace Server.Services
             {
                 query = query.Where(x => x.Hostname.ToLower().Contains(req.Hostname.ToLower()));
             }
-            else if (req.LastLoggedUser != null)
+            else if (!string.IsNullOrWhiteSpace(req.LastLoggedUser))
             {
-                query = query.Where(x => x.LastLoggedUser.Contains(req.LastLoggedUser));
+                query = query.Where(x => x.LastLoggedUser.ToLower().Contains(req.LastLoggedUser.ToLower()));
             }
             else
             {

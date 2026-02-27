@@ -34,6 +34,16 @@
                                class="input input-bordered w-full" />
                     </label>
 
+                    <label class="form-control w-full md:max-w-sm">
+                        <div class="label">
+                            <span class="label-text">User:</span>
+                        </div>
+                        <input asp-for="Request.LastLoggedUser"
+                               placeholder="Enter username"
+                               id="searchUser"
+                               class="input input-bordered w-full" />
+                    </label>
+
                     <button class="btn btn-primary md:w-auto w-full"
                             type="submit"
                             id="searchButton">
@@ -134,21 +144,30 @@
     const form = document.getElementById("searchForm");
     const ipInput = document.getElementById("searchIP");
     const hostInput = document.getElementById("searchHost");
+      const userNameInput = document.getElementById("searchUser");
     const emptyCheckBox=document.getElementById("skipEmptyCheckBox");
+    
+
+    console.log(userNameInput)
 
     ipInput.addEventListener("input", triggerSearch);
     hostInput.addEventListener("input", triggerSearch);
-      emptyCheckBox.addEventListener("input",triggerSearch);
+      userNameInput.addEventListener("input",triggerSearch);
+
+    emptyCheckBox.addEventListener("input",triggerSearch);
+      
+        console.log(userNameInput)
 
     let timer;
 
     function triggerSearch() {
         clearTimeout(timer);
 
-        // Optional: don't spam submits on empty
-         if (!ipInput.value && !hostInput.value) return;
+        // don't spam submits on empty
+         if (!ipInput.value && !hostInput.value && !userNameInput.value) return;
 
         timer = setTimeout(() => {
+            console.log("Sending form")
             form.submit();
         }, 1000);
     }

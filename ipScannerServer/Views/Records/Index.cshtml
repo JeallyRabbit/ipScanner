@@ -44,6 +44,38 @@
                                class="input input-bordered w-full" />
                     </label>
 
+                    <label class="form-control w-full md:max-w-sm">
+                        <div class="label">
+                            <span class="label-text">Operating System:</span>
+                        </div>
+                        <input asp-for="Request.OperatingSystem"
+                               placeholder="Enter OS"
+                               id="searchOS"
+                               class="input input-bordered w-full" />
+                    </label>
+
+                    <label class="form-control w-full md:max-w-sm">
+                        <div class="label">
+                            <span class="label-text">Serial Number:</span>
+                        </div>
+                        <input asp-for="Request.SerialNumber"
+                               placeholder="Enter serial number"
+                               id="searchSN"
+                               class="input input-bordered w-full" />
+                    </label>
+
+                    <label class="form-control w-full md:max-w-sm">
+                        <div class="label">
+                            <span class="label-text">Model:</span>
+                        </div>
+                        <input asp-for="Request.Model"
+                               placeholder="Enter model"
+                               id="searchModel"
+                               class="input input-bordered w-full" />
+                    </label>
+
+                    
+
                     <button class="btn btn-primary md:w-auto w-full"
                             type="submit"
                             id="searchButton">
@@ -137,26 +169,35 @@
         const el = document.getElementById(id);
         if (el){ 
             el.focus();
-            el.selectionStart = el.selectionEnd = el.value.length;
+            if(el.type!='checkbox')
+            {
+                  el.selectionStart = el.selectionEnd = el.value.length;
+            }
+            
         }
     });
 
     const form = document.getElementById("searchForm");
     const ipInput = document.getElementById("searchIP");
     const hostInput = document.getElementById("searchHost");
-      const userNameInput = document.getElementById("searchUser");
+    const userNameInput = document.getElementById("searchUser");
+    const searchOSInput = document.getElementById("searchOS");
+    const serialNumberInput=document.getElementById("searchSN");
+    const modelInput=document.getElementById("searchModel");
     const emptyCheckBox=document.getElementById("skipEmptyCheckBox");
-    
 
-    console.log(userNameInput)
+      
+    
 
     ipInput.addEventListener("input", triggerSearch);
     hostInput.addEventListener("input", triggerSearch);
-      userNameInput.addEventListener("input",triggerSearch);
-
-    emptyCheckBox.addEventListener("input",triggerSearch);
+    userNameInput.addEventListener("input",triggerSearch);
+    searchOSInput.addEventListener("input",triggerSearch);
+    serialNumberInput.addEventListener("input",triggerSearch);
+    modelInput.addEventListener("input",triggerSearch);
+    emptyCheckBox.addEventListener("click",triggerSearch);
       
-        console.log(userNameInput)
+    
 
     let timer;
 
@@ -164,8 +205,11 @@
         clearTimeout(timer);
 
         // don't spam submits on empty
-         if (!ipInput.value && !hostInput.value && !userNameInput.value) return;
-
+         if (!ipInput.value && !hostInput.value && !userNameInput.value
+           && !serialNumberInput.value && !modelInput.value && !emptyCheckBox.value)
+         {
+             return;
+         }
         timer = setTimeout(() => {
             console.log("Sending form")
             form.submit();

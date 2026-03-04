@@ -22,22 +22,37 @@ namespace Server.Services
         {
             var query = _context.DbRecords.AsQueryable();
             var querySkipEmpty = query; // Dummy value assign
+            var anyFilled = false;
 
             if (!string.IsNullOrWhiteSpace(req.Ip))
             {
+                anyFilled = true;
                 query = query.Where(x => x.Ip.Contains(req.Ip));
             }
-            else if (!string.IsNullOrWhiteSpace(req.Hostname))
+            if (!string.IsNullOrWhiteSpace(req.Hostname))
             {
+                anyFilled = true;
                 query = query.Where(x => x.Hostname.ToLower().Contains(req.Hostname.ToLower()));
             }
-            else if (!string.IsNullOrWhiteSpace(req.LastLoggedUser))
+            if (!string.IsNullOrWhiteSpace(req.LastLoggedUser))
             {
+                anyFilled = true;
                 query = query.Where(x => x.LastLoggedUser.ToLower().Contains(req.LastLoggedUser.ToLower()));
             }
-            else
+            if (!string.IsNullOrWhiteSpace(req.OperatingSystem))
             {
-                return _context.DbRecords.ToList();
+                anyFilled = true;
+                query = query.Where(x => x.OperatingSystem.ToLower().Contains(req.OperatingSystem.ToLower()));
+            }
+            if (!string.IsNullOrWhiteSpace(req.SerialNumber))
+            {
+                anyFilled = true;
+                query = query.Where(x => x.SerialNumber.ToLower().Contains(req.SerialNumber.ToLower()));
+            }
+            if (!string.IsNullOrWhiteSpace(req.Model))
+            {
+                anyFilled = true;
+                query = query.Where(x => x.Model.ToLower().Contains(req.Model.ToLower()));
             }
 
             if (req.skipEmpty == "true")
@@ -45,6 +60,14 @@ namespace Server.Services
                 querySkipEmpty = query.Where(x => x.LastFoundDate != null);
                 return querySkipEmpty.ToList();
             }
+
+
+            if (anyFilled == false)
+            {
+                return _context.DbRecords.ToList();
+            }
+
+
             return query.ToList();
         }
 

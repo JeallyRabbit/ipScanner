@@ -308,6 +308,8 @@ namespace Client
 
         const int FRAMES = 4;
 
+        const int TIMEOUT_SECONDS = 10;
+
         private static readonly object _scanCtsLock = new();
         private static CancellationTokenSource? _currentScanCts;
 
@@ -319,7 +321,8 @@ namespace Client
         static Color promptDefaultChoicesColor;
         static String headerColor;
         static String backgroundColor;
-
+        static DateTime startingTime;
+        static bool setTime = false;
         static void SetCurrentScanCts(CancellationTokenSource? cts)
         {
             lock (_scanCtsLock)
@@ -759,6 +762,13 @@ namespace Client
                 else if (menu == MENU_PROCESS_CLIENT)
                 {
 
+                    if (!setTime)
+                    {
+                        startingTime = DateTime.Now;
+                        setTime = true;
+                    }
+
+
                     using var cts = new CancellationTokenSource();
                     SetCurrentScanCts(cts);
 
@@ -874,6 +884,8 @@ namespace Client
                                                        currentTable,
                                                        responsesSnapshot.Count,
                                                        addressesSnapshot.Count
+
+
                                                    // $"Scanning... frame={ipResponses.Count() / addresses.Count()}"
                                                    )
                                                );
@@ -927,7 +939,8 @@ namespace Client
 
                             ParallelOptions options = new ParallelOptions
                             {
-                                CancellationToken = cts.Token//, MaxDegreeOfParallelism = 1
+                                CancellationToken = cts.Token,
+                                // MaxDegreeOfParallelism = 1// addresses.Count//Environment.ProcessorCount * 2
                             };
 
                             //foreach (var ip in addresses)
@@ -1190,8 +1203,8 @@ namespace Client
                 {
                     Username = credentialsUsername,
                     Password = credentialsPassword,
-                    Timeout = new System.TimeSpan(0, 0, 30)
-                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, 30) };
+                    Timeout = new System.TimeSpan(0, 0, TIMEOUT_SECONDS)
+                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, TIMEOUT_SECONDS) };
 
 
                 var scope = new ManagementScope($@"\\{hostname}\root\cimv2", options);
@@ -1199,6 +1212,7 @@ namespace Client
 
                 var query = new ObjectQuery("SELECT UserName,Model FROM Win32_ComputerSystem");
                 using var searcher = new ManagementObjectSearcher(scope, query);
+                searcher.Options.Timeout = new System.TimeSpan(0, 0, TIMEOUT_SECONDS);
                 ManagementObjectCollection collection = searcher.Get();
 
                 foreach (ManagementObject mo in collection)
@@ -1238,8 +1252,8 @@ namespace Client
                 {
                     Username = credentialsUsername,
                     Password = credentialsPassword.ToString(),
-                    Timeout = new TimeSpan(0, 0, 30)
-                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, 30) };//waiting 30 seconds
+                    Timeout = new TimeSpan(0, 0, TIMEOUT_SECONDS)
+                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, TIMEOUT_SECONDS) };//waiting 30 seconds
 
                 var scope = new ManagementScope($@"\\{hostname}\root\cimv2", options);
 
@@ -1295,8 +1309,8 @@ namespace Client
                 {
                     Username = credentialsUsername,
                     Password = credentialsPassword.ToString(),
-                    Timeout = new TimeSpan(0, 0, 30)
-                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, 30) };//waiting 30 seconds
+                    Timeout = new TimeSpan(0, 0, TIMEOUT_SECONDS)
+                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, TIMEOUT_SECONDS) };//waiting 30 seconds
 
                 var scope = new ManagementScope($@"\\{hostname}\root\cimv2", options);
 
@@ -1308,7 +1322,7 @@ namespace Client
                     "SELECT  SerialNumber FROM Win32_BIOS");
 
                 using var searcher = new ManagementObjectSearcher(scope, query);
-                searcher.Options.Timeout = new TimeSpan(0, 0, 30);//10 sec
+                searcher.Options.Timeout = new TimeSpan(0, 0, TIMEOUT_SECONDS);//10 sec
                 using var results = searcher.Get();
 
                 foreach (ManagementObject os in results)
@@ -1340,8 +1354,8 @@ namespace Client
                 {
                     Username = credentialsUsername,
                     Password = credentialsPassword.ToString(),
-                    Timeout = new TimeSpan(0, 0, 30)
-                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, 30) };//waiting 30 seconds
+                    Timeout = new TimeSpan(0, 0, TIMEOUT_SECONDS)
+                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, TIMEOUT_SECONDS) };//waiting 30 seconds
 
                 var scope = new ManagementScope($@"\\{hostname}\root\cimv2", options);
                 scope.Connect();
@@ -1487,12 +1501,14 @@ namespace Client
             int tableWidth = GetRenderableWidth(table);
 
 
+
+
             var pct = total <= 0 ? 0 : (double)processed / total * 100.0;
 
             var bar = new BarChart()
                 .Width(tableWidth)
                 .WithMaxValue(100)
-                .AddItem("Progress", pct, color: null)   // color is optional (null)
+                .AddItem($"Progress: ", pct, color: null)   // color is optional (null)
                 .ShowValues()
                 .UseValueFormatter(v => $"{v:0}% ({processed}/{total})");
 
@@ -1513,11 +1529,14 @@ namespace Client
 
 
 
+            DateTime currentTime = DateTime.Now;
+            TimeSpan workingTime = currentTime - startingTime;
 
-
+            double seconds = workingTime.TotalSeconds;
+            double speed = Math.Round(processedAddresses / seconds, 2);
 
             var tab = new Spectre.Console.Table();
-            tab.Title($"[bold]Live Ping[/]  (Ctrl + 'Q' to stop) - Processed {processedAddresses} addresses");
+            tab.Title($"[bold]Live Ping[/]  (Ctrl + 'Q' to stop) - Processed {processedAddresses} addresses, avg:{speed}/s");
             tab.AddColumn(new TableColumn(new Markup($"[{headerColor}] IpAddress [/]")));
             tab.AddColumn(new TableColumn(new Markup($"[{headerColor}] Hostname [/]")));
             tab.AddColumn(new TableColumn(new Markup($"[{headerColor}] Last logged user [/]")));
@@ -1745,29 +1764,7 @@ namespace Client
 
         static string EscapeForMarkup(string s) => Markup.Escape(s);
 
-        static void PaintBackgroundHex(string hexBg)
-        {
-            // Ensure it's something like "#RRGGBB"
-            if (string.IsNullOrWhiteSpace(hexBg))
-                hexBg = "#000000";
 
-            var width = Console.WindowWidth;
-            var height = Console.WindowHeight;
-
-            // Fill full visible window with background-colored spaces
-            var line = new string(' ', Math.Max(0, width));
-
-            // IMPORTANT: Clear first so scrollback doesn't mix old content
-            AnsiConsole.Clear();
-
-            // Use escaped bg value (Spectre markup can treat '#' normally, but safe anyway)
-            var bg = EscapeForMarkup(hexBg);
-
-            for (int y = 0; y < height; y++)
-                AnsiConsole.MarkupLine($"[on {bg}]{line}[/]");
-
-            Console.SetCursorPosition(0, 0);
-        }
 
         static void PrintPath(string currentDir)
         {

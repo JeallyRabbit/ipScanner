@@ -4,6 +4,8 @@
 @source inline("btn btn-outline"); /* optional */
 @source inline("btn btn-dash btn-primary btn-circle"); /* Classes for buttons */
 @source inline("checkbox checkbox-primary checkbox-secondary checkbox-lg"); /* Classes for checkbox*/
+@source inline("hover hover:bg-base-300");
+/*npx @tailwindcss/cli -i .\Assets\css\input.css -o .\wwwroot\css\output.css --watch */
 /* daisyUI v5 */
 @plugin "daisyui" {
     themes: light, dark --prefersdark, cupcake, emerald, dracula,coffee --default;

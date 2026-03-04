@@ -308,7 +308,7 @@ namespace Client
 
         const int FRAMES = 4;
 
-        const int TIMEOUT_SECONDS = 10;
+        const int TIMEOUT_SECONDS = 4;
 
         private static readonly object _scanCtsLock = new();
         private static CancellationTokenSource? _currentScanCts;
@@ -403,7 +403,7 @@ namespace Client
                 {
                     //getting server connection data
                     Console.Clear();
-
+                    setTime = false;
                     var clientConnectionPrompt = new SelectionPrompt<string>()
                     .Title("Choose client connection configuration method:")
                     .PageSize(5)
@@ -765,6 +765,7 @@ namespace Client
                     if (!setTime)
                     {
                         startingTime = DateTime.Now;
+                        processedAddresses = 0;
                         setTime = true;
                     }
 
@@ -940,7 +941,7 @@ namespace Client
                             ParallelOptions options = new ParallelOptions
                             {
                                 CancellationToken = cts.Token,
-                                // MaxDegreeOfParallelism = 1// addresses.Count//Environment.ProcessorCount * 2
+                                //MaxDegreeOfParallelism = Environment.ProcessorCount * 2
                             };
 
                             //foreach (var ip in addresses)
@@ -1021,12 +1022,21 @@ namespace Client
                                                         response.lastLoggedUser = aux.user;
                                                         response.model = aux.model;
 
+                                                        if (response.model == "-" && response.lastLoggedUser == "-")
+                                                        {
+                                                            response.operatingSystem = "-";
+                                                            response.serialNumber = "-";
+                                                            response.procGen = 0;
+                                                        }
+                                                        else
+                                                        {
+                                                            response.operatingSystem = getOSVersion(response.hostname, usingCustomCredentials, credentialsUsername, credentialsPassword);
 
-                                                        response.operatingSystem = getOSVersion(response.hostname, usingCustomCredentials, credentialsUsername, credentialsPassword);
+                                                            response.serialNumber = getSN(response.hostname, usingCustomCredentials, credentialsUsername, credentialsPassword);
 
-                                                        response.serialNumber = getSN(response.hostname, usingCustomCredentials, credentialsUsername, credentialsPassword);
+                                                            response.procGen = getProcGen(response.hostname);
 
-                                                        response.procGen = getProcGen(response.hostname);
+                                                        }
 
                                                         if (response.lastLoggedUser == "-" && response.model == "-" && response.operatingSystem == "-" && response.serialNumber == "-")
                                                         {

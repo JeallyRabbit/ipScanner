@@ -9,7 +9,7 @@
 <div class="min-h-screen  bg-base-200">
     <div class="mx-auto max-w-8xl p-6 space-y-6">
         <div class="card bg-base-100 shadow">
-            <div class=" mx-auto card-body gap-4">
+            <div class=" mx-auto card-body gap-4 relative">
 
                 <form asp-controller="Records" asp-action="Search" method="post" id="searchForm"
                       class="flex flex-col gap-3 md:flex-row md:items-end">
@@ -88,13 +88,29 @@
                             <input asp-for="Request.skipEmpty" type="checkbox" id="skipEmptyCheckBox" class="checkbox checkbox-secondary" />
                         Skip empty records
                       </label>
+
+                      <div class="dropdown dropdown-hover">
+                        <div tabindex="0" role="button" class="btn m-1">Order by:</div>
+                        <ul tabindex="-1" class="dropdown-content menu bg-base-300 rounded-box z-1 w-52 p-2 absolute z-50">
+                        <li><a data-column="Ip">Ip Address</a></li>
+                        <li><a data-column="Hostname"> Hostname</a></li>
+                        <li><a data-column="LastLoggedUser">LastLoggedUser</a></li>
+                        <li><a data-column="LastFoundDate">LastFoundDate</a></li>
+                      </ul>
+                    </div>
+
                     </fieldset>
+
 
 
                 </form>
 
+
                 <div class="text-sm opacity-70">
-                    Results update automatically while typing.
+                    <p>Results update automatically while typing.</p>
+
+                    
+
                 </div>
             </div>
         </div>
@@ -115,7 +131,7 @@
                         <table class="table">
                             <thead class="sticky top-0 bg-base-100">
                                 <tr>
-                                    <th data-type="ip">Address</th>
+                                    <th data-type="ip">Ip Address</th>
                                     <th>Hostname</th>
                                     <th>LastLoggedUser</th>
                                     <!-- <th>LastCheckedDate</th> -->
@@ -129,17 +145,26 @@
                             <tbody>
                                 @foreach (var ip in Model.Results)
                                 {
-                                    <tr class="hover">
+                                    <tr class="hover:bg-base-300" onclick="toggleRow(this)">
                                         <td>@ip.Ip</td>
                                         <td>@ip.Hostname</td>
                                         <td>@ip.LastLoggedUser</td>
-										<!--<td>@ip.LastCheckedDate</td> -->
+										<td>@ip.LastCheckedDate</td>
 										<td>@ip.LastFoundDate</td>
                                         <td>@ip.OperatingSystem</td>
                                         <td>@ip.SerialNumber</td>
                                         <td>@ip.Model</td>
                                         <td>@ip.ProcGen</td>
                                     </tr>
+
+                                    <tr class="hidden">
+                                        <td colspan="9">
+                                            <div class="p-4 bg-base-200 rounded">
+                                          More information here
+                                        </div>
+                                      </td>
+                                    </tr>
+
                                 }
                             </tbody>
                         </table>
@@ -157,7 +182,15 @@
 </div>
 
 <script>
+
+        function toggleRow(row) {
+      const detailRow = row.nextElementSibling;
+      detailRow.classList.toggle("hidden");
+    }
     
+    
+
+
     document.querySelectorAll("#searchForm input").forEach(el => {
         el.addEventListener("focus", () => sessionStorage.setItem("focusedInput", el.id));
     });
@@ -219,20 +252,20 @@
 
     document.addEventListener("DOMContentLoaded", () => {
 
-  function ipToNumber(ip) {
-    // Handles typical IPv4 like "192.168.1.10"
-    // Returns NaN if invalid
-    const parts = ip.trim().split(".");
-    if (parts.length !== 4) return NaN;
+      function ipToNumber(ip) {
+        // Handles typical IPv4 like "192.168.1.10"
+        // Returns NaN if invalid
+        const parts = ip.trim().split(".");
+        if (parts.length !== 4) return NaN;
 
-    let n = 0;
-    for (let i = 0; i < 4; i++) {
-      const p = Number(parts[i]);
-      if (!Number.isInteger(p) || p < 0 || p > 255) return NaN;
-      n = n * 256 + p;
-    }
-    return n;
-  }
+        let n = 0;
+        for (let i = 0; i < 4; i++) {
+          const p = Number(parts[i]);
+          if (!Number.isInteger(p) || p < 0 || p > 255) return NaN;
+          n = n * 256 + p;
+        }
+        return n;
+      }
 
   function getSortValue(text, type) {
     const v = (text ?? "").trim();
@@ -247,12 +280,15 @@
     return v.toLowerCase();
   }
 
-  // Attach to all header cells
-  document.querySelectorAll("table.table thead th").forEach((th, index) => {
+      document.querySelector(".dropdown-content").addEventListener("click", e => {
+      if (e.target.matches("a[data-column]")) {
+        sortTable(e.target.dataset.column);
+      }
+        });
 
-        th.style.cursor = "pointer";
+    }
 
-        th.addEventListener("click", () => {
+    function sortTable(th, index) {
 
           const table = th.closest("table");
           const tbody = table.tBodies[0];
@@ -263,8 +299,11 @@
           const asc = table.dataset[key] !== "asc";
           table.dataset[key] = asc ? "asc" : "desc";
 
-          // Optional: clear classes on other headers, set on this one
-          table.querySelectorAll("thead th").forEach(h => h.classList.remove("asc", "desc"));
+          // Reset header classes
+          table.querySelectorAll("thead th").forEach(h => 
+            h.classList.remove("asc", "desc")
+          );
+
           th.classList.add(asc ? "asc" : "desc");
 
           const type = th.dataset.type || "text";
@@ -272,13 +311,13 @@
           const rows = Array.from(tbody.rows);
 
           rows.sort((a, b) => {
+
             const Araw = a.cells[index]?.textContent ?? "";
             const Braw = b.cells[index]?.textContent ?? "";
 
             const A = getSortValue(Araw, type);
             const B = getSortValue(Braw, type);
 
-            // Put invalid/empty values at the bottom
             const Aok = (type === "text") ? true : Number.isFinite(A);
             const Bok = (type === "text") ? true : Number.isFinite(B);
 
@@ -289,15 +328,22 @@
               return asc ? (A - B) : (B - A);
             }
 
-            // Text compare
             return asc ? A.localeCompare(B) : B.localeCompare(A);
           });
 
           rows.forEach(r => tbody.appendChild(r));
-        });
-      });
+        
 
-    });
+        document.querySelectorAll("table.table thead th").forEach((th, index) => {
+
+          th.style.cursor = "pointer";
+
+          th.addEventListener("click", () => {
+            sortTable(th, index);
+          });
+
+        });
+  
 
 
 </script>

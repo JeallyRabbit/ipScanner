@@ -92,10 +92,14 @@
                       <div class="dropdown dropdown-hover">
                         <div tabindex="0" role="button" class="btn m-1">Order by:</div>
                         <ul tabindex="-1" class="dropdown-content menu bg-base-300 rounded-box z-1 w-52 p-2 absolute z-50">
-                        <li><a data-column="Ip">Ip Address</a></li>
-                        <li><a data-column="Hostname"> Hostname</a></li>
-                        <li><a data-column="LastLoggedUser">LastLoggedUser</a></li>
-                        <li><a data-column="LastFoundDate">LastFoundDate</a></li>
+                        <li><a data-column="0">Ip Address</a></li>
+                        <li><a data-column="1"> Hostname</a></li>
+                        <li><a data-column="2">LastLoggedUser</a></li>
+                        <li><a data-column="3">LastFoundDate</a></li>
+                        <li><a data-column="4">OperatingSystem</a></li>
+                        <li><a data-column="5">SerialNumber</a></li>
+                        <li><a data-column="6">Model</a></li>
+                        <li><a data-column="6">Proc_gen</a></li>
                       </ul>
                     </div>
 
@@ -149,7 +153,7 @@
                                         <td>@ip.Ip</td>
                                         <td>@ip.Hostname</td>
                                         <td>@ip.LastLoggedUser</td>
-										<td>@ip.LastCheckedDate</td>
+										<!-- <td>@ip.LastCheckedDate</td> -->
 										<td>@ip.LastFoundDate</td>
                                         <td>@ip.OperatingSystem</td>
                                         <td>@ip.SerialNumber</td>
@@ -181,169 +185,5 @@
     </div>
 </div>
 
-<script>
-
-        function toggleRow(row) {
-      const detailRow = row.nextElementSibling;
-      detailRow.classList.toggle("hidden");
-    }
-    
-    
 
 
-    document.querySelectorAll("#searchForm input").forEach(el => {
-        el.addEventListener("focus", () => sessionStorage.setItem("focusedInput", el.id));
-    });
-
-    // restore focus after reload
-    window.addEventListener("load", () => {
-        const id = sessionStorage.getItem("focusedInput");
-        if (!id) return;
-        const el = document.getElementById(id);
-        if (el){ 
-            el.focus();
-            if(el.type!='checkbox')
-            {
-                  el.selectionStart = el.selectionEnd = el.value.length;
-            }
-            
-        }
-    });
-
-    const form = document.getElementById("searchForm");
-    const ipInput = document.getElementById("searchIP");
-    const hostInput = document.getElementById("searchHost");
-    const userNameInput = document.getElementById("searchUser");
-    const searchOSInput = document.getElementById("searchOS");
-    const serialNumberInput=document.getElementById("searchSN");
-    const modelInput=document.getElementById("searchModel");
-    const emptyCheckBox=document.getElementById("skipEmptyCheckBox");
-
-      
-    
-
-    ipInput.addEventListener("input", triggerSearch);
-    hostInput.addEventListener("input", triggerSearch);
-    userNameInput.addEventListener("input",triggerSearch);
-    searchOSInput.addEventListener("input",triggerSearch);
-    serialNumberInput.addEventListener("input",triggerSearch);
-    modelInput.addEventListener("input",triggerSearch);
-    emptyCheckBox.addEventListener("click",triggerSearch);
-      
-    
-
-    let timer;
-
-    function triggerSearch() {
-        clearTimeout(timer);
-
-        // don't spam submits on empty
-         if (!ipInput.value && !hostInput.value && !userNameInput.value
-           && !serialNumberInput.value && !modelInput.value && !emptyCheckBox.value)
-         {
-             return;
-         }
-        timer = setTimeout(() => {
-            console.log("Sending form")
-            form.submit();
-        }, 1000);
-    }
-
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-      function ipToNumber(ip) {
-        // Handles typical IPv4 like "192.168.1.10"
-        // Returns NaN if invalid
-        const parts = ip.trim().split(".");
-        if (parts.length !== 4) return NaN;
-
-        let n = 0;
-        for (let i = 0; i < 4; i++) {
-          const p = Number(parts[i]);
-          if (!Number.isInteger(p) || p < 0 || p > 255) return NaN;
-          n = n * 256 + p;
-        }
-        return n;
-      }
-
-  function getSortValue(text, type) {
-    const v = (text ?? "").trim();
-
-    if (type === "ip") return ipToNumber(v);
-    if (type === "number") {
-      const num = Number(v.replace(",", "."));
-      return Number.isFinite(num) ? num : NaN;
-    }
-
-    // default text
-    return v.toLowerCase();
-  }
-
-      document.querySelector(".dropdown-content").addEventListener("click", e => {
-      if (e.target.matches("a[data-column]")) {
-        sortTable(e.target.dataset.column);
-      }
-        });
-
-    }
-
-    function sortTable(th, index) {
-
-          const table = th.closest("table");
-          const tbody = table.tBodies[0];
-          if (!tbody) return;
-
-          // Determine direction per-table + per-column
-          const key = `sortDir_${index}`;
-          const asc = table.dataset[key] !== "asc";
-          table.dataset[key] = asc ? "asc" : "desc";
-
-          // Reset header classes
-          table.querySelectorAll("thead th").forEach(h => 
-            h.classList.remove("asc", "desc")
-          );
-
-          th.classList.add(asc ? "asc" : "desc");
-
-          const type = th.dataset.type || "text";
-
-          const rows = Array.from(tbody.rows);
-
-          rows.sort((a, b) => {
-
-            const Araw = a.cells[index]?.textContent ?? "";
-            const Braw = b.cells[index]?.textContent ?? "";
-
-            const A = getSortValue(Araw, type);
-            const B = getSortValue(Braw, type);
-
-            const Aok = (type === "text") ? true : Number.isFinite(A);
-            const Bok = (type === "text") ? true : Number.isFinite(B);
-
-            if (type !== "text") {
-              if (!Aok && !Bok) return 0;
-              if (!Aok) return 1;
-              if (!Bok) return -1;
-              return asc ? (A - B) : (B - A);
-            }
-
-            return asc ? A.localeCompare(B) : B.localeCompare(A);
-          });
-
-          rows.forEach(r => tbody.appendChild(r));
-        
-
-        document.querySelectorAll("table.table thead th").forEach((th, index) => {
-
-          th.style.cursor = "pointer";
-
-          th.addEventListener("click", () => {
-            sortTable(th, index);
-          });
-
-        });
-  
-
-
-</script>

@@ -18,9 +18,7 @@
     </style>
    
 
-</head>
-
-<script>
+   <script>
 function setTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme)
   localStorage.setItem("theme", theme)
@@ -32,6 +30,11 @@ if (saved) {
   document.documentElement.setAttribute("data-theme", saved)
 }
 </script>
+
+
+</head>
+
+
 
 <body class="min-h-screen">
 
@@ -77,14 +80,19 @@ if (saved) {
             class="btn btn-primary rounded-full px-4 border border-base-300">
             Coffee
           </button>
-</div>
+        </div> 
+      </div>
 
         
     </header>
 
+
     <main class="p-4">
         @RenderBody()
     </main>
+
+<script src="~/js/index.js"></script>
+@RenderSection("Scripts", required: false)
 
     
 </body>

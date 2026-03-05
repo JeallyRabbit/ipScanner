@@ -4,11 +4,26 @@
 @source inline("btn btn-outline"); /* optional */
 @source inline("btn btn-dash btn-primary btn-circle"); /* Classes for buttons */
 @source inline("checkbox checkbox-primary checkbox-secondary checkbox-lg"); /* Classes for checkbox*/
-@source inline("hover hover:bg-base-300");
+@source inline("hover hover:bg-base-300");/* Classes for dropdown menu*/
+@source inline("alert alert-error shrink-0 stroke-current animate-pulse transition-all transition-shadow");/* Classes for alert*/ 
 /*npx @tailwindcss/cli -i .\Assets\css\input.css -o .\wwwroot\css\output.css --watch */
 /* daisyUI v5 */
 @plugin "daisyui" {
     themes: light, dark --prefersdark, cupcake, emerald, dracula,coffee --default;
+}
+
+@layer utilities {
+  .shake {
+    animation: shake 0.4s ease;
+  }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+  }
 }
 
 

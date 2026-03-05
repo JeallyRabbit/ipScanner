@@ -7,6 +7,9 @@ const serialNumberInput = document.getElementById("searchSN");
 const modelInput = document.getElementById("searchModel");
 const emptyCheckBox = document.getElementById("skipEmptyCheckBox");
 
+MAX_ROWS_TOGGLE=500
+
+
 // guard in case elements aren't on some pages
 if (form) {
   let timer;
@@ -40,9 +43,41 @@ if (form) {
 }
 
 // Expanding table rows
-function toggleRow(row) {
+function toggleRow(row, count) {
+
+    console.log(count)
+    if (count > MAX_ROWS_TOGGLE) {
+
+        showAlert();
+        return
+    }
+    //document.getElementById("errorAlert").classList.add("hidden");
   const detailRow = row.nextElementSibling;
   detailRow?.classList.toggle("hidden");
+}
+
+function showAlert() {
+
+    const alertBox = document.getElementById("errorAlert")
+    const alertSpan = document.getElementById("errorSpan")
+    // make visible
+    alertBox.classList.remove("hidden");
+    alertSpan.textContent = "Error! To much rows is displayed to show details (max: " + MAX_ROWS_TOGGLE+")."
+    requestAnimationFrame(() => {
+        alertBox.classList.remove("translate-x-full", "opacity-0");
+        alertBox.classList.add("animate-shake");
+    });
+
+    // auto hide after 5s
+    setTimeout(() => {
+        alertBox.classList.add("translate-x-full", "opacity-0");
+
+        setTimeout(() => {
+            alertBox.classList.add("hidden");
+            alertBox.classList.remove("animate-shake");
+        }, 300);
+
+    }, 5000);
 }
 
 // remember focused input

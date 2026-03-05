@@ -9,10 +9,10 @@
 <div class="min-h-screen  bg-base-200">
     <div class="mx-auto max-w-8xl p-6 space-y-6">
         <div class="card bg-base-100 shadow">
-            <div class=" mx-auto card-body gap-4 relative">
+            <div class=" mx-auto card-body gap-3 relative">
 
                 <form asp-controller="Records" asp-action="Search" method="post" id="searchForm"
-                      class="flex flex-col gap-3 md:flex-row md:items-end">
+                      class="flex flex-col gap-3 md:flex-row  md:items-center">
 
                     <label class="form-control w-full md:max-w-xs">
                         <div class="label">
@@ -24,7 +24,7 @@
                                class="input input-bordered w-full" />
                     </label>
 
-                    <label class="form-control w-full md:max-w-sm">
+                    <label class="form-control w-full md:max-w-xs">
                         <div class="label">
                             <span class="label-text">Hostname:</span>
                         </div>
@@ -34,7 +34,7 @@
                                class="input input-bordered w-full" />
                     </label>
 
-                    <label class="form-control w-full md:max-w-sm">
+                    <label class="form-control w-full md:max-w-xs">
                         <div class="label">
                             <span class="label-text">User:</span>
                         </div>
@@ -44,7 +44,7 @@
                                class="input input-bordered w-full" />
                     </label>
 
-                    <label class="form-control w-full md:max-w-sm">
+                    <label class="form-control w-full md:max-w-xs">
                         <div class="label">
                             <span class="label-text">Operating System:</span>
                         </div>
@@ -54,7 +54,7 @@
                                class="input input-bordered w-full" />
                     </label>
 
-                    <label class="form-control w-full md:max-w-sm">
+                    <label class="form-control w-full md:max-w-xs">
                         <div class="label">
                             <span class="label-text">Serial Number:</span>
                         </div>
@@ -64,7 +64,7 @@
                                class="input input-bordered w-full" />
                     </label>
 
-                    <label class="form-control w-full md:max-w-sm">
+                    <label class="form-control w-full md:max-w-xs">
                         <div class="label">
                             <span class="label-text">Model:</span>
                         </div>
@@ -75,13 +75,20 @@
                     </label>
 
                     
+                        
+                    <label class="form-control md:max-w-xs">
+                        <br />
+                        <button class="btn btn-primary md:w-auto w-full"
+                                type="submit"
+                                id="searchButton">
+                            Search
+                        </button>
+                    </label>
 
-                    <button class="btn btn-primary md:w-auto w-full"
-                            type="submit"
-                            id="searchButton">
-                        Search
-                    </button>
+                        
+                    
 
+                    
                     <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
                       <legend class="fieldset-legend">View options:</legend>
                       <label class="label">
@@ -104,18 +111,17 @@
                     </div>
 
                     </fieldset>
-
-
+                    
+                    
+                    
 
                 </form>
-
 
                 <div class="text-sm opacity-70">
                     <p>Results update automatically while typing.</p>
 
-                    
-
                 </div>
+                
             </div>
         </div>
 
@@ -147,9 +153,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <div id="errorAlert" role="alert" class="alert alert-error hidden transition-all duration-300  opacity-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span id="errorSpan"></span>
+                                </div>
+
                                 @foreach (var ip in Model.Results)
                                 {
-                                    <tr class="hover:bg-base-300" onclick="toggleRow(this)">
+                                    <tr class="hover:bg-base-300" onclick="toggleRow(this,@Model?.Results?.Count())">
                                         <td>@ip.Ip</td>
                                         <td>@ip.Hostname</td>
                                         <td>@ip.LastLoggedUser</td>

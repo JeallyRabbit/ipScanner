@@ -3,20 +3,11 @@
     "Server": {
       "commandName": "Project",
       "launchBrowser": true,
+      "console": "integratedTerminal",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:63134;http://localhost:63135"
     },
-    "WSL": {
-      "commandName": "WSL2",
-      "launchBrowser": true,
-      "launchUrl": "https://localhost:63134",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "https://localhost:63134;http://localhost:63135"
-      },
-      "distributionName": ""
-    }
   }
 }

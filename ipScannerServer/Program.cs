@@ -400,7 +400,12 @@ namespace MyApp
                     builder.WebHost.ConfigureKestrel(options =>
                     {
                         options.ListenAnyIP(60719);
-                        options.ListenAnyIP(60720, listen => listen.UseHttps());
+                        try
+                        {
+                            options.ListenAnyIP(60720, listen => listen.UseHttps());
+                        }
+                        catch { }
+
                     });
 
                     builder.Services.AddControllersWithViews();

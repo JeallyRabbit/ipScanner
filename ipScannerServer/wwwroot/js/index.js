@@ -75,7 +75,7 @@ function showAlert() {
         setTimeout(() => {
             alertBox.classList.add("hidden");
             alertBox.classList.remove("animate-shake");
-        }, 300);
+        }, 5000);
 
     }, 5000);
 }

@@ -136,6 +136,13 @@
                         <h2 class="card-title">Results</h2>
                         <div class="badge badge-neutral">@Model.Results.Count</div>
                     </div>
+                    <div id="errorAlert" role="alert" class="alert alert-error hidden transition-all duration-300  opacity-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span id="errorSpan"></span>
+                    </div>
+
 
                     <div class="overflow-y-auto overflow-x-auto mt-2" style="max-height:500px;">
                         <table class="table">
@@ -151,14 +158,11 @@
                                     <th>Model</th>
                                     <th>ProcGen</th>
                                 </tr>
+                                
+
                             </thead>
                             <tbody>
-                                <div id="errorAlert" role="alert" class="alert alert-error hidden transition-all duration-300  opacity-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span id="errorSpan"></span>
-                                </div>
+                                
 
                                 @foreach (var ip in Model.Results)
                                 {

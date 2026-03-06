@@ -153,7 +153,6 @@ namespace MyApp
 
             var choice = "";
             int height = AnsiConsole.Console.Profile.Height;
-            int port = 60719;
             string connectionString = "";
 
 

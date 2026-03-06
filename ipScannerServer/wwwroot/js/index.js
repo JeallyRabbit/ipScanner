@@ -7,39 +7,39 @@ const serialNumberInput = document.getElementById("searchSN");
 const modelInput = document.getElementById("searchModel");
 const emptyCheckBox = document.getElementById("skipEmptyCheckBox");
 
-MAX_ROWS_TOGGLE=500
+MAX_ROWS_TOGGLE = 500
 
 
 // guard in case elements aren't on some pages
 if (form) {
-  let timer;
+    let timer;
 
-  function triggerSearch() {
-    clearTimeout(timer);
+    function triggerSearch() {
+        clearTimeout(timer);
 
-    const isAllEmpty =
-      !ipInput?.value &&
-      !hostInput?.value &&
-      !userNameInput?.value &&
-      !searchOSInput?.value &&
-      !serialNumberInput?.value &&
-      !modelInput?.value &&
-      !emptyCheckBox?.checked;
+        const isAllEmpty =
+            !ipInput?.value &&
+            !hostInput?.value &&
+            !userNameInput?.value &&
+            !searchOSInput?.value &&
+            !serialNumberInput?.value &&
+            !modelInput?.value &&
+            !emptyCheckBox?.checked;
 
-    if (isAllEmpty) return;
+        if (isAllEmpty) return;
 
-    timer = setTimeout(() => {
-      form.submit();
-    }, 1000);
-  }
+        timer = setTimeout(() => {
+            form.submit();
+        }, 1000);
+    }
 
-  ipInput?.addEventListener("input", triggerSearch);
-  hostInput?.addEventListener("input", triggerSearch);
-  userNameInput?.addEventListener("input", triggerSearch);
-  searchOSInput?.addEventListener("input", triggerSearch);
-  serialNumberInput?.addEventListener("input", triggerSearch);
-  modelInput?.addEventListener("input", triggerSearch);
-  emptyCheckBox?.addEventListener("change", triggerSearch);
+    ipInput?.addEventListener("input", triggerSearch);
+    hostInput?.addEventListener("input", triggerSearch);
+    userNameInput?.addEventListener("input", triggerSearch);
+    searchOSInput?.addEventListener("input", triggerSearch);
+    serialNumberInput?.addEventListener("input", triggerSearch);
+    modelInput?.addEventListener("input", triggerSearch);
+    emptyCheckBox?.addEventListener("change", triggerSearch);
 }
 
 // Expanding table rows
@@ -52,8 +52,8 @@ function toggleRow(row, count) {
         return
     }
     //document.getElementById("errorAlert").classList.add("hidden");
-  const detailRow = row.nextElementSibling;
-  detailRow?.classList.toggle("hidden");
+    const detailRow = row.nextElementSibling;
+    detailRow?.classList.toggle("hidden");
 }
 
 function showAlert() {
@@ -62,7 +62,7 @@ function showAlert() {
     const alertSpan = document.getElementById("errorSpan")
     // make visible
     alertBox.classList.remove("hidden");
-    alertSpan.textContent = "Error! To much rows is displayed to show details (max: " + MAX_ROWS_TOGGLE+")."
+    alertSpan.textContent = "Error! To much rows is displayed to show details (max: " + MAX_ROWS_TOGGLE + ")."
     requestAnimationFrame(() => {
         alertBox.classList.remove("translate-x-full", "opacity-0");
         alertBox.classList.add("animate-shake");
@@ -82,45 +82,45 @@ function showAlert() {
 
 // remember focused input
 document.querySelectorAll("#searchForm input").forEach(el => {
-  el.addEventListener("focus", () => sessionStorage.setItem("focusedInput", el.id));
+    el.addEventListener("focus", () => sessionStorage.setItem("focusedInput", el.id));
 });
 
 // restore focus after reload
 window.addEventListener("load", () => {
-  const id = sessionStorage.getItem("focusedInput");
-  if (!id) return;
-  const el = document.getElementById(id);
-  if (el) {
-    el.focus();
-    if (el.type !== "checkbox") {
-      el.selectionStart = el.selectionEnd = el.value.length;
+    const id = sessionStorage.getItem("focusedInput");
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (el) {
+        el.focus();
+        if (el.type !== "checkbox") {
+            el.selectionStart = el.selectionEnd = el.value.length;
+        }
     }
-  }
 });
 
 // IP conversion (TOP-LEVEL so sorting can use it)
 function ipToNumber(ip) {
-  const parts = (ip ?? "").trim().split(".");
-  if (parts.length !== 4) return NaN;
+    const parts = (ip ?? "").trim().split(".");
+    if (parts.length !== 4) return NaN;
 
-  let n = 0;
-  for (let i = 0; i < 4; i++) {
-    const p = Number(parts[i]);
-    if (!Number.isInteger(p) || p < 0 || p > 255) return NaN;
-    n = n * 256 + p;
-  }
-  return n;
+    let n = 0;
+    for (let i = 0; i < 4; i++) {
+        const p = Number(parts[i]);
+        if (!Number.isInteger(p) || p < 0 || p > 255) return NaN;
+        n = n * 256 + p;
+    }
+    return n;
 }
 
 function getSortValue(text, type) {
-  const v = (text ?? "").trim();
+    const v = (text ?? "").trim();
 
-  if (type === "ip") return ipToNumber(v);
-  if (type === "number") {
-    const num = Number(v.replace(",", "."));
-    return Number.isFinite(num) ? num : NaN;
-  }
-  return v.toLowerCase();
+    if (type === "ip") return ipToNumber(v);
+    if (type === "number") {
+        const num = Number(v.replace(",", "."));
+        return Number.isFinite(num) ? num : NaN;
+    }
+    return v.toLowerCase();
 }
 
 function sortTable(th, index) {
@@ -186,8 +186,8 @@ function sortTable(th, index) {
 
 // attach header click handlers ONCE
 document.querySelectorAll("table.table thead th").forEach((th, index) => {
-  th.style.cursor = "pointer";
-  th.addEventListener("click", () => sortTable(th, index));
+    th.style.cursor = "pointer";
+    th.addEventListener("click", () => sortTable(th, index));
 });
 
 // dropdown sort 
@@ -195,15 +195,15 @@ const dropdown = document.querySelector(".dropdown-hover");
 
 dropdown.addEventListener("click", (e) => {
 
-  const item = e.target.closest("a[data-column]");
-  if (!item) return;
+    const item = e.target.closest("a[data-column]");
+    if (!item) return;
 
-  const index = Number(item.dataset.column);
+    const index = Number(item.dataset.column);
 
-  const th = document.querySelectorAll("table.table thead th")[index];
+    const th = document.querySelectorAll("table.table thead th")[index];
 
-  if (th) {
-    sortTable(th, index);
-  }
+    if (th) {
+        sortTable(th, index);
+    }
 
 });

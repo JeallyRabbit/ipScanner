@@ -8,6 +8,7 @@
         public SearchRequest Request { get; set; } = new();
         public List<MyApp.DbRecord> Results { get; set; } = new();
 
+
     }
 }
 

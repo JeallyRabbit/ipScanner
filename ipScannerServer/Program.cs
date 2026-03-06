@@ -111,10 +111,10 @@ namespace MyApp
 
     public class IP
     {
-        public string address { get; set; }
-        public string hostname { get; set; }
+        public string? address { get; set; }
+        public string? hostname { get; set; }
 
-        public string lastCheckedDate { get; set; }
+        public string? lastCheckedDate { get; set; }
     }
 
     public sealed class AppDbContext(DbContextOptions<AppDbContext> opts) : DbContext(opts)
@@ -213,7 +213,7 @@ namespace MyApp
                 else if (menu == MENU_DATABASE_JSON)
                 {
                     System.Console.Clear();
-                    string fileSelection = Program.fileSelection(currentDir, height);
+                    string? fileSelection = Program.fileSelection(currentDir, height);
 
                     if (fileSelection == "..")
                     {
@@ -227,7 +227,7 @@ namespace MyApp
                     else if (fileSelection.ToLower().EndsWith(".json"))
                     {
                         var json = File.ReadAllText(fileSelection);
-                        Database obj = null;
+                        Database? obj = null;
                         try
                         {
                             obj = JsonSerializer.Deserialize<Database>(json);

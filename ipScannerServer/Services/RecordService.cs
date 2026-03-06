@@ -1,4 +1,5 @@
-﻿using MyApp;
+﻿using Microsoft.EntityFrameworkCore;
+using MyApp;
 
 namespace Server.Services
 {
@@ -54,6 +55,30 @@ namespace Server.Services
                 anyFilled = true;
                 query = query.Where(x => x.Model.ToLower().Contains(req.Model.ToLower()));
             }
+
+
+
+
+            if(req.OrderBy!=Models.Orders.None)
+            {
+                var propertyName = req.OrderBy.ToString() == null ? "Ip" : req.OrderBy.ToString();
+                query=query.OrderBy(x=>x.Ip);
+                /*
+                if(req.Asc==true)
+                {
+                    var fromDB=query.ToList();
+                    var sortedList = query.OrderBy(x => req.OrderBy).ToList();
+                    return sortedList;
+                }
+                else
+                {
+                    var fromDB=query.ToList();
+                    var sortedList = query.OrderByDescending(x => req.OrderBy).ToList();
+                    return sortedList;
+                }
+                */
+            }
+
 
             if (req.skipEmpty == "true")
             {

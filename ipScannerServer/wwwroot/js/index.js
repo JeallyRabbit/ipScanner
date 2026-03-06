@@ -184,10 +184,23 @@ function sortTable(th, index) {
     });
 }
 
-// attach header click handlers ONCE
-document.querySelectorAll("table.table thead th").forEach((th, index) => {
+// attach header click handlers 
+document.querySelectorAll("table.table thead th[data-property]").forEach(th => {
+
     th.style.cursor = "pointer";
-    th.addEventListener("click", () => sortTable(th, index));
+
+    th.addEventListener("click", () => {
+
+        const property = th.dataset.property;
+
+        document.getElementById("OrderBy").value = property;
+
+        const ascInput = document.getElementById("Asc");
+        ascInput.value = ascInput.value === "true" ? "false" : "true";
+
+        triggerSearch();
+    });
+
 });
 
 // dropdown sort 
@@ -203,6 +216,7 @@ dropdown.addEventListener("click", (e) => {
     const th = document.querySelectorAll("table.table thead th")[index];
 
     if (th) {
+        
         sortTable(th, index);
     }
 

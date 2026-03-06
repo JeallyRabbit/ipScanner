@@ -1,5 +1,17 @@
 ﻿namespace Server.Models
 {
+
+    public enum Orders
+        {
+            Ip,
+            Hostname,
+            LastLoggedUser,
+            LastFoundDate,
+            OperatingSystem,
+            SerialNumber,Model,
+            ProcGen,
+            None
+        }
     public class SearchRequest
     {
         public string? Ip { get; set; }
@@ -14,5 +26,8 @@
         public string? Model { get; set; }
         public decimal? ProcGen { get; set; }
         public string? skipEmpty { get; set; }
+        //enum here ? - property by which service will sort ?
+        public Orders? OrderBy {get;set;}
+        public bool? Asc {get; set;}
     }
 }

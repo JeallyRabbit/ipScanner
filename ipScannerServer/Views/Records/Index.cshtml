@@ -1,9 +1,22 @@
 ﻿@model Server.Models.RecordsPageModel
+@using System.Text.Json
 
 @{
 	Layout = "_Layout";
+
+	var jsModel = new
+	{
+		records = Model.Results
+	};
+
+
 }
 
+
+
+<script id="page-data" type="application/json">
+	@Html.Raw(JsonSerializer.Serialize(jsModel))	
+</script>
 
 
 <div class="card card-border min-h-screen  bg-base-200">
@@ -99,14 +112,14 @@
 						<div class="dropdown dropdown-hover">
 							<div tabindex="0" role="button" class="btn m-1">Order by:</div>
 							<ul tabindex="-1" class="dropdown-content menu bg-base-300 rounded-box z-1 w-52 p-2 absolute z-50">
-								<li><a data-column="0">Ip Address</a></li>
-								<li><a data-column="1">Hostname</a></li>
-								<li><a data-column="2">LastLoggedUser</a></li>
-								<li><a data-column="3">LastFoundDate</a></li>
-								<li><a data-column="4">OperatingSystem</a></li>
-								<li><a data-column="5">SerialNumber</a></li>
-								<li><a data-column="6">Model</a></li>
-								<li><a data-column="6">Proc_gen</a></li>
+								<li><a data-property="Ip">Ip Address</a></li>
+								<li><a data-property="Hostname">Hostname</a></li>
+								<li><a data-property="LastLoggedUser">LastLoggedUser</a></li>
+								<li><a data-property="LastFoundDate">LastFoundDate</a></li>
+								<li><a data-property="OperatingSystem">OperatingSystem</a></li>
+								<li><a data-property="SerialNumber">SerialNumber</a></li>
+								<li><a data-property="Model">Model</a></li>
+								<li><a data-property="ProcGen">Proc_gen</a></li>
 							</ul>
 						</div>
 
@@ -132,8 +145,17 @@
 {
 			<div class="card bg-base-100 shadow">
 				<div class="card-body">
+
+					
+
+
 					<div class="flex items-center justify-between gap-3">
 						<h2 class="card-title">Results</h2>
+
+						<!-- two paragraphs to hide switches of sorting-->
+						<p type="" id="OrderBy" name="Request.OrderBy" asp-for="Request.OrderBy" />
+						<p type="" id="Asc" name="Request.Asc" value="!Request.Asc" asp-for="Request.Asc" />
+
 						<div class="badge badge-neutral">@Model.Results.Count</div>
 					</div>
 					<div id="errorAlert" role="alert" class="alert alert-error hidden transition-all duration-300  opacity-0">
@@ -160,11 +182,12 @@
 								<div class=" overflow-x-auto min-w-full">
 									<div class="tabs">
 
+										
 										@for (int i = 0; i < tabNum; i++)
 										{
 											if (i == 0)
 											{
-												<input type="radio" name="my_tabs_6" checked="checked" class="tab  [--tab-bg:var(--color-accent)]" aria-label="@(i + 1)" />
+												<input type="radio" name="my_tabs_6" checked="checked" class="tab" aria-label="@(i + 1)" />
 											}
 											else
 											{
@@ -175,21 +198,19 @@
 
 											<div class="sticky start-0 tab-content border-base-300 bg-base-100 p-6">
 
-												<input type="" id="OrderBy" name="Request.OrderBy" asp-for="Request.OrderBy" />
-    											<input type="" id="Asc" name="Request.Asc" value="!Request.Asc" asp-for="Request.Asc" />
-
+												
   
 												<table class="table">
 													<thead class="sticky top-0 bg-base-100">
 														<tr>
-															<th data-property="ip">Ip Address</th>
-															<th data-property="hostname">Hostname</th>
-															<th data-property="lastCheckedDate">Last Logged User</th>
-															<th data-property="lastFoundDate">Last Found Date</th>
-															<th data-property="operatingSystem">OperatingSystem</th>
-															<th data-property="serialNumber">Serial</th>
-															<th data-property="model">Model</th>
-															<th data-property="procGen">ProcGen</th>
+															<th data-property="Ip" class="ipHeader">Ip Address</th>
+															<th data-property="Hostname">Hostname</th>
+															<th data-property="LastLoggedUser">Last Logged User</th>
+															<th data-property="LastFoundDate">Last Found Date</th>
+															<th data-property="OperatingSystem">OperatingSystem</th>
+															<th data-property="SerialNumber">Serial</th>
+															<th data-property="Model">Model</th>
+															<th data-property="ProcGen">ProcGen</th>
 														</tr>
 													</thead>
 
@@ -202,20 +223,21 @@
 															}
 
 															var ip = Model.Results[(i * MAX_ROWS) + j];
-															<tr class="hover:bg-base-300 " onclick="toggleRow(this,@Model?.Results?.Count())">
-																<td>@ip.Ip</td>
-																<td>@ip.Hostname</td>
-																<td>@ip.LastLoggedUser</td>
-																<td>@ip.LastFoundDate</td>
-																<td>@ip.OperatingSystem</td>
-																<td>@ip.SerialNumber</td>
-																<td>@ip.Model</td>
-																<td>@ip.ProcGen</td>
+															var aux = (i * MAX_ROWS) + j;
+															<tr class="hover:bg-base-300  tableRow{@aux}" onclick="toggleRow(this,@Model?.Results?.Count())">
+																<td id="ipRow{@aux}">@ip.Ip</td>
+																<td id="hostnameRow{@aux}">@ip.Hostname</td>
+																<td id="userRow{@aux}">@ip.LastLoggedUser</td>
+																<td id="foundRow{@aux}">@ip.LastFoundDate</td>
+																<td id="osRow{@aux}">@ip.OperatingSystem</td>
+																<td id="snRow{@aux}">@ip.SerialNumber</td>
+																<td id="modelRow{@aux}">@ip.Model</td>
+																<td id="procGenRow{@aux}">@ip.ProcGen</td>
 															</tr>
 
 															<tr class="hidden">
 																<td colspan="9">
-																	<div class=" card card-border p-4 bg-base-200">
+																	<div class="card card-border p-4 bg-base-200" id="tableRowHidden{@aux}">
 																		More information about @ip.Ip here
 																	</div>
 																</td>

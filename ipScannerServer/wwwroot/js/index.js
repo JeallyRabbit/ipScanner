@@ -45,7 +45,7 @@ if (form) {
 // Expanding table rows
 function toggleRow(row, count) {
 
-    console.log(count)
+    
     if (count > MAX_ROWS_TOGGLE) {
 
         showAlert();
@@ -98,90 +98,90 @@ window.addEventListener("load", () => {
     }
 });
 
-// IP conversion (TOP-LEVEL so sorting can use it)
+
+
+
 function ipToNumber(ip) {
-    const parts = (ip ?? "").trim().split(".");
-    if (parts.length !== 4) return NaN;
-
-    let n = 0;
-    for (let i = 0; i < 4; i++) {
-        const p = Number(parts[i]);
-        if (!Number.isInteger(p) || p < 0 || p > 255) return NaN;
-        n = n * 256 + p;
-    }
-    return n;
+    return ip
+        .split('.')
+        .map(part => part.padStart(3, '0'))
+        .join('');
 }
 
-function getSortValue(text, type) {
-    const v = (text ?? "").trim();
+function sortTable(th, asc) {
 
-    if (type === "ip") return ipToNumber(v);
-    if (type === "number") {
-        const num = Number(v.replace(",", "."));
-        return Number.isFinite(num) ? num : NaN;
-    }
-    return v.toLowerCase();
-}
 
-function sortTable(th, index) {
+    const raw = document.getElementById("page-data")?.textContent ?? "{}";
+    var pageData = JSON.parse(raw);
+    if (th == "Ip") {
+        if (asc == "true") {
 
-    const table = th.closest("table");
-    const tbody = table.tBodies[0];
-    if (!tbody) return;
-
-    // determine sort direction
-    const key = `sortDir_${index}`;
-    const asc = table.dataset[key] !== "asc";
-    table.dataset[key] = asc ? "asc" : "desc";
-
-    // reset header styles
-    table.querySelectorAll("thead th").forEach(h =>
-        h.classList.remove("asc", "desc")
-    );
-
-    th.classList.add(asc ? "asc" : "desc");
-
-    const type = th.dataset.type || "text";
-
-    // collect rows as PAIRS (main + detail)
-    const rows = [];
-
-    for (let i = 0; i < tbody.rows.length; i += 2) {
-        rows.push({
-            main: tbody.rows[i],
-            detail: tbody.rows[i + 1]
-        });
-    }
-
-    // sort pairs using the main row
-    rows.sort((a, b) => {
-
-        const Araw = a.main.cells[index]?.textContent ?? "";
-        const Braw = b.main.cells[index]?.textContent ?? "";
-
-        const A = getSortValue(Araw, type);
-        const B = getSortValue(Braw, type);
-
-        const Aok = (type === "text") ? true : Number.isFinite(A);
-        const Bok = (type === "text") ? true : Number.isFinite(B);
-
-        if (type !== "text") {
-
-            if (!Aok && !Bok) return 0;
-            if (!Aok) return 1;
-            if (!Bok) return -1;
-
-            return asc ? (A - B) : (B - A);
+            pageData.records.sort((a, b) => ipToNumber(a[th]) - ipToNumber(b[th]))
         }
+        else {
+            pageData.records.sort((a, b) => ipToNumber(b[th]) - ipToNumber(a[th]))
+        }
+    }
+    else {
+        if (asc == "true" ) {
+            pageData.records.sort((a, b) => {
+                const A = a[th]
+                const B = b[th]
+                if (A < B) {return -1 }
+                if (A > B) { return 1; }
+                return 0;
+            })
+        }
+        else {
+            pageData.records.sort((a, b) => {
+                const A = a[th].toLowerCase()
+                const B = b[th].toLowerCase()
+                if (A < B) { return 1; }
+                if (A > B) { return -1; }
+                return 0;
+            })
+        }
+        
+    }
+    var i = 0;
+    for (var r of pageData.records) {
+        var ipField = document.getElementById("ipRow{" + i + "}")
+        ipField.innerHTML = r.Ip
 
-        return asc ? A.localeCompare(B) : B.localeCompare(A);
-    });
+        var hostnameField = document.getElementById("hostnameRow{" + i + "}")
+        hostnameField.innerHTML = r.Hostname
 
-    // reinsert rows keeping pairs together
-    rows.forEach(pair => {
-        tbody.appendChild(pair.main);
-        tbody.appendChild(pair.detail);
-    });
+        var userField = document.getElementById("userRow{" + i + "}")
+        userField.innerHTML = r.LastLoggedUser
+
+        var foundField = document.getElementById("foundRow{" + i + "}")
+        foundField.innerHTML = r.LastFoundDate
+
+        var osField = document.getElementById("osRow{" + i + "}")
+        osField.innerHTML = r.OperatingSystem
+
+        var snField = document.getElementById("snRow{" + i + "}")
+        snField.innerHTML = r.SerialNumber
+
+        var modelField = document.getElementById("modelRow{" + i + "}")
+        modelField.innerHTML = r.Model
+
+        var procGenField = document.getElementById("procGenRow{" + i + "}")
+        procGenField.innerHTML = r.ProcGen
+
+        var debug = "tableRowHidden{" + i + "}"
+        var hiddenRow = document.getElementById("tableRowHidden{" + i+"}")
+        hiddenRow.innerHTML = ("More information about " + r.Ip +" here")
+    
+
+        
+        i++;
+    }
+    
+
+    return 0;
+
+
 }
 
 // attach header click handlers 
@@ -193,31 +193,39 @@ document.querySelectorAll("table.table thead th[data-property]").forEach(th => {
 
         const property = th.dataset.property;
 
-        document.getElementById("OrderBy").value = property;
+       document.getElementById("OrderBy").value = property;
 
         const ascInput = document.getElementById("Asc");
         ascInput.value = ascInput.value === "true" ? "false" : "true";
 
-        triggerSearch();
+        sortTable(property, ascInput.value)
     });
 
 });
+
+
+
+
 
 // dropdown sort 
 const dropdown = document.querySelector(".dropdown-hover");
 
 dropdown.addEventListener("click", (e) => {
 
-    const item = e.target.closest("a[data-column]");
+    const item = e.target.closest("a[data-property]");
     if (!item) return;
 
-    const index = Number(item.dataset.column);
+    const property = item.dataset.property;
 
-    const th = document.querySelectorAll("table.table thead th")[index];
+       document.getElementById("OrderBy").value = property;
 
-    if (th) {
-        
-        sortTable(th, index);
+        const ascInput = document.getElementById("Asc");
+        ascInput.value = ascInput.value === "true" ? "false" : "true";
+
+
+
+    if (property) {
+        sortTable(property, ascInput.value);
     }
 
 });

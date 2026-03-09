@@ -10,7 +10,7 @@
 /*npx @tailwindcss/cli -i .\Assets\css\input.css -o .\wwwroot\css\output.css --watch */
 /* daisyUI v5 */
 @plugin "daisyui" {
-    themes: light, dark --prefersdark, cupcake, emerald, dracula,coffee --default;
+    themes: light, dark --prefersdark, cupcake, emerald, dracula, luxury, coffee --default;
 }
 
 @layer utilities {

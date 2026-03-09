@@ -9,10 +9,16 @@
 		records = Model.Results
 	};
 
-
+	const int MIN_SLIDER_VALUE=1;
+	const int MAX_SLIDER_VALUE=100;
+	int sliderValue=40;
 }
 
-
+<head>
+	<!-- two paragraphs to hide switches of sorting-->
+	<p type="" id="OrderBy" name="Request.OrderBy" asp-for="Request.OrderBy" />
+	<p type="" id="Asc" name="Request.Asc" value="!Request.Asc" asp-for="Request.Asc" />
+</head>
 
 <script id="page-data" type="application/json">
 	@Html.Raw(JsonSerializer.Serialize(jsModel))	
@@ -131,6 +137,7 @@
 				</form>
 
 				<div class="text-sm opacity-70">
+					
 					<p>Results update automatically while typing.</p>
 
 				</div>
@@ -149,12 +156,22 @@
 					
 
 
-					<div class="flex items-center justify-between gap-3">
+					<div class="flex items-center w-full justify-between gap-3">@*justify-between gap-3*@
 						<h2 class="card-title">Results</h2>
+						<div style="position:relative;">
+							Amount of records on page: @MIN_SLIDER_VALUE
+							<input type="range" id="rowsSlider" class="range range-accent range-lg w-[300px]" min="@MIN_SLIDER_VALUE" max="@MAX_SLIDER_VALUE"/>
+							@MAX_SLIDER_VALUE
 
-						<!-- two paragraphs to hide switches of sorting-->
-						<p type="" id="OrderBy" name="Request.OrderBy" asp-for="Request.OrderBy" />
-						<p type="" id="Asc" name="Request.Asc" value="!Request.Asc" asp-for="Request.Asc" />
+							<span id="sliderPrintValue" style="
+								position:absolute;
+								top:-25px;
+								left:50%;
+								transform:translateX(-50%);">
+								@sliderValue</span>
+						</div>
+
+						
 
 						<div class="badge badge-neutral">@Model.Results.Count</div>
 					</div>
@@ -172,6 +189,8 @@
 							
 
 							@{
+								//here get value of slider
+								//int maxRows=document.getElementById("tabHeightSlider").value;
 								const int MAX_ROWS = 8;
 								double auxMaxRows = (double)MAX_ROWS;
 								double auxRowsCount = (double)(Model.Results.Count);

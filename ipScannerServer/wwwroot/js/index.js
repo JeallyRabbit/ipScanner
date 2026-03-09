@@ -180,8 +180,6 @@ function sortTable(th, asc) {
     
 
     return 0;
-
-
 }
 
 // attach header click handlers 
@@ -203,8 +201,16 @@ document.querySelectorAll("table.table thead th[data-property]").forEach(th => {
 
 });
 
+const slider=document.getElementById("rowsSlider")
 
+slider.addEventListener("mouseup",()=>{
+    console.log("slider value: ",slider.value)
+})
 
+const sliderPrintValue=document.getElementById("sliderPrintValue")
+slider.addEventListener("input",()=>{
+    sliderPrintValue.innerHTML=slider.value
+})
 
 
 // dropdown sort 

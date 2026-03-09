@@ -7,6 +7,7 @@
 @source inline("hover hover:bg-base-300");/* Classes for dropdown menu*/
 @source inline("alert alert-error shrink-0 stroke-current animate-pulse transition-all transition-shadow");/* Classes for alert*/
 @source inline("tabs tabs-box tab-content"); /*Classes for tas*/
+@source inline("range range-accent");/*Classes for slider */
 /*npx @tailwindcss/cli -i .\Assets\css\input.css -o .\wwwroot\css\output.css --watch */
 /* daisyUI v5 */
 @plugin "daisyui" {

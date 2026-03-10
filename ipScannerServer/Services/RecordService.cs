@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyApp;
+﻿using MyApp;
 
 namespace Server.Services
 {
@@ -24,7 +23,6 @@ namespace Server.Services
             var query = _context.DbRecords.AsQueryable();
             var querySkipEmpty = query; // Dummy value assign
             var anyFilled = false;
-
             if (!string.IsNullOrWhiteSpace(req.Ip))
             {
                 anyFilled = true;
@@ -59,10 +57,10 @@ namespace Server.Services
 
 
 
-            if(req.OrderBy!=Models.Orders.None)
+            if (req.OrderBy != Models.Orders.None)
             {
                 var propertyName = req.OrderBy.ToString() == null ? "Ip" : req.OrderBy.ToString();
-                query=query.OrderBy(x=>x.Ip);
+                query = query.OrderBy(x => x.Ip);
                 /*
                 if(req.Asc==true)
                 {

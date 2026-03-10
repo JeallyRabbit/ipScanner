@@ -1,12 +1,13 @@
 ﻿@import "tailwindcss";
 
 @source inline("btn-outline");
-@source inline("btn btn-outline"); /* optional */
+@source inline("table-pin-rows table-pin-cols");/*Classes for table*/
+@source inline("btn btn-outline"); /* Classes for buttons */
 @source inline("btn btn-dash btn-primary btn-circle"); /* Classes for buttons */
 @source inline("checkbox checkbox-primary checkbox-secondary checkbox-lg"); /* Classes for checkbox*/
 @source inline("hover hover:bg-base-300");/* Classes for dropdown menu*/
 @source inline("alert alert-error shrink-0 stroke-current animate-pulse transition-all transition-shadow");/* Classes for alert*/
-@source inline("tabs tabs-box tab-content"); /*Classes for tas*/
+@source inline("tabs tabs-box tab-content"); /*Classes for tabs*/
 @source inline("range range-accent");/*Classes for slider */
 /*npx @tailwindcss/cli -i .\Assets\css\input.css -o .\wwwroot\css\output.css --watch */
 /* daisyUI v5 */

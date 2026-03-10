@@ -4,14 +4,18 @@
 @{
 	Layout = "_Layout";
 
-	var jsModel = new
-	{
-		records = Model.Results
-	};
-
 	const int MIN_SLIDER_VALUE=1;
 	const int MAX_SLIDER_VALUE=100;
-	int sliderValue=40;
+	int sliderValue=10;
+
+	var jsModel = new
+	{
+		records = Model.Results,
+		maxRowsPrint = @sliderValue,
+		sortingBy=""
+	};
+
+	
 }
 
 <head>
@@ -25,10 +29,10 @@
 </script>
 
 
-<div class="card card-border min-h-screen  bg-base-200">
-	<div class=" mx-auto max-w-8xl p-6 space-y-6">
+<div class="card card-border bg-base-200">
+	<div class="p-6 space-y-6 ">
 		<div class="card bg-base-100 shadow">
-			<div class=" mx-auto card-body gap-3 relative border-base-300 ">
+			<div class="mx-auto card-body gap-3 relative border-base-300 ">
 
 				<form asp-controller="Records" asp-action="Search" method="post" id="searchForm"
 					  class="flex flex-col gap-3 md:flex-row  md:items-center">
@@ -151,7 +155,7 @@
 @if (Model?.Results?.Any() == true)
 {
 			<div class="card bg-base-100 shadow">
-				<div class="card-body">
+				<div class="card-body  ">
 
 					
 
@@ -160,15 +164,13 @@
 						<h2 class="card-title">Results</h2>
 						<div style="position:relative;">
 							Amount of records on page: @MIN_SLIDER_VALUE
-							<input type="range" id="rowsSlider" class="range range-accent range-lg w-[300px]" min="@MIN_SLIDER_VALUE" max="@MAX_SLIDER_VALUE"/>
+							<input type="range" id="rowsSlider" class="range range-accent range-lg w-[300px]" min="@MIN_SLIDER_VALUE" value="@sliderValue" max="@MAX_SLIDER_VALUE" />
 							@MAX_SLIDER_VALUE
 
-							<span id="sliderPrintValue" style="
-								position:absolute;
-								top:-25px;
-								left:50%;
-								transform:translateX(-50%);">
-								@sliderValue</span>
+							 <span id="sliderPrintValue" style="position:absolute;top:2px; left:66%;transform:translateX(-66%);">
+								@sliderValue
+								</span> 
+							
 						</div>
 
 						
@@ -183,43 +185,39 @@
 					</div>
 
 
-					<div class="overflow-y-auto overflow-x-auto mt-2" style="max-height:500px;">
+					<div class="mt-2">
 						<div class="tabs tabs-box">
 
 							
 
 							@{
 								//here get value of slider
-								//int maxRows=document.getElementById("tabHeightSlider").value;
-								const int MAX_ROWS = 8;
-								double auxMaxRows = (double)MAX_ROWS;
+								int MAX_ROWS = sliderValue;
+								double auxMaxRows = (double)sliderValue;
 								double auxRowsCount = (double)(Model.Results.Count);
 								double auxTabNum = Math.Ceiling(auxRowsCount / auxMaxRows);
 								int tabNum = (int)auxTabNum;
-								int counter = 0;
 
-								<div class="p-2 overflow-x-auto min-w-full">
-									<div class="tabs">
+								<div class="p-2  min-w-full">
+									<div class="tabs" id="tabsDiv">
 
 										
 										@for (int i = 0; i < tabNum; i++)
 										{
 											if (i == 0)
 											{
-												<input type="radio" name="my_tabs_6" checked="checked" class="tab" aria-label="@(i + 1)" />
+												<input type="radio" name="radio" id="tab{@i}" checked="checked" class="tab" aria-label="@(i + 1)" />
 											}
 											else
 											{
-												<input type="radio" name="my_tabs_6" class="tab  [--tab-bg:var(--color-accent)]" aria-label=" @(i + 1) " />
+												<input type="radio" name="radio" id="tab{@i}" class="tab [--tab-bg:var(--color-accent)]" aria-label=" @(i + 1) " />
 
 											}
 
 
-											<div class="sticky start-0 tab-content border-base-300 bg-base-100 p-2">
+											<div class="sticky tab-content h-120 overflow-x-auto border-base-300 bg-base-100 p-2">
 
-												
-  
-												<table class="table">
+												<table class="table table-pin-rows table-pin-cols">
 													<thead class="sticky top-0 bg-base-100">
 														<tr>
 															<th data-property="Ip" class="ipHeader">Ip Address</th>

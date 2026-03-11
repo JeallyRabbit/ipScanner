@@ -231,7 +231,7 @@
 														</tr>
 													</thead>
 
-													<tbody>
+													<tbody id="table-body">
 														@for (int j = 0; j < MAX_ROWS; j++)
 														{
 															@if ((i * MAX_ROWS) + j == Model.Results.Count)
@@ -252,6 +252,8 @@
 																<td id="procGenRow{@aux}">@ip.ProcGen</td>
 															</tr>
 
+
+															
 															<tr class="hidden">
 																<td colspan="9">
 																	<div class="card card-border p-4 bg-base-200" id="tableRowHidden{@aux}">
@@ -259,6 +261,7 @@
 																	</div>
 																</td>
 															</tr>
+															
 														}
 													</tbody>
 												</table>

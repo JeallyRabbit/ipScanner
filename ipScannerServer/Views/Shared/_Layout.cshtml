@@ -34,9 +34,9 @@ if (saved) {
 
 </head>
 
+<script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.min.js"></script>
 
-
-<body class="min-h-screen">
+<body class="min-h-screen" style="transition: 0.3s ease;" data-auto-animate>
 
     <header class="navbar bg-base-200 px-4">
       <div class="flex-1">
@@ -97,7 +97,8 @@ if (saved) {
         @RenderBody()
     </main>
 
-<script src="~/js/index.js"></script>
+<script type="module" src="~/js/index.js"></script>
+    <script src="~/lib/anime/anime.umd.min.js"></script>
 @RenderSection("Scripts", required: false)
 
     

@@ -1,3 +1,7 @@
+
+
+import { animate } from './animejs';
+
 const form = document.getElementById("searchForm");
 const ipInput = document.getElementById("searchIP");
 const hostInput = document.getElementById("searchHost");
@@ -7,10 +11,12 @@ const serialNumberInput = document.getElementById("searchSN");
 const modelInput = document.getElementById("searchModel");
 const emptyCheckBox = document.getElementById("skipEmptyCheckBox");
 
-ALERT_TOGGLE = 50000
+const ALERT_TOGGLE = 50000
 
 const raw = document.getElementById("page-data")?.textContent ?? "{}";
 var pageData = JSON.parse(raw);
+
+
 
 // guard in case elements aren't on some pages
 if (form) {
@@ -55,8 +61,13 @@ function toggleRow(row, count) {
     }
     //document.getElementById("errorAlert").classList.add("hidden");
     const detailRow = row.nextElementSibling;
+    
     detailRow?.classList.toggle("hidden");
+
+    const isOpen = detailRow.classList.contains("hidden")
+   
 }
+
 
 function showAlert() {
 
@@ -112,7 +123,7 @@ function ipToNumber(ip) {
 
 function sortTable(th, asc) {
 
-    console.log("sorting header: ",th)
+    console.log("sorting headerr: ",th)
     
     if (th == "Ip") {
         if (asc == "true") {
@@ -121,6 +132,17 @@ function sortTable(th, asc) {
         }
         else {
             pageData.records.sort((a, b) => ipToNumber(b[th]) - ipToNumber(a[th]))
+        }
+    }
+    else if (th == "LastFoundDate") {
+
+        console.log(pageData.records[0][th])
+        if (asc == "true") {
+
+            pageData.records.sort((a, b) => Date.parse(a[th]) - Date.parse(b[th]))
+        }
+        else {
+            pageData.records.sort((a, b) => Date.parse(b[th]) - Date.parse(a[th]))
         }
     }
     else {
@@ -156,7 +178,7 @@ function sortTable(th, asc) {
         userField.innerHTML = r.LastLoggedUser
 
         var foundField = document.getElementById("foundRow{" + i + "}")
-        foundField.innerHTML = r.LastFoundDate
+        foundField.innerHTML = new Date(r.LastFoundDate).toLocaleString("pl-PL")
 
         var osField = document.getElementById("osRow{" + i + "}")
         osField.innerHTML = r.OperatingSystem
@@ -207,114 +229,119 @@ document.querySelectorAll("table.table thead th[data-property]").forEach(th => {
 
 // Customization of tabs to slider value
 const slider=document.getElementById("rowsSlider")
-
-slider.addEventListener("mouseup", () => {
-    console.clear()
-    console.log("slider value: ", slider.value)
-
-    
-    pageData.maxRowsPrint = slider.value
-
-    var recordsAmount = pageData.records.length
-    var auxTabNum = Math.ceil(pageData.records.length / pageData.maxRowsPrint);
-
-    var tabsDiv = document.getElementById("tabsDiv");
-
-    console.log("rows per tab: ", pageData.maxRowsPrint, " tabsNum: ", auxTabNum)
-    console.log("tabsDiv before ",tabsDiv)
-
-    let html=""
-    for (var i = 0; i < auxTabNum; i++) {
-        radioId = "tab{" + i + "}"
-        if (i == 0) {
-            
-            html += '<input type="radio" name="radio" id="' + radioId + '"checked="checked" class="tab" aria-label="' + (i + 1) + '" />';
-        }
-        else {
-            html += '<input type="radio" name="radio" id ="' + radioId +'"class="tab  [--tab-bg:var(--color-accent)]" aria-label=\"' + (i + 1)+'\" />'
-
-        }
+if (slider != null) {
 
 
-        html += "<div  class=\"sticky h-70 overflow-x-auto tab-content border-base-300 bg-base-100 p-2\">"
+    slider.addEventListener("mouseup", () => {
+        console.clear()
+        console.log("slider value: ", slider.value)
 
-        html += "<table class=\"table table-pin-rows table-pin-cols \">"
-        html+= "<thead class=\"sticky top-0 bg-base-100\">"
-        html+= "<tr>"
-        html+= "<th data-property=\"Ip\" class=\"ipHeader\">Ip Address</th>"
-        html+= "<th data-property=\"Hostname\">Hostname</th>"
-        html+= "<th data-property=\"LastLoggedUser\">Last Logged User</th>"
-        html+= "<th data-property=\"LastFoundDate\">Last Found Date</th>"
-        html+= "<th data-property=\"OperatingSystem\">OperatingSystem</th>"
-        html+= "<th data-property=\"SerialNumber\">Serial</th>"
-        html+= "<th data-property=\"Model\">Model</th>"
-        html+= "<th data-property=\"ProcGen\">ProcGen</th>"
-        html+= "</tr>"
-        html+= "</thead><tbody>"
-        for (var j = 0; j < slider.value; j++) {
-            if ((i * slider.value) + j == pageData.records.length) {
-                break;
+
+        pageData.maxRowsPrint = slider.value
+
+        var recordsAmount = pageData.records.length
+        var auxTabNum = Math.ceil(pageData.records.length / pageData.maxRowsPrint);
+
+        var tabsDiv = document.getElementById("tabsDiv");
+
+        console.log("rows per tab: ", pageData.maxRowsPrint, " tabsNum: ", auxTabNum)
+        console.log("tabsDiv before ", tabsDiv)
+
+        let html = ""
+        for (var i = 0; i < auxTabNum; i++) {
+            radioId = "tab{" + i + "}"
+            if (i == 0) {
+
+                html += '<input type="radio" name="radio" id="' + radioId + '"checked="checked" class="tab" aria-label="' + (i + 1) + '" />';
             }
-            var index = (i * slider.value) + j;
-            //console.log(pageData.records[debug])
-            var ip = pageData.records[index];
-            html += "<tr class=\"hover:bg-base-300  tableRow{" + index + "}\" onclick=\"toggleRow(this," + pageData.records.length + ")\">"
-            html += "<td id = \"ipRow{" + index + "}\">"+ip.Ip+"</td>"
-            html += "<td id=\"hostnameRow{" + index + "}\">" + ip.Hostname+"</td>"
-            html += "<td id=\"userRow{" + index + "}\">" + ip.LastLoggedUser +"</td>"
-            html += "<td id=\"foundRow{" + index + "}\">" + ip.LastFoundDate +"</td>"
-            html += "<td id=\"osRow{" + index + "}\">" + ip.OperatingSystem +"</td>"
-            html += "<td id=\"snRow{" + index + "}\">" + ip.SerialNumber +"</td>"
-            html += "<td id=\"modelRow{" + index + "}\">" + ip.Model +"</td>"
-            html += "<td id=\"procGenRow{" + index + "}\">" + ip.ProcGen +"</td>"
+            else {
+                html += '<input type="radio" name="radio" id ="' + radioId + '"class="tab  [--tab-bg:var(--color-accent)]" aria-label=\"' + (i + 1) + '\" />'
+
+            }
+
+
+            html += "<div  class=\"sticky h-70 overflow-x-auto tab-content border-base-300 bg-base-100 p-2\">"
+
+            html += "<table class=\"table table-pin-rows table-pin-cols \">"
+            html += "<thead class=\"sticky top-0 bg-base-100\">"
+            html += "<tr>"
+            html += "<th data-property=\"Ip\" class=\"ipHeader\">Ip Address</th>"
+            html += "<th data-property=\"Hostname\">Hostname</th>"
+            html += "<th data-property=\"LastLoggedUser\">Last Logged User</th>"
+            html += "<th data-property=\"LastFoundDate\">Last Found Date</th>"
+            html += "<th data-property=\"OperatingSystem\">OperatingSystem</th>"
+            html += "<th data-property=\"SerialNumber\">Serial</th>"
+            html += "<th data-property=\"Model\">Model</th>"
+            html += "<th data-property=\"ProcGen\">ProcGen</th>"
             html += "</tr>"
+            html += "</thead><tbody>"
+            for (var j = 0; j < slider.value; j++) {
+                if ((i * slider.value) + j == pageData.records.length) {
+                    break;
+                }
+                var index = (i * slider.value) + j;
+                //console.log(pageData.records[debug])
+                var ip = pageData.records[index];
+                html += "<tr class=\"hover:bg-base-300  tableRow{" + index + "}\" onclick=\"toggleRow(this," + pageData.records.length + ")\">"
+                html += "<td id = \"ipRow{" + index + "}\">" + ip.Ip + "</td>"
+                html += "<td id=\"hostnameRow{" + index + "}\">" + ip.Hostname + "</td>"
+                html += "<td id=\"userRow{" + index + "}\">" + ip.LastLoggedUser + "</td>"
+                html += "<td id=\"foundRow{" + index + "}\">" + ip.LastFoundDate + "</td>"
+                html += "<td id=\"osRow{" + index + "}\">" + ip.OperatingSystem + "</td>"
+                html += "<td id=\"snRow{" + index + "}\">" + ip.SerialNumber + "</td>"
+                html += "<td id=\"modelRow{" + index + "}\">" + ip.Model + "</td>"
+                html += "<td id=\"procGenRow{" + index + "}\">" + ip.ProcGen + "</td>"
+                html += "</tr>"
 
 
-            html+= "<tr class=\"hidden\">"
-            html+= "<td colspan=\"9\">"
-            html += "<div class=\"card card-border p-4 bg-base-200\" id=\"tableRowHidden{" + index + "}\">"
-            html+= "More information about " +ip.Ip + " here"
-            html+= "</div>"
-            html+= "</td>"
-            html+= "</tr>"
+                html += "<tr class=\"hidden\">"
+                html += "<td colspan=\"9\">"
+                html += "<div class=\"card card-border p-4 bg-base-200\" id=\"tableRowHidden{" + index + "}\">"
+                html += "More information about " + ip.Ip + " here"
+                html += "</div>"
+                html += "</td>"
+                html += "</tr>"
 
+            }
+            html += "</tbody></table></div>"
         }
-        html += "</tbody></table></div>"
-    }
-    tabsDiv.innerHTML = html;
+        tabsDiv.innerHTML = html;
 
-    if (pageData.sortingBy != "") {
-        //sortTable(pageData.sortingBy)
-    }
-    console.log("tabsDiv after: ", tabsDiv)
+        if (pageData.sortingBy != "") {
+            //sortTable(pageData.sortingBy)
+        }
+        console.log("tabsDiv after: ", tabsDiv)
 
-    // reattach table header click handlers 
-    document.querySelectorAll("table.table thead th[data-property]").forEach(th => {
+        // reattach table header click handlers 
+        document.querySelectorAll("table.table thead th[data-property]").forEach(th => {
 
-        th.style.cursor = "pointer";
+            th.style.cursor = "pointer";
 
-        th.addEventListener("click", () => {
+            th.addEventListener("click", () => {
 
-            const property = th.dataset.property;
+                const property = th.dataset.property;
 
-            document.getElementById("OrderBy").value = property;
+                document.getElementById("OrderBy").value = property;
 
-            const ascInput = document.getElementById("Asc");
-            ascInput.value = ascInput.value === "true" ? "false" : "true";
+                const ascInput = document.getElementById("Asc");
+                ascInput.value = ascInput.value === "true" ? "false" : "true";
 
-            sortTable(property, ascInput.value)
+                sortTable(property, ascInput.value)
+            });
+
         });
-
-    });
-})
+    })
 
 
-const sliderPrintValue=document.getElementById("sliderPrintValue")
-slider.addEventListener("input",()=>{
-    sliderPrintValue.innerHTML = slider.value
+    const sliderPrintValue = document.getElementById("sliderPrintValue")
+    if (sliderPrintValue != null) {
+        slider.addEventListener("input", () => {
+            sliderPrintValue.innerHTML = slider.value
 
-})
+        })
+    }
 
+}
 
 // dropdown sort 
 const dropdown = document.querySelector(".dropdown-hover");

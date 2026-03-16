@@ -24,8 +24,9 @@
 	<p type="" id="Asc" name="Request.Asc" value="!Request.Asc" asp-for="Request.Asc" />
 </head>
 
-<script id="page-data" type="application/json">
-	@Html.Raw(JsonSerializer.Serialize(jsModel))	
+<script id="page-data" type="application/json" src="~/js/index.js">
+	@Html.Raw(JsonSerializer.Serialize(jsModel))
+	
 </script>
 
 
@@ -238,10 +239,11 @@
 															{
 																break;
 															}
+															
 
 															var ip = Model.Results[(i * MAX_ROWS) + j];
 															var aux = (i * MAX_ROWS) + j;
-															<tr class="hover:bg-base-300  tableRow{@aux}" onclick="toggleRow(this,@Model?.Results?.Count())">
+															<tr class="hover:bg-base-300  tableRow{@aux}" onclick="toggleRow(@i,@Model?.Results?.Count())">
 																<td id="ipRow{@aux}">@ip.Ip</td>
 																<td id="hostnameRow{@aux}">@ip.Hostname</td>
 																<td id="userRow{@aux}">@ip.LastLoggedUser</td>

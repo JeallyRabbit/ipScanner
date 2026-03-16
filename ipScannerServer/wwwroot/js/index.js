@@ -1,7 +1,5 @@
 
 
-import { animate } from './animejs';
-
 const form = document.getElementById("searchForm");
 const ipInput = document.getElementById("searchIP");
 const hostInput = document.getElementById("searchHost");
@@ -51,7 +49,7 @@ if (form) {
 }
 
 // Expanding table rows
-function toggleRow(row, count) {
+window.toggleRow = function toggleRow(rowIndex, count) {
 
     
     if (count > ALERT_TOGGLE) {
@@ -60,13 +58,18 @@ function toggleRow(row, count) {
         return
     }
     //document.getElementById("errorAlert").classList.add("hidden");
-    const detailRow = row.nextElementSibling;
-    
-    detailRow?.classList.toggle("hidden");
+    const row = document.getElementById(pageData.records[rowIndex]);
+    if (row != null) {
+        const detailRow = row.nextElementSibling;
 
-    const isOpen = detailRow.classList.contains("hidden")
+        detailRow?.classList.toggle("hidden");
+
+        const isOpen = detailRow.classList.contains("hidden")
+    }
+    
    
 }
+//window.toggleRow = toggleRow;
 
 
 function showAlert() {
@@ -249,7 +252,7 @@ if (slider != null) {
 
         let html = ""
         for (var i = 0; i < auxTabNum; i++) {
-            radioId = "tab{" + i + "}"
+            var radioId = "tab{" + i + "}"
             if (i == 0) {
 
                 html += '<input type="radio" name="radio" id="' + radioId + '"checked="checked" class="tab" aria-label="' + (i + 1) + '" />';
@@ -282,15 +285,25 @@ if (slider != null) {
                 var index = (i * slider.value) + j;
                 //console.log(pageData.records[debug])
                 var ip = pageData.records[index];
+
+                var hostnameToPrint = ip.Hostname == null ? "" : ip.Hostname;
+                var lastLoggedUserToPrint = ip.LastLoggedUser == null ? "" : ip.LastLoggedUser;
+                var lastFoundDateToPrint = ip.LastFoundDate == null ? "" : ip.LastFoundDate;
+                var operatingSystemToPrint = ip.OperatingSystem == null ? "" : ip.OperatingSystem;
+                var serialNumberToPrint = ip.SerialNumber == null ? "" : ip.SerialNumber;
+                var modelToPrint = ip.Model == null ? "" : ip.Model;
+                var procGenToPrint = ip.ProcGen == null ? "" : ip.ProcGen;
+
+
                 html += "<tr class=\"hover:bg-base-300  tableRow{" + index + "}\" onclick=\"toggleRow(this," + pageData.records.length + ")\">"
                 html += "<td id = \"ipRow{" + index + "}\">" + ip.Ip + "</td>"
-                html += "<td id=\"hostnameRow{" + index + "}\">" + ip.Hostname + "</td>"
-                html += "<td id=\"userRow{" + index + "}\">" + ip.LastLoggedUser + "</td>"
-                html += "<td id=\"foundRow{" + index + "}\">" + ip.LastFoundDate + "</td>"
-                html += "<td id=\"osRow{" + index + "}\">" + ip.OperatingSystem + "</td>"
-                html += "<td id=\"snRow{" + index + "}\">" + ip.SerialNumber + "</td>"
-                html += "<td id=\"modelRow{" + index + "}\">" + ip.Model + "</td>"
-                html += "<td id=\"procGenRow{" + index + "}\">" + ip.ProcGen + "</td>"
+                html += "<td id=\"hostnameRow{" + index + "}\">" + hostnameToPrint + "</td>"
+                html += "<td id=\"userRow{" + index + "}\">" + lastLoggedUserToPrint + "</td>"
+                html += "<td id=\"foundRow{" + index + "}\">" + lastFoundDateToPrint + "</td>"
+                html += "<td id=\"osRow{" + index + "}\">" + operatingSystemToPrint + "</td>"
+                html += "<td id=\"snRow{" + index + "}\">" + serialNumberToPrint + "</td>"
+                html += "<td id=\"modelRow{" + index + "}\">" + modelToPrint + "</td>"
+                html += "<td id=\"procGenRow{" + index + "}\">" + procGenToPrint + "</td>"
                 html += "</tr>"
 
 

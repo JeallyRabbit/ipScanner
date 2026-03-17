@@ -58,13 +58,12 @@ window.toggleRow = function toggleRow(rowIndex, count) {
         return
     }
     //document.getElementById("errorAlert").classList.add("hidden");
-    const row = document.getElementById(pageData.records[rowIndex]);
+    const row = document.getElementById("tableRowHidden{"+rowIndex+"}");
     if (row != null) {
-        const detailRow = row.nextElementSibling;
+        
 
-        detailRow?.classList.toggle("hidden");
+        row.classList.toggle("hidden");
 
-        const isOpen = detailRow.classList.contains("hidden")
     }
     
    
@@ -196,8 +195,13 @@ function sortTable(th, asc) {
         procGenField.innerHTML = r.ProcGen
 
         var debug = "tableRowHidden{" + i + "}"
-        var hiddenRow = document.getElementById("tableRowHidden{" + i+"}")
-        hiddenRow.innerHTML = ("More information about " + r.Ip +" here")
+        var hiddenRow = document.getElementById("tableRowHidden{" + i + "}")
+        var html = "<td colspan=\"9\"> <div class=\"card card-border p-4 bg-base-200\">More information about"+ r.Ip+" here</div ></td >"
+
+        if (hiddenRow != null) {
+            hiddenRow.innerHTML = html;
+        }
+        
     
 
         
@@ -263,11 +267,11 @@ if (slider != null) {
             }
 
 
-            html += "<div  class=\"sticky h-70 overflow-x-auto tab-content border-base-300 bg-base-100 p-2\">"
+            html += "<div  class=\"sticky tab-content h-120 overflow-x-auto border-base-300 bg-base-100 p-2\">"
 
             html += "<table class=\"table table-pin-rows table-pin-cols \">"
             html += "<thead class=\"sticky top-0 bg-base-100\">"
-            html += "<tr>"
+            html += "<tr >"
             html += "<th data-property=\"Ip\" class=\"ipHeader\">Ip Address</th>"
             html += "<th data-property=\"Hostname\">Hostname</th>"
             html += "<th data-property=\"LastLoggedUser\">Last Logged User</th>"
@@ -277,7 +281,7 @@ if (slider != null) {
             html += "<th data-property=\"Model\">Model</th>"
             html += "<th data-property=\"ProcGen\">ProcGen</th>"
             html += "</tr>"
-            html += "</thead><tbody>"
+            html += "</thead><tbody >"
             for (var j = 0; j < slider.value; j++) {
                 if ((i * slider.value) + j == pageData.records.length) {
                     break;
@@ -295,7 +299,7 @@ if (slider != null) {
                 var procGenToPrint = ip.ProcGen == null ? "" : ip.ProcGen;
 
 
-                html += "<tr class=\"hover:bg-base-300  tableRow{" + index + "}\" onclick=\"toggleRow(this," + pageData.records.length + ")\">"
+                html += "<tr class=\"hover:bg-base-300 bg-base-100  tableRow{" + index + "}\" onclick=\"toggleRow("+index+"," + pageData.records.length + ")\">"
                 html += "<td id = \"ipRow{" + index + "}\">" + ip.Ip + "</td>"
                 html += "<td id=\"hostnameRow{" + index + "}\">" + hostnameToPrint + "</td>"
                 html += "<td id=\"userRow{" + index + "}\">" + lastLoggedUserToPrint + "</td>"
@@ -307,14 +311,13 @@ if (slider != null) {
                 html += "</tr>"
 
 
-                html += "<tr class=\"hidden\">"
+                html += "<tr class=\"hidden\" id=\"tableRowHidden{"+index+"}\">"
                 html += "<td colspan=\"9\">"
-                html += "<div class=\"card card-border p-4 bg-base-200\" id=\"tableRowHidden{" + index + "}\">"
-                html += "More information about " + ip.Ip + " here"
+                html += "<div class=\"card card-border p-4 bg-base-200\">"
+                html += "Moreee information about " + ip.Ip + " here"
                 html += "</div>"
                 html += "</td>"
                 html += "</tr>"
-
             }
             html += "</tbody></table></div>"
         }

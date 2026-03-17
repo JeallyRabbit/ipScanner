@@ -2,12 +2,13 @@
   "profiles": {
     "Server": {
       "commandName": "Project",
+      "commandLineArgs": "--db-connection-file serverConnection_postgres.json --db-user-password postgres",
       "launchBrowser": true,
-      "console": "integratedTerminal",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
+      "console": "integratedTerminal",
       "applicationUrl": "https://localhost:63134;http://localhost:63135"
-    },
+    }
   }
 }

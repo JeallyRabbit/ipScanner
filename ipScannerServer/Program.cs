@@ -154,6 +154,41 @@ namespace MyApp
             var choice = "";
             int height = AnsiConsole.Console.Profile.Height;
             string connectionString = "";
+            string fileSelection = "";
+            string password = "";
+            bool usingParameters = false;
+            var parsed = new Dictionary<string, string>();
+
+
+            //parsing data from parameters
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i].StartsWith("--"))
+                {
+                    string key = args[i];
+                    string value = (i + 1 < args.Length && !args[i + 1].StartsWith("--"))
+                        ? args[i + 1]
+                        : null;
+
+                    parsed[key] = value;
+                }
+            }
+
+            // Example usage
+            if (parsed.TryGetValue("--db-connection-file", out var dbFile))
+            {
+                menu = MENU_DATABASE_JSON;
+                fileSelection = dbFile;
+
+                if (parsed.TryGetValue("--db-user-password", out var passwd))
+                {
+                    menu = MENU_DATABASE_JSON;
+                    password = passwd;
+                    usingParameters = true;
+                }
+
+            }
+
 
 
 
@@ -213,7 +248,10 @@ namespace MyApp
                 else if (menu == MENU_DATABASE_JSON)
                 {
                     System.Console.Clear();
-                    string? fileSelection = Program.fileSelection(currentDir, height);
+                    if (fileSelection == "")
+                    {
+                        fileSelection = Program.fileSelection(currentDir, height);
+                    }
 
                     if (fileSelection == "..")
                     {
@@ -226,7 +264,22 @@ namespace MyApp
                     }
                     else if (fileSelection.ToLower().EndsWith(".json"))
                     {
-                        var json = File.ReadAllText(fileSelection);
+                        string json = "";
+                        try
+                        {
+                            var readJson = File.ReadAllText(fileSelection);
+                            json = readJson;
+                        }
+                        catch (FileNotFoundException ex)
+                        {
+                            AnsiConsole.MarkupLine($"[red]Failed to read:[/] {fileSelection}");
+                            AnsiConsole.MarkupLine($"[grey]{ex.Message}[/]");
+                            fileSelection = "";
+                            usingParameters = false;
+                            menu = MENU_DATABASE_CONNECTION_TYPE;
+                        }
+
+
                         Database? obj = null;
                         try
                         {
@@ -258,19 +311,23 @@ namespace MyApp
                                     .RoundedBorder()
                                     .BorderColor(Color.Yellow));
 
-                            bool isJsonValid = AnsiConsole.Prompt(
+                            bool isJsonValid = (!usingParameters) ? AnsiConsole.Prompt(
                         new TextPrompt<bool>("Is this data correct?")
                         .AddChoice(true)
                         .AddChoice(false)
                         .DefaultValue(true)
-                        .WithConverter(choice => choice ? "y" : "n"));
+                        .WithConverter(choice => choice ? "y" : "n")) : true;
 
 
                             if (isJsonValid)
                             {
-                                var passwordInput = AnsiConsole.Prompt(
+                                if (!usingParameters)
+                                {
+                                    var passwordInput = AnsiConsole.Prompt(
                                                     new TextPrompt<string>($"[[postgres]] Enter user: [red]{obj.getUsername()}[/] password:").AllowEmpty().Secret());
-                                string password = (passwordInput != "") ? passwordInput : "postgres";
+                                    password = (passwordInput != "") ? passwordInput : "postgres";
+                                }
+
 
                                 connectionString = $"Host={obj.getAddress()};Port={obj.getPort()};Database={obj.getDatabaseName()};User Id={obj.getUsername()};Password={password};Ssl Mode=Disable";
                                 menu = MENU_PROCESS_SERVER_SIDE;
@@ -320,9 +377,14 @@ namespace MyApp
                     new TextPrompt<string>("[[postgres]] Enter username:").AllowEmpty());
                     string username = (usernameInput != "") ? usernameInput : "postgres";
 
-                    var passwordInput = AnsiConsole.Prompt(
-                    new TextPrompt<string>("[[postgres]] Enter user password:").AllowEmpty().Secret());
-                    string password = (passwordInput != "") ? passwordInput : "";
+
+                    if (!usingParameters)
+                    {
+                        var passwordInput = AnsiConsole.Prompt(
+                        new TextPrompt<string>("[[postgres]] Enter user password:").AllowEmpty().Secret());
+                        password = (passwordInput != "") ? passwordInput : "";
+                    }
+
 
                     var ifSave = AnsiConsole.Prompt(
                     new TextPrompt<bool>("Save to .json?")
@@ -625,6 +687,10 @@ namespace MyApp
                     }
 
 
+                }
+                else
+                {
+                    return;
                 }
 
             }

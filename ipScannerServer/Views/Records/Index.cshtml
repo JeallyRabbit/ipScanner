@@ -239,11 +239,11 @@
 															{
 																break;
 															}
-															
+
 
 															var ip = Model.Results[(i * MAX_ROWS) + j];
 															var aux = (i * MAX_ROWS) + j;
-															<tr class="hover:bg-base-300  tableRow{@aux}" onclick="toggleRow(@i,@Model?.Results?.Count())">
+															<tr class="hover:bg-base-300  tableRow{@aux}" onclick="toggleRow(@aux,@Model?.Results?.Count())">
 																<td id="ipRow{@aux}">@ip.Ip</td>
 																<td id="hostnameRow{@aux}">@ip.Hostname</td>
 																<td id="userRow{@aux}">@ip.LastLoggedUser</td>
@@ -255,10 +255,10 @@
 															</tr>
 
 
-															
-															<tr class="hidden">
+
+															<tr class="hidden" id="tableRowHidden{@aux}">
 																<td colspan="9">
-																	<div class="card card-border p-4 bg-base-200" id="tableRowHidden{@aux}">
+																	<div class="card card-border p-4 bg-base-200">
 																		More information about @ip.Ip here
 																	</div>
 																</td>

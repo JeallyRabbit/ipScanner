@@ -243,11 +243,13 @@
 
 															var ip = Model.Results[(i * MAX_ROWS) + j];
 															var aux = (i * MAX_ROWS) + j;
+															var lastFoundPrint = ip.LastFoundDate.ToString() == "" ? "" : ip.LastFoundDate.ToString(); // Not found
+
 															<tr class="hover:bg-base-300  tableRow{@aux}" onclick="toggleRow(@aux,@Model?.Results?.Count())">
 																<td id="ipRow{@aux}">@ip.Ip</td>
 																<td id="hostnameRow{@aux}">@ip.Hostname</td>
 																<td id="userRow{@aux}">@ip.LastLoggedUser</td>
-																<td id="foundRow{@aux}">@ip.LastFoundDate</td>
+																<td id="foundRow{@aux}">@lastFoundPrint</td>
 																<td id="osRow{@aux}">@ip.OperatingSystem</td>
 																<td id="snRow{@aux}">@ip.SerialNumber</td>
 																<td id="modelRow{@aux}">@ip.Model</td>

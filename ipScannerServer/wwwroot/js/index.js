@@ -180,7 +180,8 @@ function sortTable(th, asc) {
         userField.innerHTML = r.LastLoggedUser
 
         var foundField = document.getElementById("foundRow{" + i + "}")
-        foundField.innerHTML = new Date(r.LastFoundDate).toLocaleString("pl-PL")
+        var a = new Date(r.LastFoundDate).toLocaleString("pl-PL") // Not found
+        foundField.innerHTML = a == "1.01.1970, 01:00:00" ? "" : a
 
         var osField = document.getElementById("osRow{" + i + "}")
         osField.innerHTML = r.OperatingSystem
@@ -292,12 +293,14 @@ if (slider != null) {
 
                 var hostnameToPrint = ip.Hostname == null ? "" : ip.Hostname;
                 var lastLoggedUserToPrint = ip.LastLoggedUser == null ? "" : ip.LastLoggedUser;
-                var lastFoundDateToPrint = ip.LastFoundDate == null ? "" : ip.LastFoundDate;
+                var lastFoundDateToPrint = ip.LastFoundDate == null ? "" : new Date(ip.LastFoundDate).toLocaleString("pl-PL"); // Not found
                 var operatingSystemToPrint = ip.OperatingSystem == null ? "" : ip.OperatingSystem;
                 var serialNumberToPrint = ip.SerialNumber == null ? "" : ip.SerialNumber;
                 var modelToPrint = ip.Model == null ? "" : ip.Model;
                 var procGenToPrint = ip.ProcGen == null ? "" : ip.ProcGen;
 
+                // new Date(r.LastFoundDate).toLocaleString("pl-PL")
+               // var lastFoundPrint = lastFoundDateToPrint.ToString() == "" ? "" : lastFoundDateToPrint.ToString();
 
                 html += "<tr class=\"hover:bg-base-300 bg-base-100  tableRow{" + index + "}\" onclick=\"toggleRow("+index+"," + pageData.records.length + ")\">"
                 html += "<td id = \"ipRow{" + index + "}\">" + ip.Ip + "</td>"

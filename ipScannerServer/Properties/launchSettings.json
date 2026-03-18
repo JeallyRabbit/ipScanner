@@ -2,7 +2,6 @@
   "profiles": {
     "Server": {
       "commandName": "Project",
-      "commandLineArgs": "--db-connection-file serverConnection_postgres.json --db-user-password postgres",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

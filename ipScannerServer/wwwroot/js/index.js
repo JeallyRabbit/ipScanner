@@ -1,3 +1,4 @@
+//const { doc } = require("animejs/dist/modules/core/consts");
 
 
 const form = document.getElementById("searchForm");
@@ -195,16 +196,14 @@ function sortTable(th, asc) {
         var procGenField = document.getElementById("procGenRow{" + i + "}")
         procGenField.innerHTML = r.ProcGen
 
-        var debug = "tableRowHidden{" + i + "}"
         var hiddenRow = document.getElementById("tableRowHidden{" + i + "}")
-        var html = "<td colspan=\"9\"> <div class=\"card card-border p-4 bg-base-200\">More information about"+ r.Ip+" here</div ></td >"
 
-        if (hiddenRow != null) {
-            hiddenRow.innerHTML = html;
-        }
+
+
         
-    
 
+        rebuildHiddenRow(r, hiddenRow);
+     
         
         i++;
     }
@@ -314,13 +313,29 @@ if (slider != null) {
                 html += "</tr>"
 
 
-                html += "<tr class=\"hidden\" id=\"tableRowHidden{"+index+"}\">"
-                html += "<td colspan=\"9\">"
-                html += "<div class=\"card card-border p-4 bg-base-200\">"
-                html += "Moreee information about " + ip.Ip + " here"
-                html += "</div>"
-                html += "</td>"
+                html += "<tr class=\"hidden\" id=\"tableRowHidden{" + index + "}\">"
+
+                html += "<td colspan =\"9\" class=\"md: flex-row  md:items-center\">";
+                html += "<div class=\"card card-border card-body mx-auto relative bg-base-200";
+                html += " md:flex-row  md:items-right\">";
+                html += "More information about @ip.Ip here";
+                html += "<div style = \"margin-left: auto;\">";
+                html += "<button class=\"btn btn-primary\" p-4";
+                html += "type=\"button\"";
+                html += "id=\"jsonFileButton\">";
+                html += "Export to JSON";
+                html += "</button>";
+                html += "<button class=\"btn btn-primary\"";
+                html += " type=\"button\"";
+                html += "id=\"csvFileButton\">";
+                html += "Export to CSV";
+                html += "</button>";
+                html += "</div >";
+                html += "</div >";
+                html += "</td >";
+
                 html += "</tr>"
+
             }
             html += "</tbody></table></div>"
         }
@@ -385,3 +400,42 @@ dropdown.addEventListener("click", (e) => {
     }
 
 });
+
+function rebuildHiddenRow(r, hiddenRow) {
+    var td = document.createElement("td");
+    td.setAttribute("colspan", "9");
+
+    var divText = document.createElement("div");
+    divText.classList.add("card", "card-border", "card-body", "mx-auto", "relative", "bg-base-200", "md:flex-row");
+    divText.textContent = "More information about " + r.Ip + " here";
+
+    var divButtons = document.createElement("div");
+    divButtons.style = "margin-left: auto;";
+
+    var buttonJson = document.createElement("button");
+    buttonJson.classList.add("btn", "btn-primary");
+    buttonJson.type = "button";
+    buttonJson.id = "jsonFileButton";
+    buttonJson.textContent = "Export to JSON";
+
+    var buttonCsv = document.createElement("button");
+    buttonCsv.classList.add("btn", "btn-primary");
+    buttonCsv.type = "button";
+    buttonCsv.id = "csvFileButton";
+    buttonCsv.textContent = "Export to CSV";
+
+
+
+    divButtons.appendChild(buttonJson);
+    divButtons.appendChild(buttonCsv);
+    divText.appendChild(divButtons);
+
+    td.appendChild(divText);
+
+
+    while (hiddenRow.hasChildNodes()) {
+        var child = hiddenRow.firstChild;
+        hiddenRow.removeChild(child);
+    }
+    hiddenRow.appendChild(td);
+}

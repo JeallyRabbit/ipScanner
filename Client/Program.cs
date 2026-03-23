@@ -813,9 +813,8 @@ namespace Client
 
 
 
-                        //List<IP> addresses = client.GetFromJsonAsync<List<IP>>(url).GetAwaiter().GetResult();
+                        List<IP> addresses = client.GetFromJsonAsync<List<IP>>(url).GetAwaiter().GetResult();
                         //Console.WriteLine(addresses.Count);
-                        List<IP> addresses=[new IP("192.168.1.16")];
 
                         if (addresses is null)
                         {

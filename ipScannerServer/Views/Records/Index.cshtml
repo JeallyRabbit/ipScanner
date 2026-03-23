@@ -216,7 +216,7 @@
 											}
 
 
-											<div class="sticky tab-content h-120 overflow-x-auto border-base-300 bg-base-100 p-2">
+											<div class="sticky tab-content h-120 overflow-x-auto border-base-300 bg-base-100">
 
 												<table class="table table-pin-rows table-pin-cols">
 													<thead class="sticky top-0 bg-base-100">
@@ -260,9 +260,23 @@
 
 															<tr class="hidden" id="tableRowHidden{@aux}">
 																<td colspan="9">
-																	<div class="card card-border p-4 bg-base-200">
-																		More information about @ip.Ip here
-																	</div>
+																	<div class="card card-border card-body mx-auto relative bg-base-200 md:flex-row ">
+																				More information about @ip.Ip here
+																		<div style="margin-left: auto">
+																					<button class="btn btn-primary p-4"
+																							
+																							type="button"
+																							id="jsonFileButton">
+																						Export to JSON
+																					</button>
+																					<button class="btn btn-primary"
+																							type="button"
+																							id="csvFileButton">
+																						Export to CSV
+																					</button>
+																				</div>
+																					
+																		</div>
 																</td>
 															</tr>
 															

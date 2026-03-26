@@ -246,43 +246,113 @@ if (slider != null) {
 
         pageData.maxRowsPrint = slider.value
 
-        var recordsAmount = pageData.records.length
         var auxTabNum = Math.ceil(pageData.records.length / pageData.maxRowsPrint);
 
         var tabsDiv = document.getElementById("tabsDiv");
+
+        
+        while (tabsDiv.hasChildNodes()) {
+            var child = tabsDiv.firstChild;
+            tabsDiv.removeChild(child);
+        }
+        
 
         console.log("rows per tab: ", pageData.maxRowsPrint, " tabsNum: ", auxTabNum)
         console.log("tabsDiv before ", tabsDiv)
 
         let html = ""
+        
+
         for (var i = 0; i < auxTabNum; i++) {
+
+           
+
             var radioId = "tab{" + i + "}"
+
+            var tabRadio = document.createElement("input");
+            tabRadio.classList.add("tab");
+            tabRadio.setAttribute("name", "radioName")
+            tabRadio.setAttribute("type", "radio")
+            tabRadio.setAttribute("class", "tab")
+            tabRadio.setAttribute("aria-label", (i + 1));
+            tabRadio.setAttribute("id", radioId);
+            tabsDiv.appendChild(tabRadio);
+
             if (i == 0) {
 
-                html += '<input type="radio" name="radio" id="' + radioId + '"checked="checked" class="tab" aria-label="' + (i + 1) + '" />';
+                //html += '<input type="radio" name="radio" id="' + radioId + '"  checked="checked" class="tab" aria-label="' + (i + 1) + '" />';
+                tabRadio.setAttribute("checked",true)
             }
             else {
-                html += '<input type="radio" name="radio" id ="' + radioId + '"class="tab  [--tab-bg:var(--color-accent)]" aria-label=\"' + (i + 1) + '\" />'
+                //html += '<input type="radio" name="radio" id ="' + radioId + '"class="tab  [--tab-bg:var(--color-accent)]" aria-label=\"' + (i + 1) + '\" />'
+                tabRadio.style["--tab-bg"]= "var(--color-accent)"
 
             }
 
+            const tabsSubDiv = document.createElement("div")
+            tabsSubDiv.classList.add("sticky", "tab-content", "h-120", "overflow-x-auto", "border-base-300","bg-base-100")
 
-            html += "<div  class=\"sticky tab-content h-120 overflow-x-auto border-base-300 bg-base-100 p-2\">"
+          
 
-            html += "<table class=\"table table-pin-rows table-pin-cols \">"
-            html += "<thead class=\"sticky top-0 bg-base-100\">"
-            html += "<tr >"
-            html += "<th data-property=\"Ip\" class=\"ipHeader\">Ip Address</th>"
-            html += "<th data-property=\"Hostname\">Hostname</th>"
-            html += "<th data-property=\"LastLoggedUser\">Last Logged User</th>"
-            html += "<th data-property=\"LastFoundDate\">Last Found Date</th>"
-            html += "<th data-property=\"OperatingSystem\">OperatingSystem</th>"
-            html += "<th data-property=\"SerialNumber\">Serial</th>"
-            html += "<th data-property=\"Model\">Model</th>"
-            html += "<th data-property=\"ProcGen\">ProcGen</th>"
-            html += "</tr>"
-            html += "</thead><tbody >"
-            for (var j = 0; j < slider.value; j++) {
+            const tableHead = document.createElement("thead");
+            tableHead.classList.add("sticky","top-0", "bg-base-100")
+
+                ///creating headers
+                const table = document.createElement("table");
+                table.classList.add("table", "table-pin-rows", "table-pin-cols");
+
+                const headerRow = document.createElement("tr");
+
+                var th = document.createElement("th");
+                th.setAttribute("data-property", "Ip");
+                th.classList.add("ipHeader");
+                th.textContent = "Ip Address";
+                headerRow.appendChild(th)
+
+                var th = document.createElement("th");
+                th.setAttribute("data-property", "Hostname");
+                th.textContent = "Hostname";
+                headerRow.appendChild(th)
+
+                var th = document.createElement("th");
+                th.setAttribute("data-property", "LastLoggedUser");
+                th.textContent = "Last Logged User";
+                headerRow.appendChild(th)
+
+                var th = document.createElement("th");
+                th.setAttribute("data-property", "LastFoundDate");
+                th.textContent = "Last Found Date";
+                headerRow.appendChild(th)
+
+                var th = document.createElement("th");
+                th.setAttribute("data-property", "OperatingSystem");
+                th.textContent = "OperatingSystem";
+                headerRow.appendChild(th)
+
+                var th = document.createElement("th");
+                th.setAttribute("data-property", "SerialNumber");
+                th.textContent = "Serial Number";
+                headerRow.appendChild(th)
+
+                var th = document.createElement("th");
+                th.setAttribute("data-property", "Model");
+                th.textContent = "Model";
+                headerRow.appendChild(th)
+
+                var th = document.createElement("th");
+                th.setAttribute("data-property", "ProcGen");
+                th.textContent = "ProcGen";
+                headerRow.appendChild(th)
+
+                tableHead.appendChild(headerRow)
+                table.appendChild(tableHead);
+            
+                ////////////////////////
+            const tableBody = document.createElement("tbody")
+            tableBody.setAttribute("id", "table-body");
+
+            for (var j = 0; j < slider.value; j++) 
+            {
                 if ((i * slider.value) + j == pageData.records.length) {
                     break;
                 }
@@ -298,48 +368,98 @@ if (slider != null) {
                 var modelToPrint = ip.Model == null ? "" : ip.Model;
                 var procGenToPrint = ip.ProcGen == null ? "" : ip.ProcGen;
 
-                // new Date(r.LastFoundDate).toLocaleString("pl-PL")
-               // var lastFoundPrint = lastFoundDateToPrint.ToString() == "" ? "" : lastFoundDateToPrint.ToString();
 
-                html += "<tr class=\"hover:bg-base-300 bg-base-100  tableRow{" + index + "}\" onclick=\"toggleRow("+index+"," + pageData.records.length + ")\">"
-                html += "<td id = \"ipRow{" + index + "}\">" + ip.Ip + "</td>"
-                html += "<td id=\"hostnameRow{" + index + "}\">" + hostnameToPrint + "</td>"
-                html += "<td id=\"userRow{" + index + "}\">" + lastLoggedUserToPrint + "</td>"
-                html += "<td id=\"foundRow{" + index + "}\">" + lastFoundDateToPrint + "</td>"
-                html += "<td id=\"osRow{" + index + "}\">" + operatingSystemToPrint + "</td>"
-                html += "<td id=\"snRow{" + index + "}\">" + serialNumberToPrint + "</td>"
-                html += "<td id=\"modelRow{" + index + "}\">" + modelToPrint + "</td>"
-                html += "<td id=\"procGenRow{" + index + "}\">" + procGenToPrint + "</td>"
-                html += "</tr>"
+                var row = document.createElement("tr")
+                row.classList.add("hover:bg-base-300", "bg-base-100", ("tableRow{" + index + "}"));
+                row.setAttribute("onclick", "toggleRow(" + index + "," + pageData.records.length + ")");
+
+                var td = document.createElement("td");
+                td.setAttribute("id", "ipRow{" + index + "}");
+                td.textContent = ip.Ip;
+                row.appendChild(td);
+
+                var td = document.createElement("td");
+                td.setAttribute("id", "hostnameRow{" + index + "}");
+                td.textContent = hostnameToPrint;
+                row.appendChild(td);
+                var td = document.createElement("td");
+                td.setAttribute("id", "userRow{" + index + "}");
+                td.textContent = lastLoggedUserToPrint;
+                row.appendChild(td);
+                var td = document.createElement("td");
+                td.setAttribute("id", "foundRow{" + index + "}");
+                td.textContent = lastFoundDateToPrint;
+                row.appendChild(td);
+                var td = document.createElement("td");
+                td.setAttribute("id", "osRow{" + index + "}");
+                td.textContent = operatingSystemToPrint;
+                row.appendChild(td);
+                var td = document.createElement("td");
+                td.setAttribute("id", "snRow{" + index + "}");
+                td.textContent = serialNumberToPrint;
+                row.appendChild(td);
+                var td = document.createElement("td");
+                td.setAttribute("id", "modelRow{" + index + "}");
+                td.textContent = modelToPrint;
+                row.appendChild(td);
+                var td = document.createElement("td");
+                td.setAttribute("id", "procGenRow{" + index + "}");
+                td.textContent = procGenToPrint;
+                row.appendChild(td);
+
+                tableBody.appendChild(row)
+
+                
 
 
-                html += "<tr class=\"hidden\" id=\"tableRowHidden{" + index + "}\">"
+                var hiddenRow = document.createElement("tr")
+                hiddenRow.classList.add("hidden")
+                hiddenRow.setAttribute("id", "tableRowHidden{" + index + "}");
 
-                html += "<td colspan =\"9\" class=\"md: flex-row  md:items-center\">";
-                html += "<div class=\"card card-border card-body mx-auto relative bg-base-200";
-                html += " md:flex-row  md:items-right\">";
-                html += "More information about @ip.Ip here";
-                html += "<div style = \"margin-left: auto;\">";
-                html += "<button class=\"btn btn-primary\" p-4";
-                html += "type=\"button\"";
-                html += "id=\"jsonFileButton\">";
-                html += "Export to JSON";
-                html += "</button>";
-                html += "<button class=\"btn btn-primary\"";
-                html += " type=\"button\"";
-                html += "id=\"csvFileButton\">";
-                html += "Export to CSV";
-                html += "</button>";
-                html += "</div >";
-                html += "</div >";
-                html += "</td >";
+                var tableDivider = document.createElement("td")
+                tableDivider.classList.add("md:flex-row", "md:items-center");
+                tableDivider.setAttribute("colspan", "9");
 
-                html += "</tr>"
+                var hiddenDiv = document.createElement("div");
+                hiddenDiv.classList.add("card", "card-border", "card-body", "mx-auto", "relative", "bg-base-200", "md:flex-row", "md:items-right")
+                hiddenDiv.textContent = "More information about " + ip.Ip + " here";
+                hiddenDiv.style.marginLeft = "auto"
+
+                var hiddenSubDiv = document.createElement("div");
+                hiddenSubDiv.style.marginLeft = "auto";
+
+
+                var jsonButton = document.createElement("button")
+                jsonButton.classList.add("btn", "btn-primary", "p-4");
+                jsonButton.setAttribute("type", "button");
+                jsonButton.setAttribute("id", "jsonFileButton");
+                jsonButton.textContent = "Export to JSON";
+
+                var csvButton = document.createElement("button")
+                csvButton.classList.add("btn", "btn-primary", "p-4");
+                csvButton.setAttribute("type", "button");
+                csvButton.setAttribute("id", "csvFileButton");
+                csvButton.textContent = "Export to CSV";
+
+                hiddenSubDiv.appendChild(jsonButton);
+                hiddenSubDiv.appendChild(csvButton);
+
+                hiddenDiv.appendChild(hiddenSubDiv);
+
+                tableDivider.appendChild(hiddenDiv);
+
+                hiddenRow.appendChild(tableDivider);
+
+                tableBody.appendChild(hiddenRow);
+                
 
             }
-            html += "</tbody></table></div>"
+            table.appendChild(tableBody);
+            tabsSubDiv.appendChild(table)
+            tabsDiv.appendChild(tabsSubDiv);
+            //html += "</tbody></table></div>"
         }
-        tabsDiv.innerHTML = html;
+        //tabsDiv.innerHTML = html;
 
         if (pageData.sortingBy != "") {
             //sortTable(pageData.sortingBy)

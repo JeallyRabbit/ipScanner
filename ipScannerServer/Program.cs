@@ -58,6 +58,8 @@ namespace MyApp
 
         [Column("last_checked_date")]
         public DateTime? LastCheckedDate { get; set; }
+        [Column("last_boot_time")]
+        public DateTime? lastBootUpTime { get; set; }
 
         [Column("last_found_date")]
         public DateTime? LastFoundDate { get; set; }
@@ -99,7 +101,10 @@ namespace MyApp
         public int procGen { get; set; }
         public DateTime lastCheckedDate { get; set; }
         public DateTime lastFoundDate { get; set; }
-
+        public DateTime lastBootUpTime { get; set; }
+        public string diskCaption { get; set; }
+        public Int64 diskSize { get; set; }
+        public Int64 diskFreeSpace { get; set; }
         public bool successFinding { get; set; }
 
         public ipResponse(string address, DateTime lastCheckedDate)
@@ -627,8 +632,12 @@ namespace MyApp
                                 hostname = @Hostname,
                                 last_logged_user = @LastLoggedUser, 
                                 last_checked_date = @LastCheckedDate,
+                                last_boot_time = @LastBootUpTime,
                                 operating_system = @OperatingSystem,
                                 last_found_date = @LastFoundDate,
+                                disk_drive_caption = @DiskDriveCaption,
+                                disk_free_space = @DiskFreeSpace,
+                                disk_size = @DiskSize,
                                 model=@Model,
                                 serial_number=@SN,
                                 proc_gen=@ProcGen
@@ -642,6 +651,10 @@ namespace MyApp
                                         OperatingSystem = pc.operatingSystem,
                                         Address = pc.address,
                                         LastCheckedDate = pc.lastCheckedDate,
+                                        LastBootUpTime = pc.lastBootUpTime,
+                                        DiskDriveCaption = pc.diskCaption,
+                                        DiskFreeSpace = pc.diskFreeSpace,
+                                        DiskSize = pc.diskSize,
                                         Model = pc.model,
                                         SN = pc.serialNumber,
                                         ProcGen = pc.procGen
@@ -656,7 +669,13 @@ namespace MyApp
                                 last_checked_date = @LastCheckedDate
                                 WHERE ip= @Address
                                 ";
-                                    var rows = await conn.QueryAsync<IP>(sqlResponse, new { LastCheckedDate = pc.lastCheckedDate, Address = pc.address, ProcGen = pc.procGen });
+                                    var rows = await conn.QueryAsync<IP>(sqlResponse, new
+                                    {
+                                        LastCheckedDate = pc.lastCheckedDate,
+                                        LastBootUpTime = pc.lastBootUpTime,
+                                        Address = pc.address,
+                                        ProcGen = pc.procGen
+                                    });
 
                                 }
 

@@ -18,6 +18,31 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace Client
 {
+    public class Win32_DiskDrive
+    {
+        public string model { get; set; }
+        public Int64 size { get; set; }
+        public Int64 freeSpace { get; set; }
+
+        public Win32_DiskDrive(string model = "-", Int64 size = 0, Int64 freeSpace = 0)
+        {
+            this.model = model;
+            this.size = size;
+            this.freeSpace = freeSpace;
+        }
+    }
+
+    public class Win32_OperatingSystem
+    {
+        public string osName { get; set; }
+        public DateTime osBootTime { get; set; }
+
+        public Win32_OperatingSystem(string osName = "-", DateTime osBootTime = new DateTime())
+        {
+            this.osName = osName;
+            this.osBootTime = osBootTime;
+        }
+    }
 
     public class UserModel
     {
@@ -44,6 +69,10 @@ namespace Client
 
         public DateTime lastCheckedDate { get; set; }
         public DateTime lastFoundDate { get; set; }
+        public DateTime lastBootUpTime { get; set; }
+        public string diskCaption { get; set; }
+        public Int64 diskSize { get; set; }
+        public Int64 diskFreeSpace { get; set; }
 
         public bool successFinding { get; set; }
 
@@ -939,8 +968,8 @@ namespace Client
 
                             ParallelOptions options = new ParallelOptions
                             {
-                                CancellationToken = cts.Token,
-                                //MaxDegreeOfParallelism = Environment.ProcessorCount * 2
+                                CancellationToken = cts.Token
+                                //MaxDegreeOfParallelism = 1
                             };
 
                             //foreach (var ip in addresses)
@@ -1029,11 +1058,18 @@ namespace Client
                                                         }
                                                         else
                                                         {
-                                                            response.operatingSystem = getOSVersion(response.hostname, usingCustomCredentials, credentialsUsername, credentialsPassword);
+                                                            Win32_OperatingSystem os = getOsData(response.hostname, usingCustomCredentials, credentialsUsername, credentialsPassword);
+                                                            response.operatingSystem = os.osName;
+                                                            response.lastBootUpTime = os.osBootTime;
 
                                                             response.serialNumber = getSN(response.hostname, usingCustomCredentials, credentialsUsername, credentialsPassword);
 
                                                             response.procGen = getProcGen(response.hostname);
+
+                                                            Win32_DiskDrive drive = GetDiskDrive(response.hostname, usingCustomCredentials, credentialsUsername, credentialsPassword);
+                                                            response.diskCaption = drive.model;
+                                                            response.diskSize = drive.size;
+                                                            response.diskFreeSpace = drive.freeSpace;
 
                                                         }
 
@@ -1351,7 +1387,86 @@ namespace Client
             return "-";
         }
 
-        private static string getOSVersion(string hostname, bool usingCustomCredentials = false, string credentialsUsername = "", SecureString credentialsPassword = null)
+        private static Win32_DiskDrive GetDiskDrive(string hostname, bool usingCustomCredentials = false, string credentialsUsername = "", SecureString credentialsPassword = null)
+        {
+            Win32_DiskDrive diskDrive = new Win32_DiskDrive();
+            try
+            {
+                // Works only for client running windows
+                var options = usingCustomCredentials ? new ConnectionOptions
+                {
+                    Username = credentialsUsername,
+                    Password = credentialsPassword.ToString(),
+                    Timeout = new TimeSpan(0, 0, TIMEOUT_SECONDS)
+                } : new ConnectionOptions { Timeout = new System.TimeSpan(0, 0, TIMEOUT_SECONDS) };//waiting 30 seconds
+
+                var scope = new ManagementScope($@"\\{hostname}\root\cimv2", options);
+                scope.Connect();
+
+
+
+                var query = new ObjectQuery(
+                    "SELECT * FROM Win32_DiskDrive");
+
+                using var searcher = new ManagementObjectSearcher(scope, query);
+                using var results = searcher.Get();
+
+                foreach (ManagementObject os in results)
+                {
+                    var caption = (string?)os["Caption"];
+                    diskDrive.model = caption;
+                }
+
+
+                var query2 = new ObjectQuery(
+                    "SELECT * FROM Win32_LogicalDisk");
+
+                using var searcher2 = new ManagementObjectSearcher(scope, query2);
+                using var results2 = searcher2.Get();
+
+                foreach (ManagementObject os in results2)
+                {
+                    UInt64 aux = 0;
+                    try
+                    {
+                        aux = (UInt64)os["Size"];
+                    }
+                    catch (Exception ex)
+                    {
+                        aux = 0;
+                    }
+
+                    Int64 size = (Int64)aux;
+
+                    try
+                    {
+                        aux = (UInt64)os["FreeSpace"];
+                    }
+                    catch (Exception ex)
+                    {
+                        aux = 0;
+                    }
+
+                    Int64 freeSpace = (Int64)aux;
+
+                    diskDrive.size = size;
+                    diskDrive.freeSpace = freeSpace;
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return new Win32_DiskDrive();
+            }
+
+            return diskDrive;
+
+        }
+
+        private static Win32_OperatingSystem getOsData(string hostname, bool usingCustomCredentials = false, string credentialsUsername = "", SecureString credentialsPassword = null)
         {
 
             try//getting windows version of remote machine
@@ -1371,7 +1486,8 @@ namespace Client
 
                 // Win32_OperatingSystem instead of Win32_ComputerSystem
                 var query = new ObjectQuery(
-                    "SELECT Caption, Version, BuildNumber FROM Win32_OperatingSystem");
+                    //"SELECT Caption, Version, BuildNumber, LastBootUpTime FROM Win32_OperatingSystem");
+                    "SELECT * FROM Win32_OperatingSystem");
 
                 using var searcher = new ManagementObjectSearcher(scope, query);
                 using var results = searcher.Get();
@@ -1381,25 +1497,30 @@ namespace Client
                     var caption = (string?)os["Caption"];
                     var version = (string?)os["Version"];
                     var buildStr = (string?)os["BuildNumber"];
+                    string bootTimeStr = (string?)os["LastBootUpTime"];
+                    DateTime bootTime = ManagementDateTimeConverter.ToDateTime(bootTimeStr);
 
                     int.TryParse(buildStr, out var build);
 
                     // Windows 11 starts at build 22000
                     var isWindows11 = build >= 22000;
 
-                    var operatingSystem = isWindows11 ? "Windows 11" : "Windows 10";
-                    return operatingSystem;
+                    var osName = isWindows11 ? "Windows 11" : "Windows 10";
+
+                    Win32_OperatingSystem OS = new Win32_OperatingSystem(osName, bootTime);
+
+                    return OS;
                 }
 
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return "-";
+                return new Win32_OperatingSystem("-", DateTime.UnixEpoch);
             }
 
-            return "-";
+            return new Win32_OperatingSystem("-", DateTime.UnixEpoch);
         }
 
         private static string GetPrinterSN(string ip = "127.0.0.1", SnmpVersion version = SnmpVersion.Ver1)

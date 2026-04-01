@@ -1,13 +1,11 @@
 {
   "profiles": {
     "Client": {
-      "commandName": "Project",
-      "console": "integratedTerminal"
+      "commandName": "Project"
     },
     "WSL": {
       "commandName": "WSL2",
-      "distributionName": "",
-      "console": "integratedTerminal"
+      "distributionName": ""
     }
   }
 }

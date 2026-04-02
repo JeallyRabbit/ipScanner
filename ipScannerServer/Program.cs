@@ -60,6 +60,12 @@ namespace MyApp
         public DateTime? LastCheckedDate { get; set; }
         [Column("last_boot_time")]
         public DateTime? lastBootUpTime { get; set; }
+        [Column("disk_drive_caption")]
+        public string DiskCaption { get; set; }
+        [Column("disk_size")]
+        public Int64 DiskSize { get; set; }
+        [Column("disk_free_space")]
+        public Int64 DiskFreeSpace { get; set; }
 
         [Column("last_found_date")]
         public DateTime? LastFoundDate { get; set; }
@@ -85,6 +91,9 @@ namespace MyApp
 
         [Column("proc_gen")]
         public decimal? ProcGen { get; set; }
+
+        [Column("proc_name")]
+        public string? procName { get; set; }
     }
 
 
@@ -99,6 +108,7 @@ namespace MyApp
         public string model { get; set; }
         public string serialNumber { get; set; }
         public int procGen { get; set; }
+        public string procName { get; set; }
         public DateTime lastCheckedDate { get; set; }
         public DateTime lastFoundDate { get; set; }
         public DateTime lastBootUpTime { get; set; }
@@ -640,7 +650,8 @@ namespace MyApp
                                 disk_size = @DiskSize,
                                 model=@Model,
                                 serial_number=@SN,
-                                proc_gen=@ProcGen
+                                proc_gen=@ProcGen,
+                                proc_name=@ProcName
                                 WHERE ip= @Address
                                 ";
                                     var rows = await conn.QueryAsync<IP>(sqlResponse, new
@@ -652,12 +663,13 @@ namespace MyApp
                                         Address = pc.address,
                                         LastCheckedDate = pc.lastCheckedDate,
                                         LastBootUpTime = pc.lastBootUpTime,
-                                        DiskDriveCaption = pc.diskCaption,
+                                        DiskDriveCaption = pc.diskCaption == null ? "-" : pc.diskCaption,
                                         DiskFreeSpace = pc.diskFreeSpace,
                                         DiskSize = pc.diskSize,
                                         Model = pc.model,
                                         SN = pc.serialNumber,
-                                        ProcGen = pc.procGen
+                                        ProcGen = pc.procGen,
+                                        ProcName = pc.procName
                                     });
 
                                 }

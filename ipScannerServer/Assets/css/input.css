@@ -10,6 +10,7 @@
 @source inline("tabs tabs-box tab-content"); /*Classes for tabs*/
 @source inline("range range-accent");/*Classes for slider */
 @source inline("transition-colors duration-600");/* classes for transition of theme*/
+@source inline("stat stat-figure");/* classes for hardwire statistics*/
 /*npx @tailwindcss/cli -i .\Assets\css\input.css -o .\wwwroot\css\output.css --watch */
 /* daisyUI v5 */
 @plugin "daisyui" {

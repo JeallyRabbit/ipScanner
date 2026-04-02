@@ -261,7 +261,39 @@
 															<tr class="hidden" id="tableRowHidden{@aux}">
 																<td colspan="9">
 																	<div class="card card-border card-body mx-auto relative bg-base-200 md:flex-row ">
-																				More information about @ip.Ip here
+																		
+																		<div class="stat stat-figure mx-auto relative bg-base-200 md:flex-row ">
+																			@{
+																				var byteConv = 1024.0 * 1024.0 * 1024.0;
+																				var usedSpace = Math.Round((ip.DiskSize - ip.DiskFreeSpace) / byteConv,2);
+																				var allSpace = Math.Round(ip.DiskSize / byteConv,2);
+																				var percentage = Math.Round((usedSpace / Math.Max(allSpace,1))*100,2);
+																			}
+																			<div class="stat-title">HardDrive:</div>
+																			<div class="stat-value " style="font-size: 22px;">@ip.DiskCaption</div>
+																			<div class="stat-desc" style="font-size: 12px;">@(usedSpace) GB \ @allSpace GB (@percentage%)</div>
+																			
+																		</div>
+
+																		<div class="stat stat-figure mx-auto relative bg-base-200 md:flex-row ">
+																			@{
+																				var uptime = (DateTime.Now-ip.lastBootUpTime);
+																				string uptimePrint = uptime!=null ? ((TimeSpan)uptime).ToString(@"dd\.hh\:mm\:ss") : "-";
+																			}
+																			<div class="stat-title">Cpu:</div>
+																			<div class="stat-value " style="font-size: 22px;">@ip.procName</div>
+																			<div class="stat-desc" style="font-size: 18px;">Uptime: @uptimePrint</div>
+																			
+																		</div>
+
+																		<div class="stat stat-figure mx-auto relative bg-base-200 md:flex-row ">
+
+																			<div class="stat-title">Ram:</div>
+																			<div class="stat-value" style="font-size: 22px;">Ram Name</div>
+																			<div class="stat-desc">RAM whatever</div>
+
+																		</div>
+
 																		<div style="margin-left: auto">
 																					<button class="btn btn-primary p-4"
 																							

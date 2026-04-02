@@ -32,6 +32,18 @@ namespace Client
         }
     }
 
+    public class Win32_Processor
+    {
+        public string name { get; set; }
+        public int procGen { get; set; }
+
+        public Win32_Processor(string name = "-", int procGen = 0)
+        {
+            this.name = name;
+            this.procGen = procGen;
+        }
+    }
+
     public class Win32_OperatingSystem
     {
         public string osName { get; set; }
@@ -66,6 +78,7 @@ namespace Client
         public string model { get; set; }
         public string serialNumber { get; set; }
         public int procGen { get; set; }
+        public string procName { get; set; }
 
         public DateTime lastCheckedDate { get; set; }
         public DateTime lastFoundDate { get; set; }
@@ -1064,7 +1077,9 @@ namespace Client
 
                                                             response.serialNumber = getSN(response.hostname, usingCustomCredentials, credentialsUsername, credentialsPassword);
 
-                                                            response.procGen = getProcGen(response.hostname);
+                                                            Win32_Processor proc = getProcGen(response.hostname);
+                                                            response.procGen = proc.procGen;
+                                                            response.procName = proc.name;
 
                                                             Win32_DiskDrive drive = GetDiskDrive(response.hostname, usingCustomCredentials, credentialsUsername, credentialsPassword);
                                                             response.diskCaption = drive.model;
@@ -1285,7 +1300,7 @@ namespace Client
             return mySystem;
         }
 
-        private static int getProcGen(string hostname = "", bool usingCustomCredentials = false, string credentialsUsername = "", SecureString credentialsPassword = null)
+        private static Win32_Processor getProcGen(string hostname = "", bool usingCustomCredentials = false, string credentialsUsername = "", SecureString credentialsPassword = null)
         {
 
             string foundProcGen = "", foundProcName = "";
@@ -1331,15 +1346,17 @@ namespace Client
             }
             catch (Exception)
             {
-                return 0;
+                return new Win32_Processor(); ;
             }
+
             try
             {
-                return Int32.Parse(foundProcGen);
+                return new Win32_Processor(foundProcName, int.Parse(foundProcGen));
+                //return Int32.Parse(foundProcGen);
             }
             catch
             {
-                return 0;
+                return new Win32_Processor(); ;
             }
 
         }

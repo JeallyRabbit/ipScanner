@@ -1,4 +1,4 @@
-//const { doc } = require("animejs/dist/modules/core/consts");
+
 
 
 const form = document.getElementById("searchForm");
@@ -126,7 +126,6 @@ function ipToNumber(ip) {
 
 function sortTable(th, asc) {
 
-    console.log("sorting headerr: ",th)
     
     if (th == "Ip") {
         if (asc == "true") {
@@ -422,7 +421,7 @@ if (slider != null) {
 
                 var hiddenDiv = document.createElement("div");
                 hiddenDiv.classList.add("card", "card-border", "card-body", "mx-auto", "relative", "bg-base-200", "md:flex-row", "md:items-right")
-                hiddenDiv.textContent = "More information about " + ip.Ip + " here";
+                
                 hiddenDiv.style.marginLeft = "auto"
 
                 var hiddenSubDiv = document.createElement("div");
@@ -522,12 +521,80 @@ dropdown.addEventListener("click", (e) => {
 });
 
 function rebuildHiddenRow(r, hiddenRow) {
+
     var td = document.createElement("td");
     td.setAttribute("colspan", "9");
 
-    var divText = document.createElement("div");
-    divText.classList.add("card", "card-border", "card-body", "mx-auto", "relative", "bg-base-200", "md:flex-row");
-    divText.textContent = "More information about " + r.Ip + " here";
+    var hiddenRowDiv = document.createElement("div");
+    hiddenRowDiv.classList.add("card", "card-border", "card-body", "mx-auto", "relative", "bg-base-200", "md:flex-row");
+    
+
+    
+
+    var diskDiv = document.createElement("div")
+    diskDiv.classList.add("stat", "stat-figure", "mx-auto", "relative", "bg-base-200", "md:flex-row");
+    var byteConv = 1024.0 * 1024.0 * 1024.0;
+    var usedSpace = Math.round((r.DiskSize - r.DiskFreeSpace) / byteConv, 2);
+    var allSpace = Math.round(r.DiskSize / byteConv, 2);
+    var percentage = Math.round((usedSpace / Math.max(allSpace, 1)) * 100, 2);
+
+    var diskTitleDiv = document.createElement("div");
+    diskTitleDiv.classList.add("stat-title");
+    diskTitleDiv.innerText = "HardDrive:";
+    var diskCaptionDiv = document.createElement("div");
+    diskCaptionDiv.classList.add("stat-value");
+    diskCaptionDiv.style.fontSize="22px"
+    diskCaptionDiv.innerText = r.DiskCaption;
+    var diskSpaceDiv = document.createElement("div");
+    diskSpaceDiv.classList.add("stat-desc");
+    diskSpaceDiv.style.fontSize = "12px"
+    diskSpaceDiv.innerText = usedSpace + " GB \\ " + allSpace + " GB (" + percentage+")";
+    diskDiv.appendChild(diskTitleDiv)
+    diskDiv.appendChild(diskCaptionDiv)
+    diskDiv.appendChild(diskSpaceDiv)
+    hiddenRowDiv.appendChild(diskDiv)
+
+
+    var cpuDiv = document.createElement("div")
+    var cpuTitleDiv = document.createElement("div")
+    cpuTitleDiv.classList.add("stat-title");
+    cpuTitleDiv.innerText = "Cpu:";
+    var cpuCaptionDiv = document.createElement("div");
+    cpuCaptionDiv.classList.add("stat-value");
+    cpuCaptionDiv.style.fontSize = "22px"
+    cpuCaptionDiv.innerText = r.ProcName;
+    var cpuUptimeDiv = document.createElement("div");
+    cpuUptimeDiv.classList.add("stat-desc");
+    cpuUptimeDiv.style.fontSize = "12px"
+    cpuUptimeDiv.innerText = "Uptime: "+r.Uptime;
+    cpuDiv.appendChild(cpuTitleDiv)
+    cpuDiv.appendChild(cpuCaptionDiv)
+    cpuDiv.appendChild(cpuUptimeDiv)
+    hiddenRowDiv.appendChild(cpuDiv)
+
+
+    var ramDiv = document.createElement("div")
+    var ramTitleDiv = document.createElement("div")
+    ramTitleDiv.classList.add("stat-title");
+    ramTitleDiv.innerText = "RAM:";
+    var ramCaptionDiv = document.createElement("div");
+    ramCaptionDiv.classList.add("stat-value");
+    ramCaptionDiv.style.fontSize = "22px"
+    ramCaptionDiv.innerText = "Ram Name";
+    var ramDescDiv = document.createElement("div");
+    ramDescDiv.classList.add("stat-desc");
+    ramDescDiv.style.fontSize = "12px"
+    ramDescDiv.innerText = "ramDescription";
+    ramDiv.appendChild(ramTitleDiv)
+    ramDiv.appendChild(ramCaptionDiv)
+    ramDiv.appendChild(ramDescDiv)
+    hiddenRowDiv.appendChild(ramDiv)
+
+
+
+
+
+    
 
     var divButtons = document.createElement("div");
     divButtons.style = "margin-left: auto;";
@@ -544,13 +611,11 @@ function rebuildHiddenRow(r, hiddenRow) {
     buttonCsv.id = "csvFileButton";
     buttonCsv.textContent = "Export to CSV";
 
-
-
     divButtons.appendChild(buttonJson);
     divButtons.appendChild(buttonCsv);
-    divText.appendChild(divButtons);
+    hiddenRowDiv.appendChild(divButtons);
 
-    td.appendChild(divText);
+    td.appendChild(hiddenRowDiv);
 
 
     while (hiddenRow.hasChildNodes()) {

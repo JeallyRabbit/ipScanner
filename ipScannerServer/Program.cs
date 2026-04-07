@@ -59,7 +59,7 @@ namespace MyApp
         [Column("last_checked_date")]
         public DateTime? LastCheckedDate { get; set; }
         [Column("last_boot_time")]
-        public DateTime? lastBootUpTime { get; set; }
+        public DateTime? LastBootUpTime { get; set; }
         [Column("disk_drive_caption")]
         public string DiskCaption { get; set; }
         [Column("disk_size")]
@@ -93,7 +93,9 @@ namespace MyApp
         public decimal? ProcGen { get; set; }
 
         [Column("proc_name")]
-        public string? procName { get; set; }
+        public string? ProcName { get; set; }
+        [Column("ram_size")]
+        public int RamSize { get; set; }
     }
 
 
@@ -115,6 +117,7 @@ namespace MyApp
         public string diskCaption { get; set; }
         public Int64 diskSize { get; set; }
         public Int64 diskFreeSpace { get; set; }
+        public int ramSize { get; set; }
         public bool successFinding { get; set; }
 
         public ipResponse(string address, DateTime lastCheckedDate)
@@ -648,6 +651,7 @@ namespace MyApp
                                 disk_drive_caption = @DiskDriveCaption,
                                 disk_free_space = @DiskFreeSpace,
                                 disk_size = @DiskSize,
+                                ram_size=@RamSize,
                                 model=@Model,
                                 serial_number=@SN,
                                 proc_gen=@ProcGen,
@@ -666,6 +670,7 @@ namespace MyApp
                                         DiskDriveCaption = pc.diskCaption == null ? "-" : pc.diskCaption,
                                         DiskFreeSpace = pc.diskFreeSpace,
                                         DiskSize = pc.diskSize,
+                                        RamSize = pc.ramSize,
                                         Model = pc.model,
                                         SN = pc.serialNumber,
                                         ProcGen = pc.procGen,

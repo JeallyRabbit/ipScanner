@@ -277,11 +277,34 @@
 
 																		<div class="stat stat-figure mx-auto relative bg-base-200 md:flex-row ">
 																			@{
-																				var uptime = (DateTime.Now-ip.lastBootUpTime);
-																				string uptimePrint = uptime!=null ? ((TimeSpan)uptime).ToString(@"dd\.hh\:mm\:ss") : "-";
+
+
+
+																				DateTime now = DateTime.Now;
+																				
+																				DateTime target =ip.LastBootUpTime is null  || ip.LastBootUpTime==DateTime.MinValue ? DateTime.Now: (DateTime)ip.LastBootUpTime;
+
+																				TimeSpan diff = (now - target); // absolute difference
+
+																						int days = diff.Days;
+																						int hours = diff.Hours;
+																						int minutes = diff.Minutes;
+																						int seconds = diff.Seconds;
+
+																						var parts = new System.Collections.Generic.List<string>();
+
+																						if (days > 0) parts.Add($"{days}d");
+																						if (hours > 0) parts.Add($"{hours}h");
+																						if (minutes > 0) parts.Add($"{minutes}m");
+																						if (seconds > 0) parts.Add($"{seconds}s");
+
+																				string uptimePrint = string.Join(" ", parts).Length == 0 ? "-" : string.Join(" ", parts);
+																					
+
+
 																			}
 																			<div class="stat-title">Cpu:</div>
-																			<div class="stat-value " style="font-size: 22px;">@ip.procName</div>
+																			<div class="stat-value " style="font-size: 22px;">@ip.ProcName</div>
 																			<div class="stat-desc" style="font-size: 12px;">Uptime: @uptimePrint</div>
 																			
 																		</div>
@@ -289,13 +312,14 @@
 																		<div class="stat stat-figure mx-auto relative bg-base-200 md:flex-row ">
 
 																			<div class="stat-title">Ram:</div>
-																			<div class="stat-value" style="font-size: 22px;">Ram Name</div>
-																			<div class="stat-desc" style="font-size: 12px;">RAM whatever</div>
+																			<div class="stat-value" style="font-size: 22px;">@ip.RamSize GB</div>
+																			@*<div class="stat-desc" style="font-size: 12px;">RAM whatever</div>*@
 
 																		</div>
 
-																		<div style="margin-left: auto">
-																					<button class="btn btn-primary p-4"
+																		<div class="stat stat-figure relative bg-base-200 md:flex-row " style="max-width: 200px;">
+																		
+																					<button class="btn btn-primary"
 																							
 																							type="button"
 																							id="jsonFileButton">

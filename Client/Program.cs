@@ -60,11 +60,13 @@ namespace Client
     {
         public string user { get; set; }
         public string model { get; set; }
+        public int ramSize { get; set; }
 
-        public UserModel(string user = "-", string model = "-", string name = "-")
+        public UserModel(string user = "-", string model = "-", int ramSize = 0)
         {
             this.user = user;
             this.model = model;
+            this.ramSize = ramSize;
         }
     }
 
@@ -86,6 +88,7 @@ namespace Client
         public string diskCaption { get; set; }
         public Int64 diskSize { get; set; }
         public Int64 diskFreeSpace { get; set; }
+        public int ramSize { get; set; }
 
         public bool successFinding { get; set; }
 
@@ -1062,6 +1065,7 @@ namespace Client
 
                                                         response.lastLoggedUser = aux.user;
                                                         response.model = aux.model;
+                                                        response.ramSize = aux.ramSize;
 
                                                         if (response.model == "-" && response.lastLoggedUser == "-")
                                                         {
@@ -1270,7 +1274,7 @@ namespace Client
                 var scope = new ManagementScope($@"\\{hostname}\root\cimv2", options);
                 scope.Connect();
 
-                var query = new ObjectQuery("SELECT UserName,Model FROM Win32_ComputerSystem");
+                var query = new ObjectQuery("SELECT UserName,Model,TotalPhysicalMemory FROM Win32_ComputerSystem");
                 using var searcher = new ManagementObjectSearcher(scope, query);
                 searcher.Options.Timeout = new System.TimeSpan(0, 0, TIMEOUT_SECONDS);
                 ManagementObjectCollection collection = searcher.Get();
@@ -1282,6 +1286,12 @@ namespace Client
                     mySystem.user = aux?.ToString() ?? "-";
                     aux = mo["Model"];
                     mySystem.model = aux?.ToString() ?? "-";
+
+                    double ramBytes = (Convert.ToDouble(mo["TotalPhysicalMemory"]));
+                    ramBytes /= 1073741824;
+                    ramBytes = Math.Ceiling(ramBytes);
+                    mySystem.ramSize = (int)ramBytes;
+
                 }
 
 

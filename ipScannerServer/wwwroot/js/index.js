@@ -415,40 +415,9 @@ if (slider != null) {
                 hiddenRow.classList.add("hidden")
                 hiddenRow.setAttribute("id", "tableRowHidden{" + index + "}");
 
-                var tableDivider = document.createElement("td")
-                tableDivider.classList.add("md:flex-row", "md:items-center");
-                tableDivider.setAttribute("colspan", "9");
+                rebuildHiddenRow(ip,hiddenRow)
 
-                var hiddenDiv = document.createElement("div");
-                hiddenDiv.classList.add("card", "card-border", "card-body", "mx-auto", "relative", "bg-base-200", "md:flex-row", "md:items-right")
-                
-                hiddenDiv.style.marginLeft = "auto"
-
-                var hiddenSubDiv = document.createElement("div");
-                hiddenSubDiv.style.marginLeft = "auto";
-
-
-                var jsonButton = document.createElement("button")
-                jsonButton.classList.add("btn", "btn-primary", "p-4");
-                jsonButton.setAttribute("type", "button");
-                jsonButton.setAttribute("id", "jsonFileButton");
-                jsonButton.textContent = "Export to JSON";
-
-                var csvButton = document.createElement("button")
-                csvButton.classList.add("btn", "btn-primary", "p-4");
-                csvButton.setAttribute("type", "button");
-                csvButton.setAttribute("id", "csvFileButton");
-                csvButton.textContent = "Export to CSV";
-
-                hiddenSubDiv.appendChild(jsonButton);
-                hiddenSubDiv.appendChild(csvButton);
-
-                hiddenDiv.appendChild(hiddenSubDiv);
-
-                tableDivider.appendChild(hiddenDiv);
-
-                hiddenRow.appendChild(tableDivider);
-
+               
                 tableBody.appendChild(hiddenRow);
                 
 
@@ -556,17 +525,20 @@ function rebuildHiddenRow(r, hiddenRow) {
 
 
     var cpuDiv = document.createElement("div")
+    cpuDiv.classList.add("stat", "stat-figure", "mx-auto", "relative", "bg-base-200", "md:flex-row");
     var cpuTitleDiv = document.createElement("div")
     cpuTitleDiv.classList.add("stat-title");
     cpuTitleDiv.innerText = "Cpu:";
     var cpuCaptionDiv = document.createElement("div");
     cpuCaptionDiv.classList.add("stat-value");
     cpuCaptionDiv.style.fontSize = "22px"
+    var uptime = diffFromNow(r.LastBootUpTime);
+    var uptimePrint = (uptime != null) ? (uptime) : "-";
     cpuCaptionDiv.innerText = r.ProcName;
     var cpuUptimeDiv = document.createElement("div");
     cpuUptimeDiv.classList.add("stat-desc");
     cpuUptimeDiv.style.fontSize = "12px"
-    cpuUptimeDiv.innerText = "Uptime: "+r.Uptime;
+    cpuUptimeDiv.innerText = "Uptime: " + uptimePrint;
     cpuDiv.appendChild(cpuTitleDiv)
     cpuDiv.appendChild(cpuCaptionDiv)
     cpuDiv.appendChild(cpuUptimeDiv)
@@ -574,20 +546,24 @@ function rebuildHiddenRow(r, hiddenRow) {
 
 
     var ramDiv = document.createElement("div")
+    ramDiv.classList.add("stat", "stat-figure", "mx-auto", "relative", "bg-base-200", "md:flex-row");
     var ramTitleDiv = document.createElement("div")
     ramTitleDiv.classList.add("stat-title");
     ramTitleDiv.innerText = "RAM:";
     var ramCaptionDiv = document.createElement("div");
     ramCaptionDiv.classList.add("stat-value");
     ramCaptionDiv.style.fontSize = "22px"
-    ramCaptionDiv.innerText = "Ram Name";
+    ramCaptionDiv.innerText = r.RamSize + " GB";
+    /*
     var ramDescDiv = document.createElement("div");
     ramDescDiv.classList.add("stat-desc");
     ramDescDiv.style.fontSize = "12px"
     ramDescDiv.innerText = "ramDescription";
+    ramDiv.appendChild(ramDescDiv)
+    */
     ramDiv.appendChild(ramTitleDiv)
     ramDiv.appendChild(ramCaptionDiv)
-    ramDiv.appendChild(ramDescDiv)
+    
     hiddenRowDiv.appendChild(ramDiv)
 
 
@@ -597,7 +573,8 @@ function rebuildHiddenRow(r, hiddenRow) {
     
 
     var divButtons = document.createElement("div");
-    divButtons.style = "margin-left: auto;";
+    divButtons.classList.add("stat", "stat-figure", "relative", "bg-base-200", "md:flex-row");
+    divButtons.style = "max-width: 200px;";
 
     var buttonJson = document.createElement("button");
     buttonJson.classList.add("btn", "btn-primary");
@@ -623,4 +600,29 @@ function rebuildHiddenRow(r, hiddenRow) {
         hiddenRow.removeChild(child);
     }
     hiddenRow.appendChild(td);
+}
+
+function diffFromNow(dateString) {
+
+    if (dateString == null || dateString == "0001-01-01T00:00:00") {
+        return "-"
+    }
+    const target = new Date(dateString);
+    const now = new Date();
+
+    let diff = Math.abs(now - target); // ms
+
+    const seconds = Math.floor(diff / 1000) % 60;
+    const minutes = Math.floor(diff / (1000 * 60)) % 60;
+    const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    const parts = [];
+
+    if (days) parts.push(`${days}d`);
+    if (hours) parts.push(`${hours}h`);
+    if (minutes) parts.push(`${minutes}m`);
+    if (seconds) parts.push(`${seconds}s`);
+
+    return parts.join(" ");
 }

@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Client": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "--connection-file clientConnection_192.168.1.110.json"
     },
     "WSL": {
       "commandName": "WSL2",

@@ -390,6 +390,7 @@ namespace Client
 
             int menu = MENU_CONNECT_TO_SERVER_TYPE;
             int height = AnsiConsole.Console.Profile.Height;
+            string fileSelection = "";
             Server serverData = null;
 
             // Used to check if already started displaying data - to not start multiple workers
@@ -403,6 +404,39 @@ namespace Client
 
             int processedAddresses = 0;
             int httpRequestCounter = 0;
+
+
+
+
+            //parsing data from parameters
+
+            bool usingParameters = false;
+            var parsed = new Dictionary<string, string>();
+
+
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i].StartsWith("--"))
+                {
+                    string key = args[i];
+                    string value = (i + 1 < args.Length && !args[i + 1].StartsWith("--"))
+                        ? args[i + 1]
+                        : null;
+
+                    parsed[key] = value;
+                }
+            }
+
+            if (parsed.TryGetValue("--connection-file", out var cnFile))
+            {
+                menu = MENU_CLIENT_JSON;
+                fileSelection = cnFile;
+                usingParameters = true;
+
+
+            }
+
+
 
 
             using var appCts = new CancellationTokenSource()
@@ -485,7 +519,11 @@ namespace Client
                 else if (menu == MENU_CLIENT_JSON)
                 {
                     Console.Clear();
-                    string fileSelection = Program.fileSelection(currentDir, height);
+                    if (usingParameters == false)
+                    {
+                        fileSelection = Program.fileSelection(currentDir, height);
+                    }
+
 
                     if (fileSelection == "..")
                     {
@@ -551,14 +589,22 @@ namespace Client
                                 AnsiConsole.MarkupLine($"[{myTheme.BrightRedCommandError}]Failed to read data[/]");
 
                                 AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
-                                Console.ReadLine();
+                                if (usingParameters == false)
+                                {
+                                    Console.ReadLine();
+                                }
+
                                 menu = MENU_CLIENT_JSON;
                             }
                             else
                             {
                                 menu = MENU_PROCESS_CLIENT;
                                 AnsiConsole.MarkupLine($"[{myTheme.BrightBlack}]Press [bold]<Enter>[/] to continue...[/]");
-                                Console.ReadLine();
+
+                                if (usingParameters == false)
+                                {
+                                    Console.ReadLine();
+                                }
                             }
 
 

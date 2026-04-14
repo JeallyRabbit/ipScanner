@@ -1,5 +1,4 @@
-
-
+﻿
 
 const form = document.getElementById("searchForm");
 const ipInput = document.getElementById("searchIP");
@@ -11,6 +10,7 @@ const modelInput = document.getElementById("searchModel");
 const emptyCheckBox = document.getElementById("skipEmptyCheckBox");
 
 const ALERT_TOGGLE = 50000
+const MAX_DISK_USAGE=0.90
 
 const raw = document.getElementById("page-data")?.textContent ?? "{}";
 var pageData = JSON.parse(raw);
@@ -126,8 +126,14 @@ function ipToNumber(ip) {
 
 function sortTable(th, asc) {
 
+    var ascChar = "▼"
+    var ascText=th
+    if (asc == "true") { ascChar ="▲"}
+
     
+
     if (th == "Ip") {
+        ascText="Ip Address"
         if (asc == "true") {
 
             pageData.records.sort((a, b) => ipToNumber(a[th]) - ipToNumber(b[th]))
@@ -138,7 +144,7 @@ function sortTable(th, asc) {
     }
     else if (th == "LastFoundDate") {
 
-        console.log(pageData.records[0][th])
+        ascText="Last found date"
         if (asc == "true") {
 
             pageData.records.sort((a, b) => Date.parse(a[th]) - Date.parse(b[th]))
@@ -147,11 +153,76 @@ function sortTable(th, asc) {
             pageData.records.sort((a, b) => Date.parse(b[th]) - Date.parse(a[th]))
         }
     }
-    else {
-        if (asc == "true" ) {
+    else if (th == "ProcGen")
+    {
+        ascText="Processor Gen."
+        if (asc == "true") {
             pageData.records.sort((a, b) => {
                 const A = a[th]
                 const B = b[th]
+                if (A < B) { return -1 }
+                if (A > B) { return 1; }
+                return 0;
+            })
+        }
+        else {
+            pageData.records.sort((a, b) => {
+                const A = a[th]
+                const B = b[th]
+                if (A < B) { return 1; }
+                if (A > B) { return -1; }
+                return 0;
+            })
+        }
+    }
+    else if (th == "DiskSize")
+    {
+        ascText="Disk size"
+        if (asc == "true") {
+            pageData.records.sort((a, b) => a["DiskSize"] - b["DiskSize"])
+        }
+        else {
+            pageData.records.sort((a, b) => b["DiskSize"] - a["DiskSize"])
+        }
+    }
+    else if (th == "DiskUsage")
+    {
+        ascText="Disk usage (GB)"
+        if (asc == "true") {
+            pageData.records.sort((a, b) => (a["DiskSize"] - a["DiskFreeSpace"]) - (b["DiskSize"] - b["DiskFreeSpace"]))
+        }
+        else {
+            pageData.records.sort((a, b) => (b["DiskSize"] - b["DiskFreeSpace"]) - (a["DiskSize"] - a["DiskFreeSpace"]))
+        }
+    }
+    else if (th == "DiskUsageP")
+    {
+        ascText="Disk usage (%)"
+        if (asc == "true") {
+            pageData.records.sort((a, b) => {
+                var dividerA = a["DiskSize"] == 0 ? 1 : a["DiskSize"]
+                var dividerB = b["DiskSize"] == 0 ? 1 : b["DiskSize"]
+                return ((a["DiskSize"] - a["DiskFreeSpace"]) / dividerA) - ((b["DiskSize"] - b["DiskFreeSpace"]) / dividerB)
+            })
+        }
+        else {
+
+            pageData.records.sort((a, b) => {
+                
+                if (b["DiskSize"] == 0 || a["DiskSize"] == 0) {
+                    return -1
+                }
+                return ((b["DiskSize"] - b["DiskFreeSpace"]) / b["DiskSize"]) - ((a["DiskSize"] - a["DiskFreeSpace"]) / a["DiskSize"])
+            })
+        }
+        
+    }
+
+    else {
+        if (asc == "true" ) {
+            pageData.records.sort((a, b) => {
+                const A = a[th] == null ? "" : a[th].toLowerCase()
+                const B = b[th] == null ? "" : b[th].toLowerCase()
                 if (A < B) {return -1 }
                 if (A > B) { return 1; }
                 return 0;
@@ -168,8 +239,24 @@ function sortTable(th, asc) {
         }
         
     }
+
+    if (th == "LastLoggedUser") {
+        ascText = "Last logged user"
+    }
+    else if (th == "SerialNumber") {
+        ascText = "Serial Number"
+    }
+        var dropdown = document.getElementById("dropDown")
+        dropdown.innerHTML = "Order by:\n"+ascChar+" "+ ascText
+        dropdown.style.whiteSpace = "pre"
+    
+
+
     var i = 0;
+    var overLimit = 0
     for (var r of pageData.records) {
+
+
         var ipField = document.getElementById("ipRow{" + i + "}")
         ipField.innerHTML = r.Ip
 
@@ -197,7 +284,11 @@ function sortTable(th, asc) {
 
         var hiddenRow = document.getElementById("tableRowHidden{" + i + "}")
 
-
+        
+        if (r["DiskSize"]!=0 && (r["DiskSize"] - r["DiskFreeSpace"]) / r["DiskSize"] > MAX_DISK_USAGE) {
+                overLimit++;
+            }
+        
 
         
 
@@ -206,12 +297,37 @@ function sortTable(th, asc) {
         
         i++;
     }
-    
+    if (overLimit > 0 && th.startsWith("Disk")) {
+        var alertToast = document.createElement("div")
+        alertToast.classList.add("toast","toast-end","toast-top")
+        var subAlertToast = document.createElement("duv")
+        subAlertToast.classList.add("alert", "alert-error")
+        var span = document.createElement("span")
+        span.textContent = overLimit + " devices exceed " + MAX_DISK_USAGE*100 + "% disk limit !"
+        subAlertToast.appendChild(span)
+        alertToast.appendChild(subAlertToast)
+
+        document.body.appendChild(alertToast)
+
+        // auto hide after 5s
+        setTimeout(() => {
+            alertToast.classList.add("translate-x-full", "opacity-0", "animate-shake");
+            document.body.removeChild(alertToast)
+            setTimeout(() => {
+                alertToast.classList.add("hidden");
+                alertToast.classList.remove("animate-shake");
+            }, 4000);
+
+        }, 4000);
+
+        
+    }
+    console.log("Over limit: ",overLimit)
 
     return 0;
 }
 
-// attach table header click handlers 
+// attach table header click handlers to table headers
 document.querySelectorAll("table.table thead th[data-property]").forEach(th => {
 
     th.style.cursor = "pointer";
@@ -434,7 +550,7 @@ if (slider != null) {
         }
         console.log("tabsDiv after: ", tabsDiv)
 
-        // reattach table header click handlers 
+        // reattach table header click handlers to table headers
         document.querySelectorAll("table.table thead th[data-property]").forEach(th => {
 
             th.style.cursor = "pointer";
@@ -517,7 +633,7 @@ function rebuildHiddenRow(r, hiddenRow) {
     var diskSpaceDiv = document.createElement("div");
     diskSpaceDiv.classList.add("stat-desc");
     diskSpaceDiv.style.fontSize = "12px"
-    diskSpaceDiv.innerText = usedSpace + " GB \\ " + allSpace + " GB (" + percentage+")";
+    diskSpaceDiv.innerText = usedSpace + " GB \\ " + allSpace + " GB (" + percentage+"%)";
     diskDiv.appendChild(diskTitleDiv)
     diskDiv.appendChild(diskCaptionDiv)
     diskDiv.appendChild(diskSpaceDiv)

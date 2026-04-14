@@ -159,7 +159,9 @@ namespace MyApp
 
         public static string url = "";
 
-
+        //parameters: 
+        // --db-connection-file
+        // --db-user-password
         static async Task Main(string[] args)
         {
             String currentDir = Directory.GetCurrentDirectory();
@@ -192,7 +194,6 @@ namespace MyApp
                 }
             }
 
-            // Example usage
             if (parsed.TryGetValue("--db-connection-file", out var dbFile))
             {
                 menu = MENU_DATABASE_JSON;
@@ -328,6 +329,7 @@ namespace MyApp
                                     .Collapse()
                                     .RoundedBorder()
                                     .BorderColor(Color.Yellow));
+
 
                             bool isJsonValid = (!usingParameters) ? AnsiConsole.Prompt(
                         new TextPrompt<bool>("Is this data correct?")

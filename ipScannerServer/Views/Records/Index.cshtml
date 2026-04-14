@@ -113,24 +113,28 @@
 
 
 
-					<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+					<fieldset class="fieldset bg-base-100 border-base-300 rounded-box border p-4">
 						<legend class="fieldset-legend">View options:</legend>
 						<label class="label">
 							<input asp-for="Request.skipEmpty" type="checkbox" id="skipEmptyCheckBox" class="checkbox checkbox-secondary" />
 							Skip empty records
 						</label>
 
-						<div class="dropdown dropdown-hover">
-							<div tabindex="0" role="button" class="btn m-1">Order by:</div>
-							<ul tabindex="-1" class="dropdown-content menu bg-base-300 rounded-box z-1 w-52 p-2 absolute z-50">
-								<li><a data-property="Ip">Ip Address</a></li>
+						<div class="dropdown dropdown-hover" >
+							<div tabindex="0" role="button" class="btn" id="dropDown">Order by:</div>
+							<ul tabindex="-1" class="dropdown-content menu bg-base-300 rounded-box z-1 p-2 absolute z-50">
+								@*<li><a data-property="Ip">Ip Address</a></li>
 								<li><a data-property="Hostname">Hostname</a></li>
 								<li><a data-property="LastLoggedUser">LastLoggedUser</a></li>
 								<li><a data-property="LastFoundDate">LastFoundDate</a></li>
 								<li><a data-property="OperatingSystem">OperatingSystem</a></li>
 								<li><a data-property="SerialNumber">SerialNumber</a></li>
 								<li><a data-property="Model">Model</a></li>
-								<li><a data-property="ProcGen">Proc_gen</a></li>
+								<li><a data-property="ProcGen">Proc gen</a></li>
+								*@
+								<li><a data-property="DiskSize">Disk size</a></li>
+								<li><a data-property="DiskUsage">Disk used (GB)</a></li>
+								<li><a data-property="DiskUsageP">Disk used (%)</a></li>
 							</ul>
 						</div>
 
